@@ -153,20 +153,16 @@ function App() {
         <ViewBase>
             <Switch>
                 <Route exact path="/dashboard">
-                    <Dashboard />
+                    {/* <Dashboard /> */}
                 </Route>
 
                 <Route exact path="/">
                     <Redirect to="/stake" />
                 </Route>
 
-                <Route path="/stake">
-                    <Stake />
-                </Route>
+                <Route path="/stake">{/* <Stake /> */}</Route>
 
-                <Route path="/calculator">
-                    <Calculator />
-                </Route>
+                <Route path="/calculator">{/* <Calculator /> */}</Route>
 
                 <Route path="/convert">
                     <Convert />
@@ -176,17 +172,11 @@ function App() {
                     <Mint />
                 </Route>
 
-                <Route path="/lend-borrow">
-                    <LendBorrow />
-                </Route>
+                <Route path="/lend-borrow">{/* <LendBorrow /> */}</Route>
 
-                <Route path="/lend-borrow-holdings">
-                    <LendBorrowHoldings />
-                </Route>
+                <Route path="/lend-borrow-holdings">{/* <LendBorrowHoldings /> */}</Route>
 
-                <Route path="/lend">
-                    <Lend />
-                </Route>
+                <Route path="/lend">{/* <Lend /> */}</Route>
 
                 <Route component={NotFound} />
             </Switch>
