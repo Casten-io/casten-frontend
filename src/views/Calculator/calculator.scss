@@ -1,0 +1,246 @@
+.calculator-view {
+    width: 89%;
+    max-width: 833px;
+    margin: auto;
+
+    .calculator-card {
+        position: relative;
+        z-index: 2;
+
+        background: #FFF;
+        border: 1px solid #E9E9E9;
+        border-radius: 0;
+        padding: 20px;
+        width: 100%;
+
+        .calculator-card-grid {
+            margin: 0;
+            width: 100%;
+        }
+
+        .calculator-card-header {
+            text-align: center;
+
+            .calculator-card-header-title {
+                font-family: Inter;
+                font-weight: bold;
+                font-size: 20px;
+                color: #222222;
+                margin-bottom: 5px;
+            }
+
+            .calculator-card-header-subtitle {
+                font-family: Inter;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 15px;
+                color: #222222;
+            }
+        }
+
+        .calculator-card-metrics {
+            display: flex;
+            width: 100%;
+            padding: 0;
+            text-align: center;
+            margin-top: 10px;
+
+            .calculator-card-apy,
+            .calculator-card-tvl,
+            .calculator-card-index {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+
+                .calculator-card-metrics-title {
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 20px;
+                    color: #888888;
+                    margin-bottom: 2px;
+                }
+
+                .calculator-card-metrics-value {
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 24px;
+                    line-height: 29px;
+                    color: #444444;
+                }
+            }
+        }
+
+        .calculator-card-area {
+            .calculator-card-wallet-notification {
+                text-align: center;
+
+                .calculator-card-wallet-connect-btn {
+                    background: rgba(255, 255, 255, 0.2);
+                    box-shadow: 0px 0px 10px rgba(44, 39, 109, 0.1);
+                    border-radius: 10px;
+                    padding: 14px 58px;
+                    cursor: pointer;
+                    margin: auto;
+                    max-width: 280px;
+                    margin-top: 20px;
+
+                    p {
+                        font-family: Inter;
+                        font-weight: 600;
+                        font-size: 18px;
+                        color: #FFFFFF;
+                    }
+                }
+
+                .calculator-card-wallet-desc-text {
+                    font-family: Inter;
+                    font-weight: 300;
+                    font-size: 14px;
+                    color: rgba(255, 255, 255, 0.6);
+                    margin-top: 10px;
+                    margin-bottom: 6px;
+                }
+            }
+
+            .calculator-card-action-area {
+                width: 100%;
+                margin-top: 25px;
+
+                .calculator-card-action-area-inp-wrap{
+                    .calculator-card-action-area-inp-wrap-title{
+                        font-family: Inter;
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 16px;
+                        color: #222222;
+                        margin-bottom: 5px;
+                        margin-left: 10px;
+                    }
+
+                    .calculator-card-action-input{
+                        width: 100%;
+                        background: #F7F7F7;
+                        border: 2px solid #DDDDDD;
+                        padding: 10px;
+                        border-radius: 0;
+                        outline: none;
+                        
+                        .MuiOutlinedInput-input{
+                          font-family: Inter;
+                          font-style: normal;
+                          font-weight: 500;
+                          font-size: 16px;
+                          color: #888888;
+                          padding: 7px 15px;
+                        }
+                        
+                        .MuiOutlinedInput-notchedOutline{
+                          border-color: rgba(255, 255, 255, 0.2) !important;
+                        }
+                        
+                        .stake-card-action-input-btn{
+                          cursor: pointer;
+                          p {
+                            font-family: Inter;
+                            font-weight: 500;
+                            font-size: 16px;
+                            color: #222222;
+                          }
+                        }
+                      } 
+                }
+            }
+
+            .calculator-days-slider-wrap{
+                margin-top: 30px;
+
+                .calculator-days-slider-wrap-title{
+                    font-family: Inter;
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 16px;
+                    color: #222222;
+                    margin-bottom: 10px;
+                }
+
+                .calculator-days-slider{
+                    .MuiSlider-rail, .MuiSlider-track{
+                        height: 10px;
+                    }
+
+                    .MuiSlider-rail{
+                        background: #E9E9E9;
+                        border-radius: 10px;
+                        border: none;
+                        opacity: 1;
+                    }
+
+                    .MuiSlider-track{
+                        border-top-left-radius: 10px;
+                        border-bottom-left-radius: 10px;
+                        background: #2C8B2F;
+                        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                    }
+
+                    .MuiSlider-thumb{
+                        width: 22px;
+                        height: 22px;
+                        background: #FFFFFF;
+                        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                        border: 5px solid #2C8B2F;
+                    }
+                }
+            }
+
+            .calculator-user-data {
+                justify-content: center;
+                margin: auto;
+                padding: 0;
+                margin-top: 23px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .calculator-view {
+        .calculator-card {
+            .calculator-card-metrics {
+
+                .calculator-card-apy,
+                .calculator-card-tvl,
+                .calculator-card-index {
+                    align-items: flex-start;
+                }
+
+                .calculator-card {
+                    width: 50%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                }
+            }
+
+            .calculator-card-area {
+                .calculator-card-action-area {
+                    .calculator-card-action-row {
+                        flex-direction: column;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1240px) {
+    .calculator-view {
+        width: 100%;
+    }
+}

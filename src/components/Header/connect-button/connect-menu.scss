@@ -1,0 +1,22 @@
+.connect-button{
+    background: url('../../../assets/images/bgnd-buttons.svg');
+    box-shadow: 0px 0px 10px rgba(44, 39, 109, 0.1);
+    border-radius: 0;
+    padding: 9px 20px;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+
+    .connect-button-progress{
+      margin-left: 10px;
+      margin-top: 4px;
+    }
+  
+    p{
+      font-family: Inter;
+      font-weight: 600;
+      font-size: 16px;
+      color: #FFFFFF;
+    }
+  }

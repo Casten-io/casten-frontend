@@ -1,0 +1,207 @@
+#usm-confirm-modal{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+        background-color: rgba(226, 226, 226, 0.8);
+    }
+
+    /* slightly transparent fallback for Firefox (not supporting backdrop-filter) */
+    @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+        background: rgba(200, 200, 200, 0.72);
+    }
+
+    .ohm-popover {
+        display: flex;
+        flex-direction: column;
+        background: #FFFFFF;
+        max-width: 590px;
+        max-height: 585px;
+        width: 94%;
+        padding: 24px 32px;
+        border-radius: 0;
+        position: relative;
+
+        .usm-confirm-modal__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .usm-confirm-modal__title{
+                font-size: 20px;
+                line-height: 27px;
+                font-weight: 700;
+            }
+
+            .cancel-modal {
+                cursor: pointer;
+            }
+        }
+    
+        
+        h3 {
+          align-self: center;
+          justify-self: center;
+          width: 75%;
+          text-align: center;
+        }
+        label {
+          margin: 36px 0 8px 0;
+        }
+        .help-text {
+          margin: 10px;
+        }
+    }
+    .mobile .ohm-popover {
+        max-width: 400px;
+        max-height: 600px;
+    }
+    .usm-confirm-details {
+        margin-top: 20px;
+        background-color: #F9F9F9;
+        border: solid 2px #DDD;
+        padding: 4px 20px 20px 20px;
+
+        &__item {
+            font-size: 16px;
+            &__text {
+                margin-top: 16px;
+            }
+            &__value {
+                display: flex;
+                align-items: center;
+                font-weight: 500;
+                margin-top: 8px;
+                img {
+                    max-height: 20px;
+                    max-width: 20px;
+                    margin-right: 8px;
+                }
+                .token-name {
+                    color: #9C9C9C;
+                }
+            }
+        }
+    }
+    .usm-confirm-btn {
+        background: url("../../assets/images/bgnd-buttons.svg");
+        box-shadow: 0px 0px 10px rgba(44, 39, 109, 0.1);
+        padding: 14px 24px;
+        cursor: pointer;
+        text-align: center;
+        margin-top: 20px;
+
+        p {
+            font-family: Inter;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            color: #ffffff;
+        }
+    }
+
+    .usm-confirm-summary{
+        font-size: 14px;
+        background-color: rgba(170, 175, 171, 0.1);
+        margin-top: 24px;
+        margin-bottom: 32px;
+        padding: 10px 16px;
+
+        &__details {
+            color: #222;
+
+            &__item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                line-height: 20px;
+                margin-bottom: 7px;
+
+                &__text {
+                    font-weight: 500;
+                }
+            }
+
+            border-bottom: 1px dashed #CCC;
+            padding-bottom: 9px;
+            margin-bottom: 16px;
+        }
+
+        &__params {
+            color: #909090;
+        }
+    }
+}
+
+#usm-success-modal{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+        background-color: rgba(226, 226, 226, 0.8);
+    }
+
+    /* slightly transparent fallback for Firefox (not supporting backdrop-filter) */
+    @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+        background: rgba(200, 200, 200, 0.72);
+    }
+
+    .ohm-popover {
+        display: flex;
+        flex-direction: column;
+        background: #FFFFFF;
+        max-width: 590px;
+        max-height: 203px;
+        width: 94%;
+        padding: 24px 32px;
+        border-radius: 0;
+        position: relative;
+
+        .usm-success-modal__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .usm-success-modal__title{
+                font-size: 20px;
+                line-height: 27px;
+                font-weight: 700;
+            }
+
+            .cancel-modal {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .usm-success-notification {
+        font-size: 16px;
+    }
+
+    .usm-success-details {
+        margin-top: 20px;
+        background-color: #F9F9F9;
+        border: solid 2px #DDD;
+        padding: 4px 16px 10px 16px;
+
+        &__item {
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+
+            &__text {
+            }
+            &__value {
+                a {
+                    color: #222;
+                }
+            }
+        }
+    }
+}

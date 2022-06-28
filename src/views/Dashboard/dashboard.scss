@@ -1,0 +1,44 @@
+.dashboard-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+
+  width: 89%;
+  max-width: 833px;
+  margin: auto;
+
+  .dashboard-infos-wrap{
+    .dashboard-card{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      position: relative;
+      z-index: 2;
+      
+      background: #FFFFFF;
+      border: 1px solid #E9E9E9;
+
+      border-radius: 0;
+      padding: 16px 0;
+
+      .card-title {
+        font-family: Inter;
+        font-weight: 500;
+        font-size: 20px;
+        color: #888888;
+      }
+  
+      .card-value {
+        font-family: Inter;
+        font-weight: 700;
+        font-size: 20px;
+        color: #444444;
+        margin-top: 6px;
+      }
+    }
+  }
+}

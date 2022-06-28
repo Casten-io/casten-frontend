@@ -1,0 +1,127 @@
+.lend-borrow-holdings-view {
+  width: 89%;
+  margin: auto;
+  background: #FFFFFF;
+  border: 1px solid #E9E9E9;
+  box-sizing: border-box;
+  box-shadow: 2px 7px 25px rgba(0, 0, 0, 0.04);
+  padding: 20px;
+  font-size: 14px;
+
+  .page-head {
+    display: flex;
+    flex-direction: row;
+    font-weight: 500;
+    color: #222222;
+
+    .text-head {
+      width: 50%;
+      .amount-info {
+        display: flex;
+        flex-direction: column;
+        .net-worth-label {
+          margin-top: 20px;
+        }
+        .address-hash {
+          font-weight: 700;
+          padding: 10px 10px 10px 0;
+          margin: 0 10px 0 0;
+          .link-img {
+            height: 15px;
+          }
+        }
+      }
+    }
+    .account-info-wrapper {
+      width: 50%;
+      display: flex;
+      justify-content: right;
+
+      .account-info {
+        .button-main-action {
+          background: url("../../assets/images/bgnd-buttons.svg");
+          cursor: pointer;
+          max-width: 160px;
+          width: 100%;
+          font-weight: 600;
+          font-size: 16px;
+          color: #ffffff;
+          border: none;
+          text-align: center;
+          padding: 7px 20px;
+        }
+      }
+
+      .account-info-details {
+        margin-top: 18px;
+
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        line-height: 20px;
+
+        .asset-info {
+          margin-right: 10px;
+        }
+        .wallet-balance {
+          margin-left: 10px;
+        }
+      }
+
+      .wallet-info {
+        display: flex;
+        flex-direction: row;
+        width: 180px;
+
+        .asset-info {
+          margin: 5px;
+        }
+        .wallet-balance {
+          margin: 5px;
+        }
+      }
+    }
+  }
+
+  .protocols-list {
+    margin-top: 100px;
+    table, tr, td {
+      border: none;
+      border-collapse: collapse;
+    }
+    th {
+      padding: 15px;
+    }
+    .protocols-list-table-view {
+      width: 100%;
+    }
+    .protocols-list-table-data {
+      text-align: center;
+      background: #F7F7F7;
+      height: 55px;
+      border: none;
+      .asset-protocol-info {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .left-pad {
+          width: 20%;
+        }
+        .logo-list {
+          .token-logo {
+            height: 25px;
+            margin: 5px
+          }
+        }
+        .token-name {
+          display: flex;
+          flex-direction: column;
+          .token {
+            color:#2C8B2F;;
+          }
+        }
+      }
+    }
+  }
+}

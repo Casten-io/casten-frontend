@@ -1,0 +1,33 @@
+.happy-hour-timer{
+    background: #FDE39A;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 9px 20px;
+    cursor: pointer;
+    margin-right: 8px;
+
+    display: flex;
+    align-items: center;
+
+    color: #000000;
+    font-family: Inter;
+    font-weight: 600;
+    font-size: 16px;
+
+    .title{
+        font-weight: bold;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .time{
+        color: #2C8B2F !important;
+        padding: 8px;
+    }
+
+    .description{
+        text-align: center;
+        font-size: 10px;
+    }
+}

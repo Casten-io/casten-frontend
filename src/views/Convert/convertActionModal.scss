@@ -1,0 +1,212 @@
+#convert-action-modal {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+        background-color: rgba(226, 226, 226, 0.8);
+    }
+
+    /* slightly transparent fallback for Firefox (not supporting backdrop-filter) */
+    @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+        background: rgba(200, 200, 200, 0.72);
+    }
+
+    .biconomy {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .ohm-popover {
+        display: flex;
+        flex-direction: column;
+        background: #ffffff;
+        max-width: 414px;
+        max-height: 450px;
+        width: 94%;
+        padding: 36px;
+        border-radius: 15px;
+        position: relative;
+
+        .cancel-setting {
+            position: absolute;
+            cursor: pointer;
+            right: -16px;
+            top: -16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 99px;
+            background: #2c8b2f;
+            background-image: url("../../assets/icons/x.svg");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        h3 {
+            align-self: center;
+            justify-self: center;
+            width: 75%;
+            text-align: center;
+        }
+        label {
+            margin: 36px 0 8px 0;
+        }
+        .help-text {
+            margin: 10px;
+        }
+    }
+    .mobile .ohm-popover {
+        max-width: 400px;
+    }
+
+    .convert-action-modal__header {
+        margin-bottom: 36px;
+    }
+
+    .convert-action-modal__title {
+        font-family: Inter;
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 28px;
+        color: #222222;
+        text-align: center;
+    }
+
+    .convert-action-modal_display-flex-row {
+        flex-direction: row;
+        display: flex;
+    }
+    .convert-action-modal_display-flex-column {
+        flex-direction: column;
+        display: flex;
+    }
+
+    .convert-action-modal_display-width-50 {
+        width: 50%;
+    }
+
+    .convert-action-modal_display-align-right {
+        text-align: end;
+    }
+
+    .convert-action-modal__content {
+        padding: 9px 10px;
+        background-color: #eaf3ea;
+        border-radius: 12px;
+        margin-bottom: 26px;
+
+        .convert-action-modal__label {
+            text-align: center;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 27px;
+            color: #888888;
+        }
+
+        .convert-action-modal__value {
+            text-align: center;
+            font-weight: 700;
+            line-height: 27px;
+            #number {
+                font-size: 18px;
+            }
+            #unit {
+                font-size: 14px;
+            }
+        }
+
+        .convert-action-modal__sub-value {
+            text-align: center;
+            font-weight: 400;
+            line-height: 11px;
+            #number {
+                font-size: 10px;
+            }
+            #unit {
+                font-size: 10px;
+            }
+        }
+
+        .convert-action-modal__arrow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    }
+
+    .convert-action-modal__description {
+        text-align: center;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 28px;
+        margin-bottom: 34px;
+    }
+
+    .action-button-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 8px;
+    }
+
+    .completed-action-button {
+        display: inline-block;
+        background: url("../../assets/images/bgnd-buttons.svg");
+        box-shadow: 0px 0px 10px rgba(44, 39, 109, 0.1);
+        border-radius: 0;
+        padding: 9px 20px;
+        width: 100%;
+        cursor: pointer;
+        margin: 1px;
+        color: #fff;
+
+        .MuiCircularProgress-root {
+            color: #fff;
+        }
+
+        .connect-button-progress {
+            margin-left: 10px;
+            margin-top: 4px;
+        }
+
+        p {
+            font-family: Inter;
+            font-weight: 600;
+            font-size: 16px;
+            color: #ffffff;
+        }
+    }
+
+    .action-button {
+        display: inline-block;
+        background: url("../../assets/images/bgnd-buttons.svg");
+        box-shadow: 0px 0px 10px rgba(44, 39, 109, 0.1);
+        border-radius: 0;
+        padding: 9px 20px;
+        width: 185px;
+        cursor: pointer;
+        color: #fff;
+
+        .MuiCircularProgress-root {
+            color: #fff;
+        }
+
+        .connect-button-progress {
+            margin-left: 10px;
+            margin-top: 4px;
+        }
+
+        p {
+            font-family: Inter;
+            font-weight: 600;
+            font-size: 16px;
+            color: #ffffff;
+        }
+    }
+}

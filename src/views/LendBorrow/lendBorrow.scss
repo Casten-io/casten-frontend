@@ -1,0 +1,111 @@
+.lend-borrow-view {
+    width: 89%;
+    margin: auto;
+    background: #FFFFFF;
+    border: 1px solid #E9E9E9;
+    box-sizing: border-box;
+    box-shadow: 2px 7px 25px rgba(0, 0, 0, 0.04);
+    padding: 20px;
+    font-size: 14px;
+  
+    .button-main-action {
+      background: url("../../assets/images/bgnd-buttons.svg");
+      cursor: pointer;
+      padding: 7px 20px;
+      margin: 0 10px 0 10px;
+      max-width: 160px;
+      width: 100%;
+      font-weight: 600;
+      font-size: 16px;
+      color: #ffffff;
+      border: none;
+      text-align: center;
+    }
+
+    .page-head {
+      display: flex;
+      flex-direction: row;
+      font-weight: 500;
+      color: #222222;
+  
+      .text-head {
+        width: 50%;
+        .page-info {
+          .lend-borrow-title {
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 27px;
+          }
+          .lend-borrow-description {
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 24px;
+            margin-top: 5px;
+          }
+        }
+      }
+      .account-info {
+        width: 50%;
+        direction: rtl;
+        display: flex;
+        flex-direction: column;
+        .wallet-info {
+          display: flex;
+          flex-direction: row;
+          justify-content: right;
+          margin-right: 10px;
+          width: 180px;
+  
+          .asset-info {
+            margin: 5px;
+          }
+          .wallet-balance {
+            margin: 5px;
+          }
+        }
+      }
+    }
+  
+    .protocols-list {
+      margin-top: 100px;
+      table, tr, td {
+        border: none;
+        border-collapse: collapse;
+      }
+      th {
+        padding: 15px;
+      }
+      .protocols-list-table-view {
+        width: 100%;
+      }
+      .protocols-list-table-data {
+        text-align: center;
+        background: #F7F7F7;
+        height: 55px;
+        border: none;
+
+        .button-main-action {
+          padding: 7px;
+        }
+
+        .asset-protocol-info {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          .logo-list {
+            .token-logo {
+              height: 25px;
+              margin: 5px
+            }
+          }
+          .token-name {
+            text-align: left;
+            .token {
+              color:#2C8B2F;;
+            }
+          }
+        }
+      }
+    }
+  }
