@@ -19,24 +19,9 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        margin: 25px 10px;
-        .stat {
-            border: 1px solid #222;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            .text {
-                font-family: "OpenSans";
-                font-style: normal;
-                font-weight: 400;
-                font-size: 18px;
-                line-height: 12px;
-                /* identical to box height, or 58% */
-
-                color: #111;
-                margin: 2rem 3rem 0rem 0.5rem;
-            }
+        margin: 25px 10px 40px 10px;
+        .stat-box {
+            width: 15rem;
         }
     }
 }

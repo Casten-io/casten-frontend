@@ -4,11 +4,18 @@ import "./style.scss";
 import { useEffect, useState } from "react";
 
 export interface IProduct {
-    productIcon: string;
-    productName: string;
-    assetIcon: string;
-    liquidity: number;
-    roi: number;
+    secId: string;
+    secName: string;
+    apy: string;
+    frequency: string;
+    maturity: string;
+    issuer: string;
+    totalIssuance: string;
+    availableIssuance: string;
+    category: string;
+    ltv: string;
+    leverage: string;
+    moreInfo: string;
 }
 export interface IProductIcon {
     [key: string]: string;
@@ -20,23 +27,43 @@ export interface IAssetIcons {
 function ProductListHeader() {
     return (
         <Grid container className="table-header-container">
-            <Grid item xs={4} className="table-header-item">
-                <span className="text-special">Name of Strategy</span>
+            <Grid item className="table-header-item-mid">
+                <span className="text">Sec ID</span>
             </Grid>
 
-            <Grid item xs={3} className="table-header-item">
-                <span className="text">Assets</span>
+            <Grid item className="table-header-item-mid">
+                <span className="text">Sec Name</span>
+            </Grid>
+            <Grid item className="table-header-item">
+                <span className="text">APY</span>
             </Grid>
 
-            {/* <Grid item xs={2} className="table-header-item">
-        <span className="text">Liquidity</span>
-      </Grid> */}
-
-            <Grid item xs={2} className="table-header-item">
-                <span className="text">ROI</span>
+            <Grid item className="table-header-item">
+                <span className="text">Frequency</span>
             </Grid>
-            <Grid item xs={3} className="table-header-item">
-                <span className="text"></span>
+            <Grid item className="table-header-item">
+                <span className="text">Maturity</span>
+            </Grid>
+            <Grid item className="table-header-item-mid">
+                <span className="text">Issuer</span>
+            </Grid>
+            <Grid item className="table-header-item">
+                <span className="text">Total Issuance</span>
+            </Grid>
+            <Grid item className="table-header-item">
+                <span className="text">Available Issuance</span>
+            </Grid>
+            <Grid item className="table-header-item-wide">
+                <span className="text">Category</span>
+            </Grid>
+            <Grid item className="table-header-item">
+                <span className="text">LTV</span>
+            </Grid>
+            <Grid item className="table-header-item">
+                <span className="text">Leverage</span>
+            </Grid>
+            <Grid item className="table-header-item">
+                <span className="text">More Info</span>
             </Grid>
         </Grid>
     );
@@ -56,54 +83,42 @@ function ProductList() {
                     return (
                         <div className="product-row">
                             <Grid container className="product-row-container">
-                                <Grid item xs={4} className="product-row-container-element">
-                                    {/* <img src={productIcon[p.name]} alt={index.toString()} className="product-icon" /> */}
-                                    <span style={{ marginLeft: "4px" }} className="text">
-                                        {p.productName}
-                                    </span>
+                                <Grid item className="table-value-item-mid">
+                                    <span className="text">{p.secId}</span>
                                 </Grid>
 
-                                <Grid item xs={3} className="product-row-container-element">
-                                    {/* {p.productName === "Market Weight Index" ? (
-                                        <div className="icon-container">
-                                            <img src={WBTCIcon} className="icon" />
-                                            <img src={WETHIcon} className="icon" />
-                                            <img src={USDTIcon} className="icon" />
-                                            <img src={WAVAXIcon} className="icon" />
-                                        </div>
-                                    ) : p.productName === "Low-risk Crypto Index" ? (
-                                        <div className="icon-container">
-                                            <img src={BUSDIcon} className="icon" />
-                                            <img src={USDCIcon} className="icon" />
-                                            <img src={USDTIcon} className="icon" />
-                                        </div>
-                                    ) : (
-                                        <div className="icon-container">
-                                            <img src={AVAXIcon} className="icon" />
-                                            <img src={MATICIcon} className="icon" />
-                                            <img src={WNEARIcon} className="icon" />
-                                        </div>
-                                    )} */}
+                                <Grid item className="table-value-item-mid">
+                                    <span className="text">{p.secName}</span>
                                 </Grid>
-
-                                {/* <Grid item xs={2} className="product-row-container-element">
-                  <span>{p.liquidity ? p.liquidity : "78,000.00"}</span>
-                </Grid> */}
-
-                                <Grid item xs={2} className="product-row-container-element">
-                                    {p.roi ? (
-                                        p.roi > 0 ? (
-                                            <span className="positive-roi">{p.roi} %</span>
-                                        ) : (
-                                            <span className="negative-roi">{p.roi} %</span>
-                                        )
-                                    ) : (
-                                        <span className="positive-roi">27.89 %</span>
-                                    )}
+                                <Grid item className="table-value-item">
+                                    <span className="text">{p.apy}</span>
                                 </Grid>
-
-                                <Grid item xs={3} className="product-row-container-element-button">
-                                    <Button className="product-button">Invest</Button>
+                                <Grid item className="table-value-item">
+                                    <span className="text">{p.frequency}</span>
+                                </Grid>
+                                <Grid item className="table-value-item">
+                                    <span className="text">{p.maturity}</span>
+                                </Grid>
+                                <Grid item className="table-value-item-mid">
+                                    <span className="text">{p.issuer}</span>
+                                </Grid>
+                                <Grid item className="table-value-item">
+                                    <span className="text">{p.totalIssuance}</span>
+                                </Grid>
+                                <Grid item className="table-value-item">
+                                    <span className="text">{p.availableIssuance}</span>
+                                </Grid>
+                                <Grid item className="table-value-item-wide">
+                                    <span className="text">{p.category}</span>
+                                </Grid>
+                                <Grid item className="table-value-item">
+                                    <span className="text">{p.ltv}</span>
+                                </Grid>
+                                <Grid item className="table-value-item">
+                                    <span className="text">{p.leverage}</span>
+                                </Grid>
+                                <Grid item className="table-value-item">
+                                    <span className="text">{p.moreInfo}</span>
                                 </Grid>
                             </Grid>
                         </div>
