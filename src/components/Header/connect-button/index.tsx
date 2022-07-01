@@ -25,10 +25,10 @@ function ConnectMenu() {
         clickFunc = disconnect;
     }
 
-    if (pendingTransactions && pendingTransactions.length > 0) {
-        buttonText = `${pendingTransactions.length} Pending `;
-        clickFunc = () => {};
-    }
+    // if (pendingTransactions && pendingTransactions.length > 0) {
+    //     buttonText = `${pendingTransactions.length} Pending `;
+    //     clickFunc = () => {};
+    // }
 
     if (isConnected && providerChainID !== DEFAULT_NETWORK) {
         buttonText = "Wrong network";
@@ -45,11 +45,11 @@ function ConnectMenu() {
     return (
         <div className="connect-button" style={buttonStyle} onClick={clickFunc}>
             <p>{buttonText}</p>
-            {pendingTransactions.length > 0 && (
+            {/* {pendingTransactions.length > 0 && (
                 <div className="connect-button-progress">
                     <CircularProgress size={15} color="inherit" />
                 </div>
-            )}
+            )} */}
         </div>
     );
 }

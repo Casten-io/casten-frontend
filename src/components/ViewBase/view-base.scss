@@ -4,26 +4,7 @@
     display: flex;
     flex-direction: column;
     background: #fafffa;
-    // background-image: url('../../assets/images/background.png');
     background-repeat: no-repeat;
     background-position: bottom;
     background-size: contain;
-
-    .cubes-top-left {
-        position: absolute;
-        top: 0px;
-        left: 280px;
-        min-width: 64px;
-        min-height: 62px;
-        background-image: url("../../assets/images/bgnd-top-left.svg");
-    }
-
-    .cubes-top-right {
-        position: absolute;
-        top: 0;
-        right: 0;
-        min-width: 168px;
-        min-height: 225px;
-        background-image: url("../../assets/images/bgnd-top-right.svg");
-    }
 }

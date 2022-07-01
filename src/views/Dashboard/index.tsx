@@ -1,145 +1,49 @@
-import { useSelector } from "react-redux";
-import { Grid, Zoom } from "@material-ui/core";
+import { useState, useCallback, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import Decimal from "decimal.js";
+import { Grid, InputAdornment, OutlinedInput, Typography, Zoom } from "@material-ui/core";
+import RebaseTimer from "../../components/RebaseTimer";
 import { trim } from "../../helpers";
+import { changeStake, changeApproval, redeem } from "../../store/slices/stake-thunk";
 import "./dashboard.scss";
+import { useWeb3Context } from "../../hooks";
+import { IPendingTxn, isPendingTxn, txnButtonText, getPendingTransInfo } from "../../store/slices/pending-txns-slice";
 import { Skeleton } from "@material-ui/lab";
 import { IReduxState } from "../../store/slices/state.interface";
-import { IAppSlice } from "../../store/slices/app-slice";
+import { messages } from "../../constants/messages";
+import classnames from "classnames";
+import { warning } from "../../store/slices/messages-slice";
+import ProductList from "src/components/ProductList";
 
 function Dashboard() {
-    const isAppLoading = useSelector<IReduxState, boolean>(state => state.app.loading);
-    const app = useSelector<IReduxState, IAppSlice>(state => state.app);
-
-    const trimmedStakingAPY = trim(app.stakingAPY * 100, 1);
+    const dispatch = useDispatch();
+    const { provider, address, connect, chainID, checkWrongNetwork } = useWeb3Context();
 
     return (
         <div className="dashboard-view">
-            <div className="dashboard-infos-wrap">
-                <Zoom in={true}>
-                    <Grid container spacing={4}>
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">D33D Price</p>
-                                <p className="card-value">{isAppLoading ? <Skeleton width="100px" /> : `$${trim(app.marketPrice, 2)}`}</p>
-                            </div>
-                        </Grid>
-
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">Market Cap</p>
-                                <p className="card-value">
-                                    {isAppLoading ? (
-                                        <Skeleton width="160px" />
-                                    ) : (
-                                        new Intl.NumberFormat("en-US", {
-                                            style: "currency",
-                                            currency: "USD",
-                                            maximumFractionDigits: 0,
-                                            minimumFractionDigits: 0,
-                                        }).format(app.marketCap)
-                                    )}
-                                </p>
-                            </div>
-                        </Grid>
-
-                        {/* <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">Supply (Staked/Total)</p>
-                                <p className="card-value">
-                                    {isAppLoading ? (
-                                        <Skeleton width="250px" />
-                                    ) : (
-                                        `${new Intl.NumberFormat("en-US", {
-                                            maximumFractionDigits: 0,
-                                            minimumFractionDigits: 0,
-                                        }).format(app.circSupply)}
-                                        /
-                                        ${new Intl.NumberFormat("en-US", {
-                                            maximumFractionDigits: 0,
-                                            minimumFractionDigits: 0,
-                                        }).format(app.totalSupply)}`
-                                    )}
-                                </p>
-                            </div>
-                        </Grid> */}
-
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">TVL</p>
-                                <p className="card-value">
-                                    {isAppLoading ? (
-                                        <Skeleton width="250px" />
-                                    ) : (
-                                        new Intl.NumberFormat("en-US", {
-                                            style: "currency",
-                                            currency: "USD",
-                                            maximumFractionDigits: 0,
-                                            minimumFractionDigits: 0,
-                                        }).format(app.treasuryBalance + app.stakingTVL)
-                                    )}
-                                </p>
-                            </div>
-                        </Grid>
-
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">APY</p>
-                                <p className="card-value">{isAppLoading ? <Skeleton width="250px" /> : `${new Intl.NumberFormat("en-US").format(Number(trimmedStakingAPY))}%`}</p>
-                            </div>
-                        </Grid>
-
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">Current Index</p>
-                                <p className="card-value">{isAppLoading ? <Skeleton width="250px" /> : `${trim(Number(app.currentIndex), 2)} D33D`}</p>
-                            </div>
-                        </Grid>
-
-                        {/* <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">Treasury Balance</p>
-                                <p className="card-value">
-                                    {isAppLoading ? (
-                                        <Skeleton width="250px" />
-                                    ) : (
-                                        new Intl.NumberFormat("en-US", {
-                                            style: "currency",
-                                            currency: "USD",
-                                            maximumFractionDigits: 0,
-                                            minimumFractionDigits: 0,
-                                        }).format(app.treasuryBalance)
-                                    )}
-                                </p>
-                            </div>
-                        </Grid>
-
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">Backing per $D33D</p>
-                                <p className="card-value">
-                                    {isAppLoading ? (
-                                        <Skeleton width="250px" />
-                                    ) : (
-                                        new Intl.NumberFormat("en-US", {
-                                            style: "currency",
-                                            currency: "USD",
-                                            maximumFractionDigits: 0,
-                                            minimumFractionDigits: 0,
-                                        }).format(app.rfv)
-                                    )}
-                                </p>
-                            </div>
-                        </Grid> */}
-
-                        {/* <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">Runway</p>
-                                <p className="card-value">{isAppLoading ? <Skeleton width="250px" /> : `${trim(Number(app.runway), 1)} Days`}</p>
-                            </div>
-                        </Grid> */}
-                    </Grid>
-                </Zoom>
+            <div className="dashboard-header">
+                <Typography className="title">Lending Marketplace</Typography>
             </div>
+            <div className="numbers">
+                <div className="stat">
+                    <Typography className="text">Total Value Locked</Typography>
+                    <Typography>$12,000,000.00</Typography>
+                </div>
+                <div className="stat">
+                    <Typography className="text">Loan Originated</Typography>
+                    <Typography>$12,000,000.00</Typography>
+                </div>
+                <div className="stat">
+                    <Typography className="text">Portfolio Balance</Typography>
+                    <Typography>$12,000,000.00</Typography>
+                </div>
+                <div className="stat">
+                    <Typography className="text">USDC Balance</Typography>
+                    <Typography>$12,000,000.00</Typography>
+                </div>
+            </div>
+
+            <ProductList />
         </div>
     );
 }

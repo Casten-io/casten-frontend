@@ -12,7 +12,7 @@ import { IReduxState } from "../store/slices/state.interface";
 import Loading from "../components/Loader";
 import useBonds from "../hooks/bonds";
 import ViewBase from "../components/ViewBase";
-import { Stake, ChooseBond, Bond, Dashboard, NotFound, Calculator, Convert, Mint, LendBorrow, LendBorrowHoldings, Lend } from "../views";
+import { ChooseBond, Bond, Dashboard, NotFound, Calculator, Convert, Mint, LendBorrow, LendBorrowHoldings, Lend } from "../views";
 import "./style.scss";
 import useTokens from "../hooks/tokens";
 
@@ -153,14 +153,12 @@ function App() {
         <ViewBase>
             <Switch>
                 <Route exact path="/dashboard">
-                    {/* <Dashboard /> */}
+                    <Dashboard />
                 </Route>
 
                 <Route exact path="/">
-                    <Redirect to="/stake" />
+                    <Redirect to="/dashboard" />
                 </Route>
-
-                <Route path="/stake">{/* <Stake /> */}</Route>
 
                 <Route path="/calculator">{/* <Calculator /> */}</Route>
 

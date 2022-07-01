@@ -1,4 +1,4 @@
-import { AppBar, Toolbar } from "@material-ui/core";
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MenuIcon from "../../assets/icons/hamburger.svg";
@@ -52,6 +52,7 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
                     <div onClick={handleDrawerToggle} className="dapp-topbar-slider-btn">
                         <img src={MenuIcon} alt="" />
                     </div>
+                    <Typography className="organization">Casten</Typography>
                     <div className="dapp-topbar-btns-wrap">
                         <ConnectButton />
                     </div>
