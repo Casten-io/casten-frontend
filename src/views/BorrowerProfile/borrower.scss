@@ -1,0 +1,77 @@
+.borrower-profile-view {
+    padding: 30px;
+    .header-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin-top: 10px;
+
+        .title {
+            font-family: "OpenSans";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 14px;
+            /* identical to box height, or 58% */
+
+            color: #000000;
+            margin: 10px 0px;
+        }
+        .subtitle {
+            font-family: "OpenSans";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 14px;
+            /* identical to box height, or 58% */
+
+            color: rgba(0, 0, 0, 0.5);
+        }
+    }
+    .content-container {
+        .factsheet-container {
+            margin-top: 4.55rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            .factsheet {
+                font-family: "OpenSans";
+                font-style: normal;
+                font-weight: 600;
+                font-size: 24px;
+                line-height: 14px;
+                /* identical to box height, or 58% */
+
+                color: rgba(0, 0, 0, 0.5);
+                margin-bottom: 2rem;
+            }
+        }
+        .details-container {
+            margin-top: 2rem;
+            width: 70%;
+            .details {
+                .details-item {
+                    margin: 5px;
+                    .bold {
+                        font-family: "OpenSans";
+                        font-style: normal;
+                        font-weight: 700;
+                        font-size: 14px;
+                        line-height: 14px;
+                        color: #000000;
+                    }
+                    .normie {
+                        font-family: "OpenSans";
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 14px;
+                        line-height: 14px;
+                        color: #000000;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { NavLink } from "react-router-dom";
 import Social from "./social";
-import MetapolyIcon from "../../../assets/icons/metapoly-nav-header.png";
+import CastenIcon from "../../../assets/icons/Casten.png";
 import { trim, shorten } from "../../../helpers";
 import { useAddress } from "../../../hooks";
 import useBonds from "../../../hooks/bonds";
@@ -54,8 +54,8 @@ function NavContent() {
     return (
         <div className="dapp-sidebar">
             <div className="branding-header">
-                <Link href="https://metapoly.org" target="_blank">
-                    <img alt="Metapoly.org" src={MetapolyIcon} height="28" />
+                <Link href="#" target="_blank">
+                    <img alt="Metapoly.org" src={CastenIcon} height="45" />
                 </Link>
 
                 {address && (
@@ -85,15 +85,29 @@ function NavContent() {
 
                     <Link
                         component={NavLink}
-                        to="/stake"
+                        to="/borrower"
                         isActive={(match: any, location: any) => {
-                            return checkPage(location, "stake");
+                            return checkPage(location, "convert");
                         }}
                         className={classnames("button-dapp-menu", { active: isActive })}
                     >
                         <div className="dapp-menu-item">
-                            <StakeIcon />
-                            <p>Stake</p>
+                            <ConverterIcon />
+                            <p>Borrower Profile</p>
+                        </div>
+                    </Link>
+
+                    <Link
+                        component={NavLink}
+                        to="/lend-borrow"
+                        isActive={(match: any, location: any) => {
+                            return checkPage(location, "lend-borrow");
+                        }}
+                        className={classnames("button-dapp-menu", { active: isActive })}
+                    >
+                        <div className="dapp-menu-item">
+                            <LendBorrowIcon />
+                            <p>Credit and Financial Profile</p>
                         </div>
                     </Link>
 
@@ -108,74 +122,28 @@ function NavContent() {
                     >
                         <div className="dapp-menu-item">
                             <BondIcon />
-                            <p>Bond</p>
+                            <p>ESG Profile</p>
                         </div>
                     </Link>
 
                     <Link
                         component={NavLink}
-                        to="/lend-borrow"
+                        to="/security"
                         isActive={(match: any, location: any) => {
-                            return checkPage(location, "lend-borrow");
+                            return checkPage(location, "location");
                         }}
                         className={classnames("button-dapp-menu", { active: isActive })}
                     >
                         <div className="dapp-menu-item">
-                            <LendBorrowIcon />
-                            <p>Lend / Borrow</p>
-                        </div>
-                    </Link>
-
-                    <Link
-                        component={NavLink}
-                        to="/convert"
-                        isActive={(match: any, location: any) => {
-                            return checkPage(location, "convert");
-                        }}
-                        className={classnames("button-dapp-menu", { active: isActive })}
-                    >
-                        <div className="dapp-menu-item">
-                            <ConverterIcon />
-                            <p>Convert</p>
-                        </div>
-                    </Link>
-
-                    {/* <Link
-                        component={NavLink}
-                        to="/calculator"
-                        isActive={(match: any, location: any) => {
-                            return checkPage(location, "calculator");
-                        }}
-                        className={classnames("button-dapp-menu", { active: isActive })}
-                    >
-                        <div className="dapp-menu-item">
-                            <CalculatorIcon />
-                            <p>Calculator</p>
-                        </div>
-                    </Link> */}
-
-                    <Link
-                        component={NavLink}
-                        to="/mint"
-                        isActive={(match: any, location: any) => {
-                            return checkPage(location, "mint");
-                        }}
-                        className={classnames("button-dapp-menu", { active: isActive })}
-                    >
-                        <div className="dapp-menu-item">
-                            <MintIcon />
-                            <p>Mint</p>
+                            <StakeIcon />
+                            <p>Security Offerings</p>
                         </div>
                     </Link>
                 </div>
             </div>
 
-            <div className="dapp-happy-hour">
-                <BiconomyTimer />
-            </div>
-
             <div className="dapp-menu-doc-link">
-                <Link href="https://metapoly-team.gitbook.io/doc/" target="_blank">
+                <Link href="#" target="_blank">
                     <img alt="" src={DocsIcon} />
                     <p>Docs</p>
                 </Link>

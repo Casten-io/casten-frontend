@@ -10,11 +10,11 @@ function Root() {
         return true; //window.location.host.includes("app");
     };
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        loadTokenPrices().then(() => setLoading(false));
-    }, []);
+    // useEffect(() => {
+    //     loadTokenPrices().then(() => setLoading(false));
+    // }, []);
 
     if (loading) return <Loading />;
 

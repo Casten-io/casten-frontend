@@ -8,3 +8,5 @@ export { default as Mint } from "./Mint";
 export { default as LendBorrow } from "./LendBorrow"; // total positions
 export { default as LendBorrowHoldings } from "./LendBorrowHoldings"; // my lending / borrowing
 export { default as Lend } from "./Lend";
+export { default as Security } from "./SecurityOfferings";
+export { default as BorrowerProfile } from "./BorrowerProfile";

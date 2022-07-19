@@ -54,8 +54,6 @@ function ViewBase({ children }: IViewBaseProps) {
 
     const isSmallerScreen = useMediaQuery("(max-width: 960px)");
     const location = useLocation();
-    console.log("Lcoation");
-    console.log(location.pathname);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);

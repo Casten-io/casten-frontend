@@ -6,6 +6,7 @@ import TimeMenu from "./time-menu";
 import ConnectButton from "./connect-button";
 import "./header.scss";
 import { DRAWER_WIDTH, TRANSITION_DURATION } from "../../constants/style";
+import { useLocation } from "react-router-dom";
 
 interface IHeader {
     handleDrawerToggle: () => void;
@@ -45,19 +46,23 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
     const isVerySmallScreen = useMediaQuery("(max-width: 400px)");
     const isWrapShow = useMediaQuery("(max-width: 480px)");
 
+    const location = useLocation();
+
     return (
         <div className={`${classes.topBar} ${!drawe && classes.topBarShift}`}>
-            <AppBar position="sticky" className={classes.appBar} elevation={0}>
-                <Toolbar disableGutters className="dapp-topbar">
-                    <div onClick={handleDrawerToggle} className="dapp-topbar-slider-btn">
-                        <img src={MenuIcon} alt="" />
-                    </div>
-                    <Typography className="organization">Casten</Typography>
-                    <div className="dapp-topbar-btns-wrap">
-                        <ConnectButton />
-                    </div>
-                </Toolbar>
-            </AppBar>
+            {location.pathname === "/dashboard" && (
+                <AppBar position="sticky" className={classes.appBar} elevation={0}>
+                    <Toolbar disableGutters className="dapp-topbar">
+                        <div onClick={handleDrawerToggle} className="dapp-topbar-slider-btn">
+                            <img src={MenuIcon} alt="" />
+                        </div>
+                        <Typography className="organization">Casten</Typography>
+                        <div className="dapp-topbar-btns-wrap">
+                            <ConnectButton />
+                        </div>
+                    </Toolbar>
+                </AppBar>
+            )}
         </div>
     );
 }
