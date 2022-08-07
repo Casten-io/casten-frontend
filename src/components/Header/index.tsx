@@ -7,6 +7,7 @@ import ConnectButton from "./connect-button";
 import "./header.scss";
 import { DRAWER_WIDTH, TRANSITION_DURATION } from "../../constants/style";
 import { useLocation } from "react-router-dom";
+import Casten from "../../assets/icons/Casten.png";
 
 interface IHeader {
     handleDrawerToggle: () => void;
@@ -17,7 +18,6 @@ const useStyles = makeStyles(theme => ({
     appBar: {
         [theme.breakpoints.up("sm")]: {
             width: "100%",
-            padding: "20px 0 30px 0",
         },
         justifyContent: "flex-end",
         alignItems: "flex-end",
@@ -30,7 +30,6 @@ const useStyles = makeStyles(theme => ({
             easing: theme.transitions.easing.sharp,
             duration: TRANSITION_DURATION,
         }),
-        marginLeft: DRAWER_WIDTH,
     },
     topBarShift: {
         transition: theme.transitions.create("margin", {
@@ -50,19 +49,17 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
 
     return (
         <div className={`${classes.topBar} ${!drawe && classes.topBarShift}`}>
-            {location.pathname === "/dashboard" && (
-                <AppBar position="sticky" className={classes.appBar} elevation={0}>
-                    <Toolbar disableGutters className="dapp-topbar">
-                        <div onClick={handleDrawerToggle} className="dapp-topbar-slider-btn">
-                            <img src={MenuIcon} alt="" />
-                        </div>
-                        <Typography className="organization">Casten</Typography>
-                        <div className="dapp-topbar-btns-wrap">
-                            <ConnectButton />
-                        </div>
-                    </Toolbar>
-                </AppBar>
-            )}
+            <AppBar position="sticky" className={classes.appBar} elevation={0}>
+                <Toolbar disableGutters className="dapp-topbar">
+                    <div onClick={handleDrawerToggle} className="dapp-topbar-slider-btn">
+                        <img src={MenuIcon} />
+                    </div>
+                    <img src={Casten} alt="Casten Logo" className="casten-logo" />
+                    <div className="dapp-topbar-btns-wrap">
+                        <ConnectButton />
+                    </div>
+                </Toolbar>
+            </AppBar>
         </div>
     );
 }

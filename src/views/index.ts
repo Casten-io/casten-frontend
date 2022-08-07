@@ -10,3 +10,4 @@ export { default as LendBorrowHoldings } from "./LendBorrowHoldings"; // my lend
 export { default as Lend } from "./Lend";
 export { default as Security } from "./SecurityOfferings";
 export { default as BorrowerProfile } from "./BorrowerProfile";
+export { default as CreditProfile } from "./CreditProfile";

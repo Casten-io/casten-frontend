@@ -36,7 +36,7 @@ function AssetListHeader() {
             <Grid item className="table-header-item">
                 <span className="text">Value</span>
             </Grid>
-            <Grid item className="table-header-item">
+            <Grid item className="table-header-item-mid">
                 <span className="text">Finance Date</span>
             </Grid>
             <Grid item className="table-header-item">
@@ -76,7 +76,7 @@ function AssetList() {
                                 <Grid item className="table-value-item">
                                     <span className="text">{p.value}</span>
                                 </Grid>
-                                <Grid item className="table-value-item">
+                                <Grid item className="table-value-item-mid">
                                     <span className="text">{p.financedate}</span>
                                 </Grid>
                                 <Grid item className="table-value-item">

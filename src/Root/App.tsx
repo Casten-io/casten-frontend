@@ -12,7 +12,7 @@ import { IReduxState } from "../store/slices/state.interface";
 import Loading from "../components/Loader";
 import useBonds from "../hooks/bonds";
 import ViewBase from "../components/ViewBase";
-import { ChooseBond, Bond, Dashboard, NotFound, Calculator, Convert, Mint, Security, BorrowerProfile, LendBorrowHoldings, Lend } from "../views";
+import { ChooseBond, Bond, Dashboard, NotFound, CreditProfile, Convert, Mint, Security, BorrowerProfile, LendBorrowHoldings, Lend } from "../views";
 import "./style.scss";
 import useTokens from "../hooks/tokens";
 
@@ -64,6 +64,10 @@ function App() {
                 </Route>
                 <Route path="/security">
                     <Security />
+                </Route>
+
+                <Route path="/credit-profile">
+                    <CreditProfile />
                 </Route>
 
                 <Route path="/lend-borrow">{/* <LendBorrow /> */}</Route>

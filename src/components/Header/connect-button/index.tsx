@@ -5,10 +5,12 @@ import { DEFAULT_NETWORK } from "../../../constants";
 import { IReduxState } from "../../../store/slices/state.interface";
 import { IPendingTxn } from "../../../store/slices/pending-txns-slice";
 import "./connect-menu.scss";
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import Metamask from "../../../assets/icons/metamask.jpeg";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 function ConnectMenu() {
-    const { connect, disconnect, connected, web3, providerChainID, checkWrongNetwork } = useWeb3Context();
+    const { connect, disconnect, connected, address, web3, providerChainID, checkWrongNetwork } = useWeb3Context();
     const dispatch = useDispatch();
     const [isConnected, setConnected] = useState(connected);
 
@@ -21,14 +23,9 @@ function ConnectMenu() {
     let buttonStyle = {};
 
     if (isConnected) {
-        buttonText = "Disconnect";
+        buttonText = address.substring(0, 7) + "..." + address.substring(address.length - 5);
         clickFunc = disconnect;
     }
-
-    // if (pendingTransactions && pendingTransactions.length > 0) {
-    //     buttonText = `${pendingTransactions.length} Pending `;
-    //     clickFunc = () => {};
-    // }
 
     if (isConnected && providerChainID !== DEFAULT_NETWORK) {
         buttonText = "Wrong network";
@@ -43,13 +40,21 @@ function ConnectMenu() {
     }, [web3, connected]);
 
     return (
-        <div className="connect-button" style={buttonStyle} onClick={clickFunc}>
-            <p>{buttonText}</p>
-            {/* {pendingTransactions.length > 0 && (
+        <div className="topbar-right">
+            {isConnected && (
+                <div className="portfolio-container">
+                    <Typography className="portfolio-button">Portfolio Manager</Typography>
+                </div>
+            )}
+            <div className="connect-button" style={buttonStyle} onClick={clickFunc}>
+                <img src={Metamask} className="metamask-icon" />
+                <p>{buttonText}</p>
+                {/* {pendingTransactions.length > 0 && (
                 <div className="connect-button-progress">
                     <CircularProgress size={15} color="inherit" />
                 </div>
             )} */}
+            </div>
         </div>
     );
 }

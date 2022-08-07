@@ -1,22 +1,52 @@
-.connect-button{
-    background: url('../../../assets/images/bgnd-buttons.svg');
-    box-shadow: 0px 0px 10px rgba(44, 39, 109, 0.1);
-    border-radius: 0;
-    padding: 9px 20px;
-    cursor: pointer;
-
+.topbar-right {
     display: flex;
-    align-items: center;
+    flex-direction: row;
+    .portfolio-container {
+        padding: 9px 20px;
 
-    .connect-button-progress{
-      margin-left: 10px;
-      margin-top: 4px;
+        margin-right: 30px;
+        border: 1px solid rgba(28, 163, 174, 0.2);
+        border-radius: 6px;
+        .portfolio-button {
+            font-family: "Open Sans";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 18px;
+
+            display: flex;
+            align-items: center;
+            text-align: center;
+
+            color: #1f1f1f;
+        }
     }
-  
-    p{
-      font-family: Inter;
-      font-weight: 600;
-      font-size: 16px;
-      color: #FFFFFF;
+    .connect-button {
+        // background: url("../../../assets/images/bgnd-buttons.svg");
+        box-shadow: 0px 0px 10px rgba(44, 39, 109, 0.1);
+        border-radius: 0;
+        padding: 9px 20px;
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+
+        .metamask-icon {
+            width: 16.55px;
+            height: 15.34px;
+            margin-right: 10px;
+        }
+
+        .connect-button-progress {
+            margin-left: 10px;
+            margin-top: 4px;
+        }
+
+        p {
+            font-family: "Open Sans";
+            font-weight: 600;
+            font-size: 16px;
+            color: #1f1f1f;
+        }
     }
-  }
+}

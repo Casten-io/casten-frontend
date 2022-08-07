@@ -101,7 +101,7 @@ function FactList() {
                                     <span className="text">{p.leverage}</span>
                                 </Grid>
                                 <Grid item className="table-value-item">
-                                    <Button className="text">Invest</Button>
+                                    <span className="button-text">Invest</span>
                                 </Grid>
                             </Grid>
                         </div>

@@ -53,20 +53,6 @@ function NavContent() {
 
     return (
         <div className="dapp-sidebar">
-            <div className="branding-header">
-                <Link href="#" target="_blank">
-                    <img alt="Metapoly.org" src={CastenIcon} height="45" />
-                </Link>
-
-                {address && (
-                    <div className="wallet-link">
-                        <Link href={`https://cchain.explorer.avax.network/address/${address}`} target="_blank">
-                            <p>{shorten(address)}</p>
-                        </Link>
-                    </div>
-                )}
-            </div>
-
             <div className="dapp-menu-links">
                 <div className="dapp-nav">
                     <Link
@@ -99,9 +85,9 @@ function NavContent() {
 
                     <Link
                         component={NavLink}
-                        to="/lend-borrow"
+                        to="/credit-profile"
                         isActive={(match: any, location: any) => {
-                            return checkPage(location, "lend-borrow");
+                            return checkPage(location, "credit-profile");
                         }}
                         className={classnames("button-dapp-menu", { active: isActive })}
                     >
