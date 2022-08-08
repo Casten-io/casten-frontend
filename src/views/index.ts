@@ -11,3 +11,4 @@ export { default as Lend } from "./Lend";
 export { default as Security } from "./SecurityOfferings";
 export { default as BorrowerProfile } from "./BorrowerProfile";
 export { default as CreditProfile } from "./CreditProfile";
+export { default as Portfolio } from "./Portfolio";

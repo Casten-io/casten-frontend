@@ -125,6 +125,20 @@ function NavContent() {
                             <p>Security Offerings</p>
                         </div>
                     </Link>
+
+                    <Link
+                        component={NavLink}
+                        to="/portfolio"
+                        isActive={(match: any, location: any) => {
+                            return checkPage(location, "location");
+                        }}
+                        className={classnames("button-dapp-menu", { active: isActive })}
+                    >
+                        <div className="dapp-menu-item">
+                            <StakeIcon />
+                            <p>Portfolio Manager</p>
+                        </div>
+                    </Link>
                 </div>
             </div>
 
