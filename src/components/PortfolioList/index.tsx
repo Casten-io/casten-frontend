@@ -1,7 +1,8 @@
 import { Grid, Backdrop, Box, Fade, Button } from "@material-ui/core";
 import portfolio from "./portfolio-mock";
 import "./style.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useCallback, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 export interface IPortfoliosheet {
     select: string;
@@ -78,12 +79,20 @@ function PortfolioList() {
     const [mwiAssets, setMwiAssets] = useState<string[]>([]);
     const [bniiAssets, setBniAssets] = useState<string[]>([]);
     const [lrcAssets, setLrcAssets] = useState<string[]>([]);
+    const history = useHistory();
+
+    const securityRedirect = useCallback(() => history.push("/security"), [history]);
 
     return (
         <div className="product-container">
             <PortfolioListHeader />
 
-            <div className="product-container-rows">
+            <div
+                className="product-container-rows"
+                onClick={() => {
+                    securityRedirect;
+                }}
+            >
                 {portfolio.map((p, index: number) => {
                     return (
                         <div className="product-row">

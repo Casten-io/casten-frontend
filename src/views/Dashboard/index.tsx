@@ -9,7 +9,7 @@ import "./dashboard.scss";
 import { useWeb3Context } from "../../hooks";
 import { IPendingTxn, isPendingTxn, txnButtonText, getPendingTransInfo } from "../../store/slices/pending-txns-slice";
 import { Skeleton } from "@material-ui/lab";
-
+import { Route, Redirect, Switch } from "react-router-dom";
 import classnames from "classnames";
 import { warning } from "../../store/slices/messages-slice";
 import ProductList from "src/components/ProductList";
@@ -48,7 +48,6 @@ function Dashboard() {
                     </Card>
                 </Box>
             </div>
-
             <ProductList />
         </div>
     );
