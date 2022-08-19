@@ -1,27 +1,26 @@
 {
   "compilerOptions": {
-    "declaration": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "esModuleInterop": true,
-    "lib": ["ESNext", "dom"],
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "sourceMap": true,
     "target": "es5",
-    "jsx": "react-jsx",
-    "baseUrl": ".",
-    "skipLibCheck": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "noFallthroughCasesInSwitch": true
+    "jsx": "react-jsx"
   },
-  "include": ["index.d.ts", "src", "babel.config.js"],
-  "exclude": ["**/*.test.ts", "**/*.test.tsx", "node_modules", "vendor", "public"],
-  "compileOnSave": false
+  "include": [
+    "src"
+  ]
 }
