@@ -1,0 +1,27 @@
+.dashboard-view {
+  width: 90%;
+  margin: auto;
+
+  .dashboard-header {
+    margin: 15px 10px;
+    .title {
+      font-family: "OpenSans";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 14px;
+      /* identical to box height, or 58% */
+
+      color: #000000;
+    }
+  }
+  .numbers {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 25px 10px 40px 10px;
+    .stat-box {
+      width: 15rem;
+    }
+  }
+}
