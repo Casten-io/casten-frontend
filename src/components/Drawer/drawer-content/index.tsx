@@ -1,11 +1,10 @@
 import { useCallback, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import Social from "./social";
 import CastenIcon from "../../../assets/icons/Casten.png";
 // import { trim, shorten } from "../../../helpers";
 // import { useAddress } from "../../../hooks";
 // import useBonds from "../../../hooks/bonds";
-import { Link } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import "./drawer-content.scss";
 import DocsIcon from "../../../assets/icons/stake.svg";
@@ -49,11 +48,7 @@ function NavContent() {
       <div className="dapp-menu-links">
         <div className="dapp-nav">
           <Link
-            component={NavLink}
             to="/dashboard"
-            isActive={(match: any, location: any) => {
-              return checkPage(location, "dashboard");
-            }}
             className={classnames("button-dapp-menu", { active: isActive })}
           >
             <div className="dapp-menu-item">
@@ -63,11 +58,7 @@ function NavContent() {
           </Link>
 
           <Link
-            component={NavLink}
             to="/borrower"
-            isActive={(match: any, location: any) => {
-              return checkPage(location, "convert");
-            }}
             className={classnames("button-dapp-menu", { active: isActive })}
           >
             <div className="dapp-menu-item">
@@ -77,11 +68,7 @@ function NavContent() {
           </Link>
 
           <Link
-            component={NavLink}
             to="/credit-profile"
-            isActive={(match: any, location: any) => {
-              return checkPage(location, "credit-profile");
-            }}
             className={classnames("button-dapp-menu", { active: isActive })}
           >
             <div className="dapp-menu-item">
@@ -91,12 +78,8 @@ function NavContent() {
           </Link>
 
           <Link
-            component={NavLink}
             id="bond-nav"
             to="/bonds"
-            isActive={(match: any, location: any) => {
-              return checkPage(location, "bonds");
-            }}
             className={classnames("button-dapp-menu", { active: isActive })}
           >
             <div className="dapp-menu-item">
@@ -106,11 +89,7 @@ function NavContent() {
           </Link>
 
           <Link
-            component={NavLink}
             to="/security"
-            isActive={(match: any, location: any) => {
-              return checkPage(location, "location");
-            }}
             className={classnames("button-dapp-menu", { active: isActive })}
           >
             <div className="dapp-menu-item">
@@ -120,11 +99,7 @@ function NavContent() {
           </Link>
 
           <Link
-            component={NavLink}
             to="/portfolio"
-            isActive={(match: any, location: any) => {
-              return checkPage(location, "location");
-            }}
             className={classnames("button-dapp-menu", { active: isActive })}
           >
             <div className="dapp-menu-item">
@@ -135,12 +110,6 @@ function NavContent() {
         </div>
       </div>
 
-      <div className="dapp-menu-doc-link">
-        <Link href="#" target="_blank">
-          <img alt="" src={DocsIcon} />
-          <p>Docs</p>
-        </Link>
-      </div>
       <Social />
     </div>
   );

@@ -2,7 +2,7 @@ import { Grid, Backdrop, Box, Fade, Button } from "@material-ui/core";
 import portfolio from "./portfolio-mock";
 import "./style.scss";
 import { useEffect, useCallback, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export interface IPortfoliosheet {
   select: string;
@@ -79,11 +79,11 @@ function PortfolioList() {
   const [mwiAssets, setMwiAssets] = useState<string[]>([]);
   const [bniiAssets, setBniAssets] = useState<string[]>([]);
   const [lrcAssets, setLrcAssets] = useState<string[]>([]);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const securityRedirect = useCallback(
-    () => history.push("/security"),
-    [history]
+    () =>  navigate('/security'),
+    [navigate]
   );
 
   return (

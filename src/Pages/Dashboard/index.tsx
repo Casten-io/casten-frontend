@@ -17,9 +17,8 @@ import "./dashboard.scss";
 // import { useWeb3Context } from "../../hooks";
 
 import { Skeleton } from "@material-ui/lab";
-import { Route, Redirect, Switch } from "react-router-dom";
 import classnames from "classnames";
-import ProductList from "../../components/ProductList";
+import ProductList from "../../Components/ProductList";
 
 function Dashboard() {
   const dispatch = useDispatch();
