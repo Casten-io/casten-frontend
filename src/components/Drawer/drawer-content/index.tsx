@@ -48,7 +48,7 @@ function NavContent() {
       <div className="dapp-menu-links">
         <div className="dapp-nav">
           <Link
-            to="/dashboard"
+            to="/"
             className={classnames("button-dapp-menu", { active: isActive })}
           >
             <div className="dapp-menu-item">
@@ -64,27 +64,6 @@ function NavContent() {
             <div className="dapp-menu-item">
               <DashboardIcon />
               <p>Borrower Profile</p>
-            </div>
-          </Link>
-
-          <Link
-            to="/credit-profile"
-            className={classnames("button-dapp-menu", { active: isActive })}
-          >
-            <div className="dapp-menu-item">
-              <DashboardIcon />
-              <p>Credit and Financial Profile</p>
-            </div>
-          </Link>
-
-          <Link
-            id="bond-nav"
-            to="/bonds"
-            className={classnames("button-dapp-menu", { active: isActive })}
-          >
-            <div className="dapp-menu-item">
-              <DashboardIcon />
-              <p>ESG Profile</p>
             </div>
           </Link>
 
