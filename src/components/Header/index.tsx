@@ -6,6 +6,9 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import WalletConnect from "../Commons/WalletConnect";
 import Casten from "../../assets/icons/Casten.png";
+import "./header.scss";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../store";
 
 interface IHeader {
   handleDrawerToggle: () => void;
@@ -17,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       width: "100%",
     },
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
+    justifyContent: "space-between",
+    alignItems: "space-between",
     background: "transparent",
     backdropFilter: "none",
     zIndex: 10,
@@ -41,6 +44,7 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
   const classes = useStyles();
   const isVerySmallScreen = useMediaQuery("(max-width: 400px)");
   const isWrapShow = useMediaQuery("(max-width: 480px)");
+  const address = useSelector((state: RootState) => state.account.address);
 
   return (
     <div className={`${classes.topBar} ${!drawe && classes.topBarShift}`}>
@@ -51,6 +55,11 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
           </div>
           <img src={Casten} alt="Casten Logo" className="casten-logo" />
           <div className="dapp-topbar-btns-wrap">
+            {address && (
+              <div className="portfolio-container">
+                <div className="portfolio-button">Portfolio Manager</div>
+              </div>
+            )}
             <WalletConnect />
           </div>
         </Toolbar>
