@@ -5,7 +5,8 @@ import { Hidden, makeStyles, useMediaQuery } from "@material-ui/core";
 import { DRAWER_WIDTH, TRANSITION_DURATION } from "../../constants/style";
 import MobileDrawer from "../Drawer/mobile-drawer";
 import Drawer from "../Drawer";
-import { Paper } from "@material-ui/core";
+import { Paper, Box } from "@material-ui/core";
+import { useLocation } from "react-router-dom";
 
 interface IViewBaseProps {
   children: React.ReactNode;
@@ -52,7 +53,7 @@ function ViewBase({ children }: IViewBaseProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const isSmallerScreen = useMediaQuery("(max-width: 960px)");
-
+  const location = useLocation();
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -64,17 +65,32 @@ function ViewBase({ children }: IViewBaseProps) {
         handleDrawerToggle={handleDrawerToggle}
       />
 
-      <div className={classes.drawer}>
-        <Drawer />
-      </div>
+      {location.pathname !== "/" && (
+        <div className={classes.drawer}>
+          <Box component="div" sx={{ display: { xs: "block", sm: "none" } }}>
+            <MobileDrawer
+              mobileOpen={mobileOpen}
+              handleDrawerToggle={handleDrawerToggle}
+            />
+          </Box>
+          <Box component="div" sx={{ display: { xs: "none", sm: "block" } }}>
+            <Drawer />
+          </Box>{" "}
+        </div>
+      )}
 
-      <div
-        className={`${classes.content} ${
-          isSmallerScreen && classes.contentShift
-        }`}
-      >
-        {children}
-      </div>
+      {location.pathname !== "/" && (
+        <div
+          className={`${classes.content} ${
+            isSmallerScreen && classes.contentShift
+          }`}
+        >
+          {children}
+        </div>
+      )}
+      {location.pathname === "/" && (
+        <div className={`${classes.contentDash} `}>{children}</div>
+      )}
     </div>
   );
 }
