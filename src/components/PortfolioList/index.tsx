@@ -81,10 +81,7 @@ function PortfolioList() {
   const [lrcAssets, setLrcAssets] = useState<string[]>([]);
   const navigate = useNavigate();
 
-  const securityRedirect = useCallback(
-    () =>  navigate('/security'),
-    [navigate]
-  );
+  const securityRedirect = useCallback(() => navigate("/security"), [navigate]);
 
   return (
     <div className="product-container">
@@ -92,9 +89,9 @@ function PortfolioList() {
 
       <div
         className="product-container-rows"
-        onClick={() => {
-          securityRedirect;
-        }}
+        // onClick={() => {
+        //   securityRedirect;
+        // }}
       >
         {portfolio.map((p, index: number) => {
           return (
