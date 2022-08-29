@@ -1,0 +1,4 @@
+export const mumbai = {
+    shelf: "0x459A7C7dF9F128863710A652AA9026Fe3E809DE6",
+    jrOperator: "0x2cFC555dE9D265E849b9a30002E8958249FA9737"
+}

@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@material-ui/core";
 // import FactList from "../../components/FactList";
-import PortfolioList from "../../components/PortfolioList";
+import PortfolioList from "../../Components/PortfolioList";
 
 function Portfolio() {
   return (

@@ -11,8 +11,8 @@ import {
   Box,
   Typography,
 } from "@material-ui/core";
-import FactList from "../../components/FactList";
-import AssetList from "../../components/AssetList";
+import FactList from "../../Components/FactList";
+import AssetList from "../../Components/AssetList";
 
 function Security() {
   return (
