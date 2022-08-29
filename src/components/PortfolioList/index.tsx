@@ -3,6 +3,8 @@ import portfolio from "./portfolio-mock";
 import "./style.scss";
 import { useEffect, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../store";
+import {useSelector} from "react-redux";
 
 export interface IPortfoliosheet {
   select: string;
@@ -86,7 +88,6 @@ function PortfolioList() {
   return (
     <div className="product-container">
       <PortfolioListHeader />
-
       <div
         className="product-container-rows"
         // onClick={() => {

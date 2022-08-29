@@ -38,11 +38,13 @@ function WalletConnect() {
     }
     const provider = await web3Modal.connect();
     const ethersProvider = new providers.Web3Provider(provider);
+    const network = await ethersProvider.getNetwork();
     const userAddress = await ethersProvider.getSigner().getAddress();
     dispatch(
       walletConnect({
-        provider,
+        provider: ethersProvider,
         address: userAddress,
+        networkInfo: network
       })
     );
   }
