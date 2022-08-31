@@ -1,70 +1,135 @@
 .security-view {
-    padding: 30px;
-    .header-container {
+  padding: 30px;
+  .header-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 10px;
+
+    .title {
+      font-family: "OpenSans";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 14px;
+      /* identical to box height, or 58% */
+
+      color: #000000;
+      margin: 10px 0px;
+    }
+    .subtitle {
+      font-family: "OpenSans";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 14px;
+      /* identical to box height, or 58% */
+
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+  .content-container {
+    .content-header {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      .action {
         display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        margin-top: 10px;
-
-        .title {
-            font-family: "OpenSans";
-            font-style: normal;
-            font-weight: 600;
-            font-size: 24px;
-            line-height: 14px;
-            /* identical to box height, or 58% */
-
-            color: #000000;
-            margin: 10px 0px;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        .order-type {
+          font-family: "OpenSans";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 20px;
+          line-height: 14px;
+          color: #000000;
+          margin-right: 14px;
         }
-        .subtitle {
-            font-family: "OpenSans";
-            font-style: normal;
-            font-weight: 600;
-            font-size: 20px;
-            line-height: 14px;
-            /* identical to box height, or 58% */
-
-            color: rgba(0, 0, 0, 0.5);
-        }
-    }
-    .content-container {
-        .factsheet-container {
-            margin-top: 4.55rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            .factsheet {
-                font-family: "OpenSans";
-                font-style: normal;
-                font-weight: 600;
-                font-size: 24px;
-                line-height: 14px;
-                /* identical to box height, or 58% */
-
-                color: rgba(0, 0, 0, 0.5);
-                margin-bottom: 2rem;
+        .form {
+          .select {
+            .menu {
+              font-family: "OpenSans";
+              font-style: normal;
+              font-weight: 600;
+              font-size: 20px;
+              line-height: 14px;
+              color: #65ae1c;
             }
+          }
         }
-        .assetlist-container {
-            margin-top: 4.55rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            .assetlist {
-                font-family: "OpenSans";
-                font-style: normal;
-                font-weight: 600;
-                font-size: 24px;
-                line-height: 14px;
-                /* identical to box height, or 58% */
-
-                color: rgba(0, 0, 0, 0.5);
-                margin-bottom: 2rem;
-            }
+      }
+      .action-amount {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        .amount {
+          font-family: "OpenSans";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 20px;
+          line-height: 14px;
+          color: #000000;
+          margin-right: 14px;
         }
+      }
+      .balance {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-right: 20px;
+        .amount {
+          font-family: "OpenSans";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 20px;
+          line-height: 14px;
+          color: #949494;
+          margin-right: 15px;
+        }
+      }
     }
+    .factsheet-container {
+      margin-top: 4.55rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      .factsheet {
+        font-family: "OpenSans";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 14px;
+        /* identical to box height, or 58% */
+
+        color: rgba(0, 0, 0, 0.5);
+        margin-bottom: 2rem;
+      }
+    }
+    .assetlist-container {
+      margin-top: 4.55rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      .assetlist {
+        font-family: "OpenSans";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 14px;
+        /* identical to box height, or 58% */
+
+        color: rgba(0, 0, 0, 0.5);
+        margin-bottom: 2rem;
+      }
+    }
+  }
 }
