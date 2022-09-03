@@ -10,7 +10,7 @@ import {
   Fade,
   Box,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import Office from "../../assets/icons/office.png";
 
 function BorrowerProfile() {

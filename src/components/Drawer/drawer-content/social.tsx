@@ -1,4 +1,4 @@
-import { SvgIcon, Link } from "@material-ui/core";
+import { SvgIcon, Link } from "@mui/material";
 import { ReactComponent as GitHub } from "../../../assets/icons/github.svg";
 import { ReactComponent as Twitter } from "../../../assets/icons/twitter.svg";
 import { ReactComponent as Telegram } from "../../../assets/icons/telegram.svg";

@@ -13,16 +13,16 @@ import {
   MenuItem,
   Box,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import FactList from "../../Components/FactList";
 import AssetList from "../../Components/AssetList";
 
 function Security() {
   const [action, setAction] = useState("Buy");
 
-  const handleChange = (event: React.FormEvent<EventTarget>): void => {
-    let target = event.target as HTMLInputElement;
-    setAction(target.value);
+  const handleChange = (event: any) => {
+    // let target = event.target as HTMLInputElement;
+    setAction(event.target.value);
   };
 
   return (

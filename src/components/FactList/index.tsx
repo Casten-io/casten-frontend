@@ -1,4 +1,4 @@
-import { Grid, Backdrop, Box, Fade, Button } from "@material-ui/core";
+import { Grid, Backdrop, Box, Fade, Button } from "@mui/material";
 import facts from "./fact-mock";
 import "./style.scss";
 import { useEffect, useState } from "react";
@@ -59,10 +59,6 @@ function FactListHeader() {
 }
 
 function FactList() {
-  const [mwiAssets, setMwiAssets] = useState<string[]>([]);
-  const [bniiAssets, setBniAssets] = useState<string[]>([]);
-  const [lrcAssets, setLrcAssets] = useState<string[]>([]);
-
   return (
     <div className="product-container">
       <FactListHeader />

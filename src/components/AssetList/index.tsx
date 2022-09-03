@@ -1,4 +1,4 @@
-import { Grid, Backdrop, Box, Fade, Button } from "@material-ui/core";
+import { Grid, Backdrop, Box, Fade, Button } from "@mui/material";
 import assets from "./asset-mock";
 import "./style.scss";
 import { useEffect, useState } from "react";
@@ -50,10 +50,6 @@ function AssetListHeader() {
 }
 
 function AssetList() {
-  const [mwiAssets, setMwiAssets] = useState<string[]>([]);
-  const [bniiAssets, setBniAssets] = useState<string[]>([]);
-  const [lrcAssets, setLrcAssets] = useState<string[]>([]);
-
   return (
     <div className="product-container">
       <AssetListHeader />

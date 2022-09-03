@@ -11,7 +11,7 @@ import {
   CardActions,
   CardContent,
   Card,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import "./dashboard.scss";
 // import { useWeb3Context } from "../../hooks";
