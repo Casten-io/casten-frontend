@@ -1,4 +1,4 @@
-import { Drawer } from "@material-ui/core";
+import { Drawer } from "@mui/material";
 import DrawerContent from "./drawer-content";
 
 function Sidebar() {
