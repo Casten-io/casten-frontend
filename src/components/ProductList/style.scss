@@ -3,7 +3,6 @@
     background-color: #fff;
     padding: 3px;
     border-radius: 6px;
-    // margin-bottom: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -49,10 +48,10 @@
   .product-container-rows {
     .product-row {
       .product-row-container {
+        cursor: pointer;
         background-color: #fff;
-        padding: 3px;
         border-radius: 6px;
-        margin-bottom: 10px;
+        // padding-bottom: 10px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;

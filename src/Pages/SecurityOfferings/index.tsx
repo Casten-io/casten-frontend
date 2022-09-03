@@ -20,9 +20,11 @@ import AssetList from "../../Components/AssetList";
 function Security() {
   const [action, setAction] = useState("Buy");
 
-  const handleChange = (event: any) => {
-    setAction(event.target.value);
+  const handleChange = (event: React.FormEvent<EventTarget>): void => {
+    let target = event.target as HTMLInputElement;
+    setAction(target.value);
   };
+
   return (
     <div className="security-view">
       <Zoom in={true}>
@@ -42,7 +44,7 @@ function Security() {
                     value={action}
                     // label="Age"
                     className="select"
-                    onChange={() => handleChange}
+                    onChange={handleChange}
                   >
                     <MenuItem value={"Buy"} className="menu">
                       Buy

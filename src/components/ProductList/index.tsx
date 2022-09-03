@@ -2,6 +2,7 @@ import { Grid, Backdrop, Box, Fade, Button } from "@material-ui/core";
 import products from "./product-mock";
 import "./style.scss";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export interface IProduct {
   secId: string;
@@ -73,7 +74,11 @@ function ProductList() {
   const [mwiAssets, setMwiAssets] = useState<string[]>([]);
   const [bniiAssets, setBniAssets] = useState<string[]>([]);
   const [lrcAssets, setLrcAssets] = useState<string[]>([]);
+  const navigate = useNavigate();
 
+  const navigateToSecurity = () => {
+    navigate("/security");
+  };
   return (
     <div className="product-container">
       <ProductListHeader />
@@ -82,7 +87,11 @@ function ProductList() {
         {products.map((p, index: number) => {
           return (
             <div className="product-row">
-              <Grid container className="product-row-container">
+              <Grid
+                container
+                className="product-row-container"
+                onClick={navigateToSecurity}
+              >
                 <Grid item className="table-value-item-mid">
                   <span className="text">{p.secId}</span>
                 </Grid>
