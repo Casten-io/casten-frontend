@@ -1,73 +1,45 @@
-import { Grid, Backdrop, Box, Fade, Button } from "@mui/material";
-import products from "./product-mock";
+import {
+  Grid,
+  Paper,
+  Table,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableContainer,
+} from "@mui/material";
 import "./style.scss";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export interface IProduct {
-  secId: string;
-  secName: string;
-  apy: string;
-  frequency: string;
-  maturity: string;
-  issuer: string;
-  totalIssuance: string;
-  availableIssuance: string;
-  category: string;
-  ltv: string;
-  leverage: string;
-  moreInfo: string;
-}
-export interface IProductIcon {
-  [key: string]: string;
-}
-export interface IAssetIcons {
-  [key: string]: string[];
-}
-
-function ProductListHeader() {
-  return (
-    <Grid container className="table-header-container">
-      <Grid item className="table-header-item-mid">
-        <span className="text">Sec ID</span>
-      </Grid>
-
-      <Grid item className="table-header-item-mid">
-        <span className="text">Sec Name</span>
-      </Grid>
-      <Grid item className="table-header-item">
-        <span className="text">APY</span>
-      </Grid>
-
-      <Grid item className="table-header-item">
-        <span className="text">Frequency</span>
-      </Grid>
-      <Grid item className="table-header-item">
-        <span className="text">Maturity</span>
-      </Grid>
-      <Grid item className="table-header-item-mid">
-        <span className="text">Issuer</span>
-      </Grid>
-      <Grid item className="table-header-item">
-        <span className="text">Total Issuance</span>
-      </Grid>
-      <Grid item className="table-header-item">
-        <span className="text">Available Issuance</span>
-      </Grid>
-      <Grid item className="table-header-item-wide">
-        <span className="text">Category</span>
-      </Grid>
-      <Grid item className="table-header-item">
-        <span className="text">LTV</span>
-      </Grid>
-      <Grid item className="table-header-item">
-        <span className="text">Leverage</span>
-      </Grid>
-      <Grid item className="table-header-item">
-        <span className="text">More Info</span>
-      </Grid>
-    </Grid>
-  );
+function createData(
+  secId: string,
+  secName: string,
+  apy: string,
+  frequency: string,
+  maturity: string,
+  issuer: string,
+  totalIssuance: string,
+  availableIssuance: string,
+  category: string,
+  ltv: string,
+  leverage: string,
+  moreInfo: string
+) {
+  return {
+    secId,
+    secName,
+    apy,
+    frequency,
+    maturity,
+    issuer,
+    totalIssuance,
+    availableIssuance,
+    category,
+    ltv,
+    leverage,
+    moreInfo,
+  };
 }
 
 function ProductList() {
@@ -76,62 +48,69 @@ function ProductList() {
   const navigateToSecurity = () => {
     navigate("/security");
   };
+
+  const rows = [
+    createData(
+      "FTECHSR420",
+      "A Fintech SR 11% 2023",
+      "11.21",
+      "Monthly",
+      "Dec 23",
+      "Cauris Finance",
+      "$5MM",
+      "$1.2MM",
+      "Revenue based/Invoice Discounting",
+      "0.8",
+      "3.0",
+      "More Info"
+    ),
+  ];
   return (
-    <div className="product-container">
-      <ProductListHeader />
-
-      <div className="product-container-rows">
-        {products.map((p, index: number) => {
-          return (
-            <div className="product-row">
-              <Grid
-                container
-                className="product-row-container"
-                onClick={navigateToSecurity}
-              >
-                <Grid item className="table-value-item-mid">
-                  <span className="text">{p.secId}</span>
-                </Grid>
-
-                <Grid item className="table-value-item-mid">
-                  <span className="text">{p.secName}</span>
-                </Grid>
-                <Grid item className="table-value-item">
-                  <span className="text">{p.apy}</span>
-                </Grid>
-                <Grid item className="table-value-item">
-                  <span className="text">{p.frequency}</span>
-                </Grid>
-                <Grid item className="table-value-item">
-                  <span className="text">{p.maturity}</span>
-                </Grid>
-                <Grid item className="table-value-item-mid">
-                  <span className="text">{p.issuer}</span>
-                </Grid>
-                <Grid item className="table-value-item">
-                  <span className="text">{p.totalIssuance}</span>
-                </Grid>
-                <Grid item className="table-value-item">
-                  <span className="text">{p.availableIssuance}</span>
-                </Grid>
-                <Grid item className="table-value-item-wide">
-                  <span className="text">{p.category}</span>
-                </Grid>
-                <Grid item className="table-value-item">
-                  <span className="text">{p.ltv}</span>
-                </Grid>
-                <Grid item className="table-value-item">
-                  <span className="text">{p.leverage}</span>
-                </Grid>
-                <Grid item className="table-value-item">
-                  <span className="text">{p.moreInfo}</span>
-                </Grid>
-              </Grid>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    <TableContainer component={Paper} className="table-container">
+      <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table">
+        <TableHead className="table-head">
+          <TableRow className="head-row">
+            <TableCell className="head-cell">SecID</TableCell>
+            <TableCell className="head-cell">Sec Name</TableCell>
+            <TableCell className="head-cell">APY</TableCell>
+            <TableCell className="head-cell">Frequency</TableCell>
+            <TableCell className="head-cell">Maturity</TableCell>
+            <TableCell className="head-cell">Issuer</TableCell>
+            <TableCell className="head-cell">Total Issuance</TableCell>
+            <TableCell className="head-cell">Available Issuance</TableCell>
+            <TableCell className="head-cell">Category</TableCell>
+            <TableCell className="head-cell">LTV</TableCell>
+            <TableCell className="head-cell">Leverage</TableCell>
+            <TableCell className="head-cell">More Info</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody className="table-body">
+          {rows.map((row) => (
+            <TableRow
+              key={row.secId}
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              onClick={navigateToSecurity}
+              className="body-row"
+            >
+              <TableCell component="th" scope="row">
+                {row.secId}
+              </TableCell>
+              <TableCell>{row.secName}</TableCell>
+              <TableCell>{row.apy}</TableCell>
+              <TableCell>{row.frequency}</TableCell>
+              <TableCell>{row.maturity}</TableCell>
+              <TableCell>{row.issuer}</TableCell>
+              <TableCell>{row.totalIssuance}</TableCell>
+              <TableCell>{row.availableIssuance}</TableCell>
+              <TableCell>{row.category}</TableCell>
+              <TableCell>{row.ltv}</TableCell>
+              <TableCell>{row.leverage}</TableCell>
+              <TableCell>{row.moreInfo}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
 
