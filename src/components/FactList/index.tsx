@@ -1,7 +1,16 @@
-import { Grid, Backdrop, Box, Fade, Button } from "@mui/material";
 import facts from "./fact-mock";
 import "./style.scss";
 import { useEffect, useState } from "react";
+import {
+  Grid,
+  Paper,
+  Table,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableContainer,
+} from "@mui/material";
 
 export interface IFactsheet {
   secId: string;
@@ -14,97 +23,99 @@ export interface IFactsheet {
   ltv: string;
   leverage: string;
 }
-export interface IProductIcon {
-  [key: string]: string;
-}
-export interface IAssetIcons {
-  [key: string]: string[];
-}
 
-function FactListHeader() {
-  return (
-    <Grid container className="table-header-container">
-      <Grid item className="table-header-item-mid">
-        <span className="text">ID</span>
-      </Grid>
-
-      <Grid item className="table-header-item-mid">
-        <span className="text">Name</span>
-      </Grid>
-      <Grid item className="table-header-item">
-        <span className="text">Tranche</span>
-      </Grid>
-
-      <Grid item className="table-header-item-mid">
-        <span className="text">Total Issuance</span>
-      </Grid>
-      <Grid item className="table-header-item">
-        <span className="text">APY</span>
-      </Grid>
-      <Grid item className="table-header-item-mid">
-        <span className="text">Frequency</span>
-      </Grid>
-      <Grid item className="table-header-item">
-        <span className="text">Maturity</span>
-      </Grid>
-      <Grid item className="table-header-item">
-        <span className="text">LTV</span>
-      </Grid>
-      <Grid item className="table-header-item">
-        <span className="text">Leverage</span>
-      </Grid>
-      <Grid item className="table-header-item"></Grid>
-    </Grid>
-  );
+function createData(
+  secId: string,
+  secName: string,
+  tranche: string,
+  totalIssuance: string,
+  apy: string,
+  frequency: string,
+  maturity: string,
+  ltv: string,
+  leverage: string
+) {
+  return {
+    secId,
+    secName,
+    tranche,
+    totalIssuance,
+    apy,
+    frequency,
+    maturity,
+    ltv,
+    leverage,
+  };
 }
 
 function FactList() {
+  const rows = [
+    createData(
+      "AFT001",
+      "Sr. A Fintech 11% 2023",
+      "Senior",
+      "$5MM",
+      "11.00%",
+      "Monthly",
+      "Dec 23",
+      "0.8",
+      "3.0"
+    ),
+    createData(
+      "AFT002",
+      "Jr. A Fintech 11% 2023",
+      "Junior",
+      "$2MM",
+      "15.00%",
+      "Monthly",
+      "Dec 23",
+      "0.8",
+      "3.0"
+    ),
+  ];
   return (
-    <div className="product-container">
-      <FactListHeader />
-
-      <div className="product-container-rows">
-        {facts.map((p, index: number) => {
-          return (
-            <div className="product-row">
-              <Grid container className="product-row-container">
-                <Grid item className="table-value-item-mid">
-                  <span className="text">{p.secId}</span>
-                </Grid>
-
-                <Grid item className="table-value-item-mid">
-                  <span className="text">{p.secName}</span>
-                </Grid>
-                <Grid item className="table-value-item">
-                  <span className="text">{p.tranche}</span>
-                </Grid>
-                <Grid item className="table-value-item-mid">
-                  <span className="text">{p.totalIssuance}</span>
-                </Grid>
-                <Grid item className="table-value-item">
-                  <span className="text">{p.apy}</span>
-                </Grid>
-                <Grid item className="table-value-item-mid">
-                  <span className="text">{p.frequency}</span>
-                </Grid>
-                <Grid item className="table-value-item">
-                  <span className="text">{p.maturity}</span>
-                </Grid>
-                <Grid item className="table-value-item">
-                  <span className="text">{p.ltv}</span>
-                </Grid>
-                <Grid item className="table-value-item">
-                  <span className="text">{p.leverage}</span>
-                </Grid>
-                <Grid item className="table-value-item">
-                  <span className="button-text">Invest</span>
-                </Grid>
-              </Grid>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    <TableContainer component={Paper} className="table-container">
+      <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table">
+        <TableHead className="table-head">
+          <TableRow className="head-row">
+            <TableCell className="head-cell">SecID</TableCell>
+            <TableCell className="head-cell">Sec Name</TableCell>
+            <TableCell className="head-cell">Tranche</TableCell>
+            <TableCell className="head-cell">Total Issuance</TableCell>
+            <TableCell className="head-cell">APY</TableCell>
+            <TableCell className="head-cell">Frequency</TableCell>
+            <TableCell className="head-cell">Maturity</TableCell>
+            <TableCell className="head-cell">LTV</TableCell>
+            <TableCell className="head-cell">Leverage</TableCell>
+            <TableCell className="head-cell"></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody className="table-body">
+          {rows.map((row) => (
+            <TableRow
+              key={row.secId}
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              className="body-row"
+            >
+              <TableCell component="th" scope="row">
+                {row.secId}
+              </TableCell>
+              <TableCell>{row.secName}</TableCell>
+              <TableCell>{row.tranche}</TableCell>
+              <TableCell>{row.totalIssuance}</TableCell>
+              <TableCell>{row.apy}</TableCell>
+              <TableCell>{row.frequency}</TableCell>
+              <TableCell>{row.maturity}</TableCell>
+              <TableCell>{row.ltv}</TableCell>
+              <TableCell>{row.leverage}</TableCell>
+              <TableCell className="invest-button">
+                <span className="invest">Invest</span>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
 

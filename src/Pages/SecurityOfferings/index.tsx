@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import FactList from "../../Components/FactList";
-import AssetList from "../../Components/AssetList";
+import OrderList from "../../Components/OrderList";
 
 function Security() {
   const [action, setAction] = useState("Buy");
@@ -66,7 +66,7 @@ function Security() {
         </div>
         <div className="assetlist-container">
           <Typography className="assetlist">Asset List</Typography>
-          <AssetList />
+          <OrderList />
         </div>
       </div>
     </div>
