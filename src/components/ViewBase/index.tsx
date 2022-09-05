@@ -14,44 +14,7 @@ interface IViewBaseProps {
   children: React.ReactNode;
 }
 
-// const useStyles = makeStyles((theme: Theme) => ({
-//   drawer: {
-//     [theme.breakpoints.up("md")]: {
-//       width: DRAWER_WIDTH,
-//       flexShrink: 0,
-//     },
-//   },
-//   content: {
-//     padding: theme.spacing(1),
-//     transition: theme.transitions.create("margin", {
-//       easing: theme.transitions.easing.sharp,
-//       duration: TRANSITION_DURATION,
-//     }),
-//     height: "100%",
-//     overflow: "auto",
-//     marginLeft: DRAWER_WIDTH,
-//   },
-//   contentDash: {
-//     padding: theme.spacing(1),
-//     transition: theme.transitions.create("margin", {
-//       easing: theme.transitions.easing.sharp,
-//       duration: TRANSITION_DURATION,
-//     }),
-//     height: "100%",
-//     overflow: "auto",
-//   },
-//   contentShift: {
-//     transition: theme.transitions.create("margin", {
-//       easing: theme.transitions.easing.easeOut,
-//       duration: TRANSITION_DURATION,
-//     }),
-//     marginLeft: 0,
-//   },
-// }));
-
 function ViewBase({ children }: IViewBaseProps) {
-  // const classes = useStyles();
-
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const isSmallerScreen = useMediaQuery("(max-width: 960px)");
@@ -68,14 +31,20 @@ function ViewBase({ children }: IViewBaseProps) {
       />
 
       {location.pathname !== "/" && (
-        <div className={"drawer"}>
-          <Box component="div" sx={{ display: { xs: "block", sm: "none" } }}>
+        <div className="drawer">
+          <Box
+            sx={{ display: { xs: "block", sm: "none" }, zIndex: 0 }}
+            className="sidebar"
+          >
             <MobileDrawer
               mobileOpen={mobileOpen}
               handleDrawerToggle={handleDrawerToggle}
             />
           </Box>
-          <Box component="div" sx={{ display: { xs: "none", sm: "block" } }}>
+          <Box
+            sx={{ display: { xs: "none", sm: "block" }, zIndex: 0 }}
+            className="sidebar"
+          >
             <Drawer />
           </Box>{" "}
         </div>
