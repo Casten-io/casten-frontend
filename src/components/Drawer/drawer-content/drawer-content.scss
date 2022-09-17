@@ -9,9 +9,8 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
-    margin: 0px 10px 0px 10px;
-    padding: 0px 20px;
+    align-items: center;
+    padding: 0px 8px;
     .dapp-menu-item {
       display: flex;
       flex-direction: row;
@@ -47,6 +46,7 @@
 
       background-color: #cee9eb;
       border-radius: 8px;
+      padding: 0px 8px;
       width: 100%;
       cursor: pointer;
       .text {

@@ -1,13 +1,17 @@
 import { useCallback, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
-import Social from "./social";
 import CastenIcon from "../../../assets/icons/Casten.png";
 import { Skeleton } from "@material-ui/lab";
 import "./drawer-content.scss";
 import DocsIcon from "../../../assets/icons/stake.svg";
 import classnames from "classnames";
 import { useNavigate } from "react-router-dom";
-import DashboardIcon from "./icons/DashboardIcon";
+import {
+  DashboardIcon,
+  SecurityIcon,
+  PortfolioIcon,
+  BorrowerIcon,
+} from "./icons";
 
 function NavContent() {
   const [active, setActive] = useState("security");
@@ -30,7 +34,7 @@ function NavContent() {
           }
           onClick={() => navigateToPage("/borrower")}
         >
-          <DashboardIcon />
+          <BorrowerIcon />
           <p className={active === "borrower" ? "text-special" : "text"}>
             Borrower Profile
           </p>
@@ -42,7 +46,7 @@ function NavContent() {
           }
           onClick={() => navigateToPage("/security")}
         >
-          <DashboardIcon />
+          <SecurityIcon />
           <p className={active === "security" ? "text-special" : "text"}>
             Security Offerings
           </p>
@@ -54,7 +58,7 @@ function NavContent() {
           }
           onClick={() => navigateToPage("/portfolio")}
         >
-          <DashboardIcon />
+          <PortfolioIcon />
           <p className={active === "portfolio" ? "text-special" : "text"}>
             Portfolio Manager
           </p>
