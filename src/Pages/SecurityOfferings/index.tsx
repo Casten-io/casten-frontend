@@ -15,14 +15,30 @@ import {
 } from "@mui/material";
 import FactList from "../../Components/FactList";
 import OrderList from "../../Components/OrderList";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store";
+import {Address, ADDRESS_BY_NETWORK_ID} from "../../constants/address";
 
 function Security() {
+  const networkInfo = useSelector(
+      (state: RootState) => state.account.networkInfo
+  );
+  const provider = useSelector((state: RootState) => state.account.provider);
+
   const [action, setAction] = useState("Buy");
+  const [amount, setAmount] = useState("0");
+
+  const contractInfo =
+      ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "80001"];
 
   const handleChange = (event: any) => {
     // let target = event.target as HTMLInputElement;
     setAction(event.target.value);
   };
+
+  const handleInputChange = (event: any) => {
+    setAmount(event.target.value);
+  }
 
   return (
     <div className="security-view">
@@ -53,7 +69,7 @@ function Security() {
           </div>
           <div className="action-amount">
             <Typography className="amount">Enter Amount</Typography>
-            <TextField id="outlined-basic" label="$" variant="outlined" />
+            <TextField id="outlined-basic" label="$" variant="outlined" onChange={handleInputChange}/>
           </div>
           <div className="balance">
             <Typography className="amount">Available Balance: </Typography>
@@ -62,7 +78,7 @@ function Security() {
         </div>
         <div className="factsheet-container">
           <Typography className="factsheet">Factsheet</Typography>
-          <FactList />
+          <FactList amount={amount}/>
         </div>
         <div className="assetlist-container">
           <Typography className="assetlist">Asset List</Typography>
