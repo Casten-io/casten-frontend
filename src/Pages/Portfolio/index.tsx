@@ -34,7 +34,6 @@ function Portfolio() {
   ) => {
     const juniorTokenBalance = await selfC.balanceOf(address);
     const seniorTokenBalance = await juniorOperatorC.balanceOf(address);
-    debugger;
   };
 
   useEffect(() => {

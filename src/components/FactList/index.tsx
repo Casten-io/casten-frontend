@@ -1,4 +1,4 @@
-import facts from "./fact-mock";
+import {ethers, BigNumber} from "ethers";
 import "./style.scss";
 import { useEffect, useState } from "react";
 import {
@@ -11,6 +11,10 @@ import {
   TableCell,
   TableContainer,
 } from "@mui/material";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store";
+import {Address, ADDRESS_BY_NETWORK_ID} from "../../constants/address";
+import {debug} from "util";
 
 export interface IFactsheet {
   secId: string;
@@ -48,7 +52,9 @@ function createData(
   };
 }
 
-function FactList() {
+function FactList({
+    amount
+                  }: {amount:string}) {
   const rows = [
     createData(
       "AFT001",
@@ -73,6 +79,43 @@ function FactList() {
       "3.0"
     ),
   ];
+
+  const networkInfo = useSelector(
+      (state: RootState) => state.account.networkInfo
+  );
+  const provider = useSelector((state: RootState) => state.account.provider);
+  const address = useSelector((state: RootState) => state.account.address);
+
+
+  const contractInfo =
+      ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "80001"];
+
+  const investNow = async (investType: string): Promise<void> => {
+    const DaiContract = new ethers.Contract(contractInfo.DAI_TOKEN.address, contractInfo.DAI_TOKEN.ABI, provider?.getSigner());
+    const juniorOperatorContract = new ethers.Contract(contractInfo.JUNIOR_OPERATOR.address, contractInfo.JUNIOR_OPERATOR.ABI, provider?.getSigner());
+    const seniorOperatorContract = new ethers.Contract(contractInfo.SENIOR_OPERATOR.address, contractInfo.SENIOR_OPERATOR.ABI, provider?.getSigner());
+    const SeniorTranche = contractInfo.SENIOR_TRANCHE.address;
+    const JuniorTranche = contractInfo.JUNIOR_TRANCHE.address;
+    const amountBN = BigNumber.from(amount).mul(BigNumber.from(10).pow(18));
+    if(investType === "Senior") {
+
+      const allowance = await DaiContract.allowance(address,SeniorTranche);
+      if(allowance.lt(amountBN)) {
+        await DaiContract.approve(SeniorTranche, amountBN)
+      }
+      await seniorOperatorContract.supplyOrder(amountBN);
+
+    } else {
+      const allowance = await DaiContract.allowance(address, JuniorTranche);
+      if(allowance.lt(amountBN)) {
+        await DaiContract.approve(JuniorTranche, amountBN)
+      }
+      await juniorOperatorContract.supplyOrder(amountBN);
+
+    }
+
+  }
+
   return (
     <TableContainer component={Paper} className="table-container">
       <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table">
@@ -109,7 +152,7 @@ function FactList() {
               <TableCell>{row.ltv}</TableCell>
               <TableCell>{row.leverage}</TableCell>
               <TableCell className="invest-button">
-                <span className="invest">Invest</span>
+                <span className="invest" onClick={() => investNow(row.tranche)}>Invest</span>
               </TableCell>
             </TableRow>
           ))}
