@@ -1,0 +1,39 @@
+$xs: 0px;
+$sm: 600px;
+$md: 900px;
+$lg: 1200px;
+$xl: 1536px;
+
+.appbar {
+  background-color: #ffffff;
+  z-index: 10000;
+  .dapp-topbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .dapp-items {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin-right: 20px;
+      .portfolio-container {
+        background: #ffffff;
+        border: 1px solid rgba(28, 163, 174, 0.2);
+        border-radius: 6px;
+        margin-right: 12px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 11px 34px;
+        cursor: pointer;
+        .portfolio-button {
+          color: black;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}

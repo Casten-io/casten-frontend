@@ -1,0 +1,31 @@
+.wallet-connect {
+  background: #ffffff;
+  border: 1px solid rgba(28, 163, 174, 0.2);
+  border-radius: 6px;
+  height: 35px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 3px 18px;
+  cursor: pointer;
+
+  .wallet-text {
+    color: black;
+    font-weight: 500;
+  }
+  .connected-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    .metamask {
+      height: 20px;
+      margin-right: 12px;
+    }
+    .address {
+      color: black;
+      font-weight: 500;
+    }
+  }
+}

@@ -1,0 +1,35 @@
+.table-container {
+  .table {
+    .table-head {
+      .head-row {
+        .head-cell {
+          font-weight: 600;
+        }
+      }
+    }
+    .table-body {
+      .body-row {
+        .invest-button {
+          .invest {
+            background-color: #1ca3ae;
+            border-radius: 45px;
+            color: #fff;
+            padding: 10px 25px;
+          }
+        }
+      }
+      .body-row:hover {
+        background-color: #d2edef;
+        cursor: pointer;
+        .invest-button {
+          .invest {
+            background-color: #1ca3ae;
+            border-radius: 45px;
+            color: #fff;
+            padding: 10px 25px;
+          }
+        }
+      }
+    }
+  }
+}

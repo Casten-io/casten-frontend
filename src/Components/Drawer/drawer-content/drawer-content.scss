@@ -1,0 +1,72 @@
+.dapp-sidebar {
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  margin-top: 100px;
+  z-index: 0;
+  .dapp-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0px 8px;
+    .dapp-menu-item {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      // padding: 0px 20px 0px 20px;
+      width: 100%;
+      cursor: pointer;
+      .text {
+        font-family: "Open Sans";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 22px;
+        margin-left: 20px;
+        color: #959595;
+      }
+      .text-special {
+        font-family: "Open Sans";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 22px;
+        margin-left: 20px;
+        color: #000;
+      }
+    }
+    .dapp-menu-item-special {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+
+      background-color: #cee9eb;
+      border-radius: 8px;
+      padding: 0px 8px;
+      width: 100%;
+      cursor: pointer;
+      .text {
+        font-family: "Open Sans";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 22px;
+        margin-left: 20px;
+        color: #959595;
+      }
+      .text-special {
+        font-family: "Open Sans";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 22px;
+        margin-left: 20px;
+        color: #000;
+      }
+    }
+  }
+}

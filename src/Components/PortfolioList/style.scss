@@ -1,0 +1,17 @@
+.table-container {
+  .table {
+    .table-head {
+      .head-row {
+        .head-cell {
+          font-weight: 600;
+        }
+      }
+    }
+    .table-body {
+      .body-row:hover {
+        background-color: #d2edef;
+        cursor: pointer;
+      }
+    }
+  }
+}
