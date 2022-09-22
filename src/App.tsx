@@ -1,7 +1,6 @@
 import React from "react";
 import { store } from "./store";
 import { Provider } from "react-redux";
-import WalletConnect from "./Components/Commons/WalletConnect";
 import ViewBase from "./Components/ViewBase";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import {
