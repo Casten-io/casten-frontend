@@ -1,5 +1,5 @@
 # Casten Frontend
-This is the front-end repo for Wonderland. 
+This is the front-end repo for Casten. 
 
 ##  🔧 Setting up Local Development
 
