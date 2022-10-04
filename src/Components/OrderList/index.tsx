@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import "./style.scss";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export interface IAssetsheet {
   secId: string;
@@ -68,6 +69,11 @@ function OrderList() {
       "Active"
     ),
   ];
+  const navigate = useNavigate();
+
+  const navigateToAsset = () => {
+    navigate("/asset");
+  };
   return (
     <TableContainer component={Paper} className="table-container">
       <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table">
@@ -88,6 +94,7 @@ function OrderList() {
               key={row.secId}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               className="body-row"
+              onClick={navigateToAsset}
             >
               <TableCell>{row.secId}</TableCell>
               <TableCell>{row.secName}</TableCell>

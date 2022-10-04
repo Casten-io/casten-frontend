@@ -10,6 +10,8 @@ import {
   Portfolio,
 } from "./Pages";
 
+import Order from "./Components/Order";
+
 function App() {
   return (
     <Router>
@@ -19,6 +21,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/security" element={<SecurityOfferings />} />
+              <Route path="/asset" element={<Order />} />
               <Route path="/borrower" element={<BorrowerProfile />} />
               <Route path="/portfolio" element={<Portfolio />} />
             </Routes>
