@@ -6,12 +6,14 @@ import SENIOR_OPERATOR_ABI from "../abis/srOperator.json";
 import DAI_TOKEN_ABI from "../abis/daiToken.json";
 import SENIOR_TRANCHE from "../abis/seniorTranche.json";
 import JUNIOR_TRANCHE from "../abis/juniorTranche.json";
+import JUNIOR_MEMBER_LIST from "../abis/jrMemberList.json";
+import SENIOR_MEMBER_LIST from "../abis/srMemberList.json";
 import {ethers} from "ethers";
 
 
 export type Address = "80001"
 
-export type Contracts = "SHELF" | "JUNIOR_OPERATOR" | "JUNIOR_TOKEN" | "SENIOR_TOKEN" | "SENIOR_OPERATOR" | "DAI_TOKEN" | "SENIOR_TRANCHE" | "JUNIOR_TRANCHE"
+export type Contracts = "SHELF" | "JUNIOR_OPERATOR" | "JUNIOR_TOKEN" | "SENIOR_TOKEN" | "SENIOR_OPERATOR" | "DAI_TOKEN" | "SENIOR_TRANCHE" | "JUNIOR_TRANCHE" | "JUNIOR_MEMBER_LIST" | "SENIOR_MEMBER_LIST"
 
 type ContractRecord =  Record<Contracts, {
     address: string,
@@ -51,6 +53,14 @@ export const ADDRESS_BY_NETWORK_ID: Record<Address, ContractRecord> = {
         JUNIOR_TRANCHE: {
             address: "0xd27F7b961008661aae7Bab780Fd4e1C04522295D",
             ABI: JUNIOR_TRANCHE
-        }
+        },
+        JUNIOR_MEMBER_LIST: {
+            address: "0x576f1b9aF62bEc5e452A41c1561d97ac4667C597",
+            ABI: JUNIOR_MEMBER_LIST
+        },
+        SENIOR_MEMBER_LIST: {
+            address: "0x60f526A1B37aa71726a18E66843450f0A635d481",
+            ABI: SENIOR_MEMBER_LIST
+        },
     }
 }
