@@ -1,7 +1,7 @@
 import React from "react";
 import { store } from "./store";
 import { Provider } from "react-redux";
-import ViewBase from "./components/ViewBase";
+import ViewBase from "./Components/ViewBase";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import {
   Dashboard,

@@ -1,8 +1,8 @@
+import { useSelector, useDispatch } from "react-redux";
 import Product1 from "../../assets/icons/discord.svg";
 import Product2 from "../../assets/icons/discord.svg";
 import Assets from "../../assets/icons/discord.svg";
 import { IFactsheet } from ".";
-import { useSelector, useDispatch } from "react-redux";
 
 const facts: IFactsheet[] = [
   {

@@ -111,6 +111,7 @@ function FactList({
         await DaiContract.approve(JuniorTranche, amountBN)
       }
       await juniorOperatorContract.supplyOrder(amountBN);
+
     }
 
   }

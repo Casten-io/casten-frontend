@@ -18,7 +18,7 @@ import "./dashboard.scss";
 
 import { Skeleton } from "@material-ui/lab";
 import classnames from "classnames";
-import ProductList from "../../components/ProductList";
+import ProductList from "../../Components/ProductList";
 
 function Dashboard() {
   const dispatch = useDispatch();

@@ -13,8 +13,8 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-import FactList from "../../components/FactList";
-import OrderList from "../../components/OrderList";
+import FactList from "../../Components/FactList";
+import OrderList from "../../Components/OrderList";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store";
 import {Address, ADDRESS_BY_NETWORK_ID} from "../../constants/address";
