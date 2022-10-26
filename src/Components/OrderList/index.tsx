@@ -9,7 +9,6 @@ import {
   TableContainer,
 } from "@mui/material";
 import "./style.scss";
-import { useEffect, useState } from "react";
 
 export interface IAssetsheet {
   secId: string;
