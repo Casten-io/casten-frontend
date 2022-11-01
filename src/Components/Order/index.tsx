@@ -89,11 +89,6 @@ function Order() {
                 <Typography>0.33%</Typography>
               </div>
             </Grid>
-
-            {/* <Grid className="item">
-            <Typography>Financing fee</Typography>
-            <Typography>0.00 DAI</Typography>
-          </Grid> */}
           </Grid>
         </CardContent>
       </Card>

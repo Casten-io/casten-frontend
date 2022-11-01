@@ -21,8 +21,23 @@
     flex-direction: row;
     justify-content: space-between;
     margin: 25px 10px 40px 10px;
-    .stat-box {
-      width: 15rem;
+    .protocol-stats {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      .stat-box {
+        width: 15rem;
+        margin-right: 5rem;
+      }
+    }
+    .personal-stats {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      .stat-box {
+        width: 15rem;
+        margin-left: 5rem;
+      }
     }
   }
 }
