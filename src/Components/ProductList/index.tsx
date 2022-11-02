@@ -1,5 +1,6 @@
 import {
   Grid,
+  Button,
   Paper,
   Table,
   TableBody,
@@ -45,15 +46,15 @@ function createData(
 function ProductList() {
   const navigate = useNavigate();
 
-  const navigateToSecurity = () => {
-    navigate("/security");
+  const navigateToTokenOfferings = () => {
+    navigate("/token");
   };
 
   const rows = [
     createData(
       "FTECHSR420",
       "A Fintech SR 11% 2023",
-      "11.21",
+      "11.21%",
       "Monthly",
       "Dec 23",
       "Cauris Finance",
@@ -62,7 +63,7 @@ function ProductList() {
       "Revenue based/Invoice Discounting",
       "0.8",
       "3.0",
-      "More Info"
+      "Details"
     ),
   ];
   return (
@@ -70,12 +71,12 @@ function ProductList() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table">
         <TableHead className="table-head">
           <TableRow className="head-row">
-            <TableCell className="head-cell">SecID</TableCell>
-            <TableCell className="head-cell">Sec Name</TableCell>
+            <TableCell className="head-cell">Token ID</TableCell>
+            <TableCell className="head-cell">Token Name</TableCell>
             <TableCell className="head-cell">APY</TableCell>
             <TableCell className="head-cell">Frequency</TableCell>
             <TableCell className="head-cell">Maturity</TableCell>
-            <TableCell className="head-cell">Issuer</TableCell>
+            <TableCell className="head-cell">Borrower</TableCell>
             <TableCell className="head-cell">Total Issuance</TableCell>
             <TableCell className="head-cell">Available Issuance</TableCell>
             <TableCell className="head-cell">Category</TableCell>
@@ -89,7 +90,7 @@ function ProductList() {
             <TableRow
               key={row.secId}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              onClick={navigateToSecurity}
+              onClick={navigateToTokenOfferings}
               className="body-row"
             >
               <TableCell component="th" scope="row">
@@ -105,7 +106,9 @@ function ProductList() {
               <TableCell>{row.category}</TableCell>
               <TableCell>{row.ltv}</TableCell>
               <TableCell>{row.leverage}</TableCell>
-              <TableCell>{row.moreInfo}</TableCell>
+              <TableCell className="special-cell">
+                <div className="button">{row.moreInfo}</div>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

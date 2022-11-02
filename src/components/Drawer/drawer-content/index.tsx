@@ -30,6 +30,18 @@ function NavContent() {
         </div>
         <div
           className={
+            active === "portfolio" ? "dapp-menu-item-special" : "dapp-menu-item"
+          }
+          onClick={() => navigateToPage("/portfolio")}
+        >
+          <PortfolioIcon />
+          <p className={active === "portfolio" ? "text-special" : "text"}>
+            Portfolio Manager
+          </p>
+        </div>
+
+        <div
+          className={
             active === "borrower" ? "dapp-menu-item-special" : "dapp-menu-item"
           }
           onClick={() => navigateToPage("/borrower")}
@@ -42,25 +54,13 @@ function NavContent() {
 
         <div
           className={
-            active === "security" ? "dapp-menu-item-special" : "dapp-menu-item"
+            active === "token" ? "dapp-menu-item-special" : "dapp-menu-item"
           }
-          onClick={() => navigateToPage("/security")}
+          onClick={() => navigateToPage("/token")}
         >
           <SecurityIcon />
-          <p className={active === "security" ? "text-special" : "text"}>
-            Security Offerings
-          </p>
-        </div>
-
-        <div
-          className={
-            active === "portfolio" ? "dapp-menu-item-special" : "dapp-menu-item"
-          }
-          onClick={() => navigateToPage("/portfolio")}
-        >
-          <PortfolioIcon />
-          <p className={active === "portfolio" ? "text-special" : "text"}>
-            Portfolio Manager
+          <p className={active === "token" ? "text-special" : "text"}>
+            Token Offerings
           </p>
         </div>
       </div>
