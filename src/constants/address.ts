@@ -11,7 +11,7 @@ import SENIOR_MEMBER_LIST from "../abis/srMemberList.json";
 import {ethers} from "ethers";
 
 
-export type Address = "80001"
+export type Address = "80001" | "137"
 
 export type Contracts = "SHELF" | "JUNIOR_OPERATOR" | "JUNIOR_TOKEN" | "SENIOR_TOKEN" | "SENIOR_OPERATOR" | "DAI_TOKEN" | "SENIOR_TRANCHE" | "JUNIOR_TRANCHE" | "JUNIOR_MEMBER_LIST" | "SENIOR_MEMBER_LIST"
 
@@ -60,6 +60,48 @@ export const ADDRESS_BY_NETWORK_ID: Record<Address, ContractRecord> = {
         },
         SENIOR_MEMBER_LIST: {
             address: "0x60f526A1B37aa71726a18E66843450f0A635d481",
+            ABI: SENIOR_MEMBER_LIST
+        },
+    },
+    "137": {
+        DAI_TOKEN: {
+            address: "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+            ABI: DAI_TOKEN_ABI
+        },
+        SHELF:  {
+            address: "0x94E9316eBD73d06Fcd8B49029506cc497A0c481d",
+            ABI: JUNIOR_OPERATOR_ABI
+        },
+        JUNIOR_OPERATOR: {
+            address: "0x6e39f30B1e9F05915E51D5A6f526268FE0854Fdd",
+            ABI: SHELF_ABI
+        },
+        SENIOR_OPERATOR: {
+            address: "0x71b00166bDa4f9FC8E44fB92B86529C530C69227",
+            ABI: SENIOR_OPERATOR_ABI
+        },
+        JUNIOR_TOKEN: {
+            address: "0x800ab96e05641a3143a8b2CaF0E33C0Bc61d9FE5",
+            ABI: JUNIOR_TOKEN_ABI
+        },
+        SENIOR_TOKEN: {
+            address: "0xfd64c0c6aa73350e7C8886ea8654d4CcDD4c06AD",
+            ABI: SENIOR_TOKEN_ABI
+        },
+        SENIOR_TRANCHE: {
+            address: "0xfeE0006935FbF1142aFbF15155932973f0c14973",
+            ABI: SENIOR_TRANCHE
+        },
+        JUNIOR_TRANCHE: {
+            address: "0x72E6CDB05A4E688E7f7B082B1312dcB131A9Fd9F",
+            ABI: JUNIOR_TRANCHE
+        },
+        JUNIOR_MEMBER_LIST: {
+            address: "0x224643917128d8353fd60b4D90935705CAD58C83",
+            ABI: JUNIOR_MEMBER_LIST
+        },
+        SENIOR_MEMBER_LIST: {
+            address: "0x224643917128d8353fd60b4D90935705CAD58C83",
             ABI: SENIOR_MEMBER_LIST
         },
     }
