@@ -18,13 +18,15 @@ export type Contracts = "SHELF" | "JUNIOR_OPERATOR" | "JUNIOR_TOKEN" | "SENIOR_T
 type ContractRecord =  Record<Contracts, {
     address: string,
     ABI: ethers.ContractInterface
+    TOKEN_DECIMALS?: number
 }>
 
 export const ADDRESS_BY_NETWORK_ID: Record<Address, ContractRecord> = {
     "80001": {
         DAI_TOKEN: {
             address: "0xd9ab6653AabCBBdE8844cddcBE63834Ea1698912",
-            ABI: DAI_TOKEN_ABI
+            ABI: DAI_TOKEN_ABI,
+            TOKEN_DECIMALS: 18
         },
         SHELF:  {
             address: "0x459A7C7dF9F128863710A652AA9026Fe3E809DE6",
@@ -66,7 +68,8 @@ export const ADDRESS_BY_NETWORK_ID: Record<Address, ContractRecord> = {
     "137": {
         DAI_TOKEN: {
             address: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-            ABI: DAI_TOKEN_ABI
+            ABI: DAI_TOKEN_ABI,
+            TOKEN_DECIMALS: 6
         },
         SHELF:  {
             address: "0x94E9316eBD73d06Fcd8B49029506cc497A0c481d",

@@ -88,6 +88,8 @@ function FactList({ amount }: { amount: string }) {
   const provider = useSelector((state: RootState) => state.account.provider);
   const address = useSelector((state: RootState) => state.account.address);
 
+  console.log(networkInfo?.chainId)
+
   const contractInfo =
     ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "80001"];
 
@@ -109,7 +111,7 @@ function FactList({ amount }: { amount: string }) {
     );
     const SeniorTranche = contractInfo.SENIOR_TRANCHE.address;
     const JuniorTranche = contractInfo.JUNIOR_TRANCHE.address;
-    const amountBN = BigNumber.from(amount).mul(BigNumber.from(10).pow(18));
+    const amountBN = BigNumber.from(amount).mul(BigNumber.from(10).pow(contractInfo.DAI_TOKEN.TOKEN_DECIMALS || 18));
     if (investType === "Senior") {
       const allowance = await DaiContract.allowance(address, SeniorTranche);
       if (allowance.lt(amountBN)) {
