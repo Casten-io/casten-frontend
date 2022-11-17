@@ -1,11 +1,11 @@
 import React from "react";
 import { store } from "./store";
 import { Provider } from "react-redux";
-import ViewBase from "./Components/ViewBase";
+import ViewBase from "./components/ViewBase";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { Dashboard, TokenOfferings, BorrowerProfile, Portfolio } from "./Pages";
 
-import Order from "./Components/Order";
+import Order from "./components/Order";
 
 function App() {
   return (

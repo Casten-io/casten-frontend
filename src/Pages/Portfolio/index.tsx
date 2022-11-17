@@ -10,8 +10,8 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-// import FactList from "../../Components/FactList";
-import PortfolioList from "../../Components/PortfolioList";
+// import FactList from "../../components/FactList";
+import PortfolioList from "../../components/PortfolioList";
 import { ADDRESS_BY_NETWORK_ID, Address } from "../../constants/address";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
