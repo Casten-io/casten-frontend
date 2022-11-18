@@ -3,10 +3,11 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { walletConnect } from "../../../store/slices/account";
+import { updateExecution, walletConnect } from "../../../store/slices/account";
 import { RootState } from "../../../store";
 import "./style.scss";
 import Metamask from "../../../assets/icons/metamask.jpeg";
+import { backendUrl } from '../../../constants';
 
 function WalletConnect() {
   const [web3Modal, setWeb3Modal] = useState<null | Web3Modal>(null);
@@ -32,6 +33,23 @@ function WalletConnect() {
     setWeb3Modal(newWeb3Modal);
   }, []);
 
+  const executeQuery = (User: string) => {
+    fetch(`${backendUrl}/dune/execute/1620692`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ User })
+    })
+      .then((resp) => resp.json())
+      .then((respJson) => dispatch(updateExecution({
+        executionId: respJson.data.execution_id,
+      })))
+      .catch((error) => {
+        console.error('query execution failed: ', error)
+      })
+  }
+
   async function connectWallet() {
     if (!web3Modal) {
       return;
@@ -47,6 +65,7 @@ function WalletConnect() {
         networkInfo: network
       })
     );
+    executeQuery(userAddress)
   }
 
   return (

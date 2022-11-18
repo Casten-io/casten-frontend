@@ -22,8 +22,10 @@ import {
   Radio,
   TextField,
 } from "@mui/material";
-import {BigNumber, ethers} from "ethers";
-import {Address, ADDRESS_BY_NETWORK_ID} from '../../constants/address';
+import { BigNumber, ethers } from "ethers";
+import { Address, ADDRESS_BY_NETWORK_ID } from '../../constants/address';
+import { backendUrl } from '../../constants';
+import { CircularProgress } from '@material-ui/core';
 
 export interface IPortfoliosheet {
   select: string;
@@ -65,7 +67,7 @@ function createData(
   profitloss: string,
   invested: string,
   exposure: string,
-  percent_exp: string
+  percent_exp: string,
 ) {
   return {
     select,
@@ -86,8 +88,32 @@ function createData(
 
 function PortfolioList() {
   const navigate = useNavigate();
+  const address = useSelector((state: RootState) => state.account.address);
+  const executionId = useSelector((state: RootState) => state.account.executionId);
+  const [apiCallStatus, setApiCallStatus] = useState<boolean>(false)
+  const [orderList, setOrderList] = useState<any[]>([])
 
   const securityRedirect = useCallback(() => navigate("/security"), [navigate]);
+
+  const fetchUserOrders = useCallback(async () => {
+    if (!executionId) {
+      return;
+    }
+    setApiCallStatus(true);
+    const resp = await fetch(`${backendUrl}/dune/execute-and-serve/1620692/${executionId}`, {
+      method: 'POST',
+    });
+    const respJson = await resp.json();
+    setApiCallStatus(false);
+    setOrderList(respJson.data.rows);
+  }, [executionId, address]);
+
+  useEffect(() => {
+    if (address) {
+      fetchUserOrders()
+        .catch((error) => console.error('error while fetching user\'s orders: ', error));
+    }
+  }, [address, executionId]);
 
   const rows = [
     createData(
@@ -103,14 +129,14 @@ function PortfolioList() {
       "10,000",
       "500,000",
       "510,000",
-      "51%"
+      "51%",
     ),
   ];
   const [withdrawalAmount, setWithdrawalAmounts] = useState<any>({
     juniorToken: BigNumber.from('0'),
     seniorToken: BigNumber.from('0'),
     remainingJuniorToken: BigNumber.from('0'),
-    remainingSeniorToken: BigNumber.from('0')
+    remainingSeniorToken: BigNumber.from('0'),
   })
   const [inputWithdrawal, setInputWithdrawal] = useState<number>(0)
   const [openWithdraw, setOpenWithdraw] = useState<boolean>(false)
@@ -119,10 +145,9 @@ function PortfolioList() {
   const [actionBtns, setActionBtns] = useState<boolean>(true)
 
   const networkInfo = useSelector(
-    (state: RootState) => state.account.networkInfo
+    (state: RootState) => state.account.networkInfo,
   );
   const provider = useSelector((state: RootState) => state.account.provider);
-  const address = useSelector((state: RootState) => state.account.address);
 
   const contractInfo =
     ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "80001"];
@@ -182,11 +207,11 @@ function PortfolioList() {
     }
 
     const amountBN = BigNumber.from(
-      inputWithdrawal || withdrawalAmount[selectedTranche === 'Senior' ? 'remainingSeniorToken' : 'remainingJuniorToken']
+      inputWithdrawal || withdrawalAmount[selectedTranche === 'Senior' ? 'remainingSeniorToken' : 'remainingJuniorToken'],
     ).mul(BigNumber.from(10).pow(18));
 
     const allowance = await token.allowance(address, operatorAddress);
-    if(allowance.lt(amountBN)) {
+    if (allowance.lt(amountBN)) {
       await token.approve(operatorAddress, amountBN)
     }
     const withdrawTX = await contract.redeemOrder(amountBN);
@@ -240,24 +265,24 @@ function PortfolioList() {
           withdrawalAmount.remainingSeniorToken.gt(BigNumber.from(0)) ||
           withdrawalAmount.remainingJuniorToken.gt(BigNumber.from(0))
         ) && <Button
-					onClick={() => setOpenWithdraw(true)}
-					variant="outlined"
-					color="success"
-					sx={{mr: 2}}
-				>
-					Withdraw
-				</Button>}
+          onClick={() => setOpenWithdraw(true)}
+          variant="outlined"
+          color="success"
+          sx={{ mr: 2 }}
+        >
+          Withdraw
+        </Button>}
         {(
           withdrawalAmount.seniorToken.gt(BigNumber.from(0)) ||
           withdrawalAmount.juniorToken.gt(BigNumber.from(0))
         ) && <Button
-					onClick={() => setOpenClaim(true)}
-					variant="outlined"
-					color="success"
-				>
-					Claim
-				</Button>}
-			</Box>}
+          onClick={() => setOpenClaim(true)}
+          variant="outlined"
+          color="success"
+        >
+          Claim
+        </Button>}
+      </Box>}
       <Modal
         open={openClaim}
         onClose={() => setOpenClaim(false)}
@@ -279,12 +304,12 @@ function PortfolioList() {
                   setSelectedTranche(e.target.value);
                 }}
               >
-                <FormControlLabel value="female" control={<Radio />} label="Junior" />
-                <FormControlLabel value="male" control={<Radio />} label="Senior" />
+                <FormControlLabel value="female" control={<Radio/>} label="Junior"/>
+                <FormControlLabel value="male" control={<Radio/>} label="Senior"/>
               </RadioGroup>
             </FormControl>
           </Box>
-          <Box display="flex" justifyContent="space-between" >
+          <Box display="flex" justifyContent="space-between">
             <Button onClick={() => setOpenClaim(false)} variant="outlined" color="warning">
               Cancel
             </Button>
@@ -316,13 +341,15 @@ function PortfolioList() {
               .gt(withdrawalAmount[selectedTranche === 'Senior' ? 'remainingSeniorToken' : 'remainingJuniorToken'])}
           />
           {BigNumber
-            .from(inputWithdrawal || 0)
-            .mul(BigNumber.from(10).pow(18))
-            .gt(withdrawalAmount[selectedTranche === 'Senior' ? 'remainingSeniorToken' : 'remainingJuniorToken']) && <Typography color="red">
-						Please enter amount within withdrawal limit of Pool
-					</Typography>}
+              .from(inputWithdrawal || 0)
+              .mul(BigNumber.from(10).pow(18))
+              .gt(withdrawalAmount[selectedTranche === 'Senior' ? 'remainingSeniorToken' : 'remainingJuniorToken']) &&
+            <Typography color="red">
+              Please enter amount within withdrawal limit of Pool
+            </Typography>}
           <Typography>
-            available amount of {selectedTranche} Pool is {(Number(withdrawalAmount[selectedTranche === 'Senior' ? 'remainingSeniorToken' : 'remainingJuniorToken'])/(10**18)).toString()}
+            available amount of {selectedTranche} Pool
+            is {(Number(withdrawalAmount[selectedTranche === 'Senior' ? 'remainingSeniorToken' : 'remainingJuniorToken']) / (10 ** 18)).toString()}
           </Typography>
           <Box display="flex" justifyContent="space-between" mb={3}>
             <FormControl>
@@ -335,12 +362,12 @@ function PortfolioList() {
                   setSelectedTranche(e.target.value);
                 }}
               >
-                <FormControlLabel value="Junior" control={<Radio />} label="Junior" />
-                <FormControlLabel value="Senior" control={<Radio />} label="Senior" />
+                <FormControlLabel value="Junior" control={<Radio/>} label="Junior"/>
+                <FormControlLabel value="Senior" control={<Radio/>} label="Senior"/>
               </RadioGroup>
             </FormControl>
           </Box>
-          <Box display="flex" justifyContent="space-between" >
+          <Box display="flex" justifyContent="space-between">
             <Button onClick={() => setOpenWithdraw(false)} variant="outlined" color="warning">
               Cancel
             </Button>
@@ -359,18 +386,23 @@ function PortfolioList() {
               <TableCell className="head-cell">Sec Name</TableCell>
               <TableCell className="head-cell">Issuer</TableCell>
               <TableCell className="head-cell">APY</TableCell>
-              <TableCell className="head-cell">Maturity</TableCell>
               <TableCell className="head-cell">Tranche</TableCell>
-              <TableCell className="head-cell">Frequency</TableCell>
               <TableCell className="head-cell">Price</TableCell>
               <TableCell className="head-cell">P/L</TableCell>
+              <TableCell className="head-cell">Invested On</TableCell>
               <TableCell className="head-cell">Amt. Invested</TableCell>
               <TableCell className="head-cell">Exposure</TableCell>
               <TableCell className="head-cell">% Exp</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="table-body">
-            {rows.map((row) => (
+            {apiCallStatus ? <TableRow className="body-row">
+              <TableCell colSpan={12}>
+                <Box display="flex" justifyContent="center" alignItems="center">
+                  <CircularProgress />
+                </Box>
+              </TableCell>
+            </TableRow> : orderList.map((row) => (
               <TableRow
                 key={row.sec_name}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -379,18 +411,17 @@ function PortfolioList() {
                 <TableCell component="th" scope="row">
                   {row.select}
                 </TableCell>
-                <TableCell>{row.symbol}</TableCell>
-                <TableCell>{row.sec_name}</TableCell>
-                <TableCell>{row.issuer}</TableCell>
-                <TableCell>{row.apy}</TableCell>
-                <TableCell>{row.maturity}</TableCell>
-                <TableCell>{row.tranche}</TableCell>
-                <TableCell>{row.frequency}</TableCell>
-                <TableCell>{row.price}</TableCell>
-                <TableCell>{row.profitloss}</TableCell>
-                <TableCell>{row.invested}</TableCell>
-                <TableCell>{row.exposure}</TableCell>
-                <TableCell>{row.percent_exp}</TableCell>
+                <TableCell>{row.symbol || 'N/A'}</TableCell>
+                <TableCell>{row.Pool_name || 'N/A'}</TableCell>
+                <TableCell>{row.issuer || 'N/A'}</TableCell>
+                <TableCell>{row.APY || 'N/A'}</TableCell>
+                <TableCell>{row.Tranche || 'N/A'}</TableCell>
+                <TableCell>{row.price || 'N/A'}</TableCell>
+                <TableCell>{row.profitloss || 'N/A'}</TableCell>
+                <TableCell>{row.evt_block_time ? new Date(row.evt_block_time).toLocaleString() : 'N/A'}</TableCell>
+                <TableCell>{row.amount_invested || 'N/A'}</TableCell>
+                <TableCell>{row.exposure || 'N/A'}</TableCell>
+                <TableCell>{row.percent_exp || 'N/A'}</TableCell>
               </TableRow>
             ))}
           </TableBody>

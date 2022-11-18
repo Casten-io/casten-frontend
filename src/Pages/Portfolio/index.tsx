@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "./portfolio.scss";
 import {
   Grid,
@@ -16,6 +16,9 @@ import { ADDRESS_BY_NETWORK_ID, Address } from "../../constants/address";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { ethers } from "ethers";
+import useTokenBalance from '../../hooks/useTokenBalance';
+import { parseBalance } from '../../utils';
+import { backendUrl } from '../../constants';
 
 function Portfolio() {
   const networkInfo = useSelector(
@@ -27,6 +30,7 @@ function Portfolio() {
     ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "80001"];
   let juniorTokenContract: ethers.Contract | null;
   let seniorTokenContract: ethers.Contract | null;
+  const { data: tokenBalance } = useTokenBalance(address, contractInfo?.DAI_TOKEN?.address)
 
   const getBalancesFromContract = async (
     selfC: ethers.Contract,
@@ -60,7 +64,7 @@ function Portfolio() {
       <div className="content-container">
         <div className="balance-container">
           <Typography className="balance">Available Balance</Typography>
-          <Typography className="usdc-balance">$ 1,000,000 USDC</Typography>
+          <Typography className="usdc-balance">{parseBalance(tokenBalance || 0, 2, contractInfo?.DAI_TOKEN?.TOKEN_DECIMALS)} USDC</Typography>
         </div>
         <div className="portfoliolist-container">
           <PortfolioList />

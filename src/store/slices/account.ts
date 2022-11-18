@@ -11,7 +11,8 @@ interface NetworkInfo {
 export interface AccountState {
     address: string,
     provider: null | ethers.providers.Web3Provider,
-    networkInfo: null | NetworkInfo
+    networkInfo: null | NetworkInfo,
+    executionId?: string
 }
 
 const initialState: AccountState = {
@@ -28,11 +29,14 @@ export const accountSlice = createSlice({
             state.address = action.payload.address;
             state.provider = action.payload.provider;
             state.networkInfo = action.payload.networkInfo;
+        },
+        updateExecution: (state, action) => {
+          state.executionId = action.payload.executionId;
         }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { walletConnect } = accountSlice.actions
+export const { walletConnect, updateExecution } = accountSlice.actions
 
 export default accountSlice.reducer
