@@ -260,29 +260,6 @@ function PortfolioList() {
   }, [address])
   return (
     <>
-      {actionBtns && <Box display="flex" width="100%" paddingY="10px" justifyContent="flex-end">
-        {(
-          withdrawalAmount.remainingSeniorToken.gt(BigNumber.from(0)) ||
-          withdrawalAmount.remainingJuniorToken.gt(BigNumber.from(0))
-        ) && <Button
-          onClick={() => setOpenWithdraw(true)}
-          variant="outlined"
-          color="success"
-          sx={{ mr: 2 }}
-        >
-          Withdraw
-        </Button>}
-        {(
-          withdrawalAmount.seniorToken.gt(BigNumber.from(0)) ||
-          withdrawalAmount.juniorToken.gt(BigNumber.from(0))
-        ) && <Button
-          onClick={() => setOpenClaim(true)}
-          variant="outlined"
-          color="success"
-        >
-          Claim
-        </Button>}
-      </Box>}
       <Modal
         open={openClaim}
         onClose={() => setOpenClaim(false)}
@@ -293,22 +270,6 @@ function PortfolioList() {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Please select from which pool you want to claim.
           </Typography>
-          <Box display="flex" justifyContent="space-between" mb={3}>
-            <FormControl>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="female"
-                name="radio-buttons-group"
-                value={selectedTranche}
-                onChange={(e) => {
-                  setSelectedTranche(e.target.value);
-                }}
-              >
-                <FormControlLabel value="female" control={<Radio/>} label="Junior"/>
-                <FormControlLabel value="male" control={<Radio/>} label="Senior"/>
-              </RadioGroup>
-            </FormControl>
-          </Box>
           <Box display="flex" justifyContent="space-between">
             <Button onClick={() => setOpenClaim(false)} variant="outlined" color="warning">
               Cancel
@@ -351,22 +312,6 @@ function PortfolioList() {
             available amount of {selectedTranche} Pool
             is {(Number(withdrawalAmount[selectedTranche === 'Senior' ? 'remainingSeniorToken' : 'remainingJuniorToken']) / (10 ** 18)).toString()}
           </Typography>
-          <Box display="flex" justifyContent="space-between" mb={3}>
-            <FormControl>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="female"
-                name="radio-buttons-group"
-                value={selectedTranche}
-                onChange={(e) => {
-                  setSelectedTranche(e.target.value);
-                }}
-              >
-                <FormControlLabel value="Junior" control={<Radio/>} label="Junior"/>
-                <FormControlLabel value="Senior" control={<Radio/>} label="Senior"/>
-              </RadioGroup>
-            </FormControl>
-          </Box>
           <Box display="flex" justifyContent="space-between">
             <Button onClick={() => setOpenWithdraw(false)} variant="outlined" color="warning">
               Cancel
@@ -393,6 +338,7 @@ function PortfolioList() {
               <TableCell className="head-cell">Amt. Invested</TableCell>
               <TableCell className="head-cell">Exposure</TableCell>
               <TableCell className="head-cell">% Exp</TableCell>
+              <TableCell className="head-cell">Claim/Withdraw</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="table-body">
@@ -422,6 +368,31 @@ function PortfolioList() {
                 <TableCell>{row.amount_invested || 'N/A'}</TableCell>
                 <TableCell>{row.exposure || 'N/A'}</TableCell>
                 <TableCell>{row.percent_exp || 'N/A'}</TableCell>
+                <TableCell>
+                  {actionBtns && <Box display="flex" width="100%" paddingY="10px" justifyContent="flex-end">
+                    {withdrawalAmount[`remaining${row.Tranche}Token`].gt(BigNumber.from(0)) && <Button
+                      onClick={() => {
+                        setSelectedTranche(row.Tranche)
+                        setOpenWithdraw(true)
+                      }}
+                      variant="outlined"
+                      color="success"
+                      sx={{ mr: 2 }}
+                    >
+                      Withdraw
+                    </Button>}
+                    {withdrawalAmount[`${row.Tranche.toLowerCase()}Token`].gt(BigNumber.from(0)) && <Button
+                      onClick={() => {
+                        setSelectedTranche(row.Tranche)
+                        setOpenClaim(true)
+                      }}
+                      variant="outlined"
+                      color="success"
+                    >
+                      Claim
+                    </Button>}
+                  </Box>}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
