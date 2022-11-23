@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useState } from 'react';
 import {
   Grid,
   Paper,
@@ -6,11 +7,12 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  TableContainer,
-} from "@mui/material";
-import "./style.scss";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+  TableContainer, Box,
+} from '@mui/material';
+import './style.scss';
+import { useNavigate } from 'react-router-dom';
+import { backendUrl } from '../../constants';
+import { CircularProgress } from '@material-ui/core';
 
 export interface IAssetsheet {
   secId: string;
@@ -70,6 +72,47 @@ function OrderList() {
     ),
   ];
   const navigate = useNavigate();
+  const [executionId, setExecutionId] = useState<string>();
+  const [apiCallStatus, setApiCallStatus] = useState<boolean>(false);
+  const [assetList, setAssetList] = useState<any[]>([]);
+
+  const executeQuery = () => {
+    fetch(`${backendUrl}/dune/execute/1629073`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then((resp) => resp.json())
+      .then((respJson) => setExecutionId(respJson.data.execution_id))
+      .catch((error) => {
+        console.error('query execution failed: ', error)
+      });
+  };
+
+  const fetchAssetList = useCallback(async () => {
+    if (!executionId) {
+      return;
+    }
+    setApiCallStatus(true);
+    const resp = await fetch(`${backendUrl}/dune/execute-and-serve/1620692/${executionId}`, {
+      method: 'POST',
+    });
+    const respJson = await resp.json();
+    setApiCallStatus(false);
+    setAssetList(respJson.data.rows);
+  }, [executionId]);
+
+  useEffect(() => {
+    executeQuery()
+  }, [])
+
+  useEffect(() => {
+    if (executionId) {
+      fetchAssetList()
+        .catch((error) => console.error('error while fetching asset list: ', error));
+    }
+  }, [executionId]);
 
   const navigateToAsset = () => {
     navigate("/asset");
@@ -89,19 +132,25 @@ function OrderList() {
           </TableRow>
         </TableHead>
         <TableBody className="table-body">
-          {rows.map((row) => (
+          {apiCallStatus ? <TableRow className="body-row">
+              <TableCell colSpan={12}>
+                <Box display="flex" justifyContent="center" alignItems="center">
+                  <CircularProgress />
+                </Box>
+              </TableCell>
+          </TableRow> : assetList.map((row) => (
             <TableRow
-              key={row.secId}
+              key={row.loanID}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               className="body-row"
               onClick={navigateToAsset}
             >
-              <TableCell>{row.secId}</TableCell>
-              <TableCell>{row.secName}</TableCell>
-              <TableCell>{row.description}</TableCell>
-              <TableCell>{row.value}</TableCell>
-              <TableCell>{row.financedate}</TableCell>
-              <TableCell>{row.maturity}</TableCell>
+              <TableCell>{row.loanID}</TableCell>
+              <TableCell>{row.Name || '-'}</TableCell>
+              <TableCell>{row.Description || '-'}</TableCell>
+              <TableCell>{row.value || '-'}</TableCell>
+              <TableCell>{row.finance_date ? new Date(row.finance_date).toDateString() : '-'}</TableCell>
+              <TableCell>{row.maturityDate_ ? new Date(row.maturityDate_ * 1000).toDateString() : '-'}</TableCell>
               <TableCell>{row.status}</TableCell>
             </TableRow>
           ))}

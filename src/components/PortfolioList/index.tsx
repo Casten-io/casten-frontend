@@ -90,8 +90,8 @@ function PortfolioList() {
   const navigate = useNavigate();
   const address = useSelector((state: RootState) => state.account.address);
   const executionId = useSelector((state: RootState) => state.account.executionId);
-  const [apiCallStatus, setApiCallStatus] = useState<boolean>(false)
-  const [orderList, setOrderList] = useState<any[]>([])
+  const [apiCallStatus, setApiCallStatus] = useState<boolean>(false);
+  const [orderList, setOrderList] = useState<any[]>([]);
 
   const securityRedirect = useCallback(() => navigate("/security"), [navigate]);
 
@@ -137,12 +137,12 @@ function PortfolioList() {
     seniorToken: BigNumber.from('0'),
     remainingJuniorToken: BigNumber.from('0'),
     remainingSeniorToken: BigNumber.from('0'),
-  })
-  const [inputWithdrawal, setInputWithdrawal] = useState<number>(0)
-  const [openWithdraw, setOpenWithdraw] = useState<boolean>(false)
-  const [openClaim, setOpenClaim] = useState<boolean>(false)
-  const [selectedTranche, setSelectedTranche] = useState<string>('Senior')
-  const [actionBtns, setActionBtns] = useState<boolean>(true)
+  });
+  const [inputWithdrawal, setInputWithdrawal] = useState<number>(0);
+  const [openWithdraw, setOpenWithdraw] = useState<boolean>(false);
+  const [openClaim, setOpenClaim] = useState<boolean>(false);
+  const [selectedTranche, setSelectedTranche] = useState<string>('Senior');
+  const [actionBtns, setActionBtns] = useState<boolean>(true);
 
   const networkInfo = useSelector(
     (state: RootState) => state.account.networkInfo,
@@ -174,7 +174,7 @@ function PortfolioList() {
         seniorToken: seniorDisburseDetails.payoutTokenAmount,
         remainingJuniorToken: juniorTokenBalance,
         remainingSeniorToken: seniorTokenBalance,
-      })
+      });
       if (
         (
           juniorDisburseDetails.payoutTokenAmount.gt(BigNumber.from(0)) ||
@@ -182,10 +182,10 @@ function PortfolioList() {
         ) &&
         (seniorMember || juniorMember)
       ) {
-        setActionBtns(true)
+        setActionBtns(true);
       }
     } catch (e) {
-      console.error('withdrawal amount calculation failed: ', e)
+      console.error('withdrawal amount calculation failed: ', e);
     }
   }, [address])
 
@@ -197,12 +197,12 @@ function PortfolioList() {
     let token;
     let operatorAddress;
     if (selectedTranche === 'Senior') {
-      operatorAddress = contractInfo.SENIOR_TRANCHE.address
-      token = new ethers.Contract(contractInfo.SENIOR_TOKEN.address, contractInfo.SENIOR_TOKEN.ABI, provider?.getSigner())
+      operatorAddress = contractInfo.SENIOR_TRANCHE.address;
+      token = new ethers.Contract(contractInfo.SENIOR_TOKEN.address, contractInfo.SENIOR_TOKEN.ABI, provider?.getSigner());
       contract = new ethers.Contract(contractInfo.SENIOR_OPERATOR.address, contractInfo.SENIOR_OPERATOR.ABI, provider?.getSigner());
     } else {
-      operatorAddress = contractInfo.JUNIOR_TRANCHE.address
-      token = new ethers.Contract(contractInfo.JUNIOR_TOKEN.address, contractInfo.JUNIOR_TOKEN.ABI, provider?.getSigner())
+      operatorAddress = contractInfo.JUNIOR_TRANCHE.address;
+      token = new ethers.Contract(contractInfo.JUNIOR_TOKEN.address, contractInfo.JUNIOR_TOKEN.ABI, provider?.getSigner());
       contract = new ethers.Contract(contractInfo.JUNIOR_OPERATOR.address, contractInfo.JUNIOR_OPERATOR.ABI, provider?.getSigner());
     }
 
@@ -212,14 +212,14 @@ function PortfolioList() {
 
     const allowance = await token.allowance(address, operatorAddress);
     if (allowance.lt(amountBN)) {
-      await token.approve(operatorAddress, amountBN)
+      await token.approve(operatorAddress, amountBN);
     }
     const withdrawTX = await contract.redeemOrder(amountBN);
 
     await withdrawTX.wait();
 
     setOpenWithdraw(false);
-  }, [inputWithdrawal, selectedTranche, withdrawalAmount])
+  }, [inputWithdrawal, selectedTranche, withdrawalAmount]);
 
   const claim = useCallback(async () => {
     if (!address || !provider) {
@@ -232,14 +232,14 @@ function PortfolioList() {
       contract = new ethers.Contract(contractInfo.JUNIOR_OPERATOR.address, contractInfo.JUNIOR_OPERATOR.ABI, provider?.getSigner());
     }
 
-    const disburseTx = await contract['disburse()']()
+    const disburseTx = await contract['disburse()']();
 
 
     await disburseTx.wait();
 
     calculateDisburseAndEnableAction()
       .catch((e) => {
-        console.error('failed to calculate withdrawal amount', e)
+        console.error('failed to calculate withdrawal amount', e);
       })
       .finally(() => {
         setOpenClaim(false);
@@ -248,16 +248,16 @@ function PortfolioList() {
     //   ...withdrawalAmount,
     //   [selectedTranche === 'Senior' ? 'seniorToken' : 'juniorToken']: withdrawalAmts
     // })
-  }, [withdrawalAmount, selectedTranche])
+  }, [withdrawalAmount, selectedTranche]);
 
   useEffect(() => {
     if (address) {
       calculateDisburseAndEnableAction()
         .catch((e) => {
-          console.error('failed to calculate withdrawal amount', e)
-        })
+          console.error('failed to calculate withdrawal amount', e);
+        });
     }
-  }, [address])
+  }, [address]);
   return (
     <>
       <Modal
@@ -357,17 +357,17 @@ function PortfolioList() {
                 <TableCell component="th" scope="row">
                   {row.select}
                 </TableCell>
-                <TableCell>{row.symbol || 'N/A'}</TableCell>
-                <TableCell>{row.Pool_name || 'N/A'}</TableCell>
-                <TableCell>{row.issuer || 'N/A'}</TableCell>
-                <TableCell>{row.APY || 'N/A'}</TableCell>
-                <TableCell>{row.Tranche || 'N/A'}</TableCell>
-                <TableCell>{row.price || 'N/A'}</TableCell>
-                <TableCell>{row.profitloss || 'N/A'}</TableCell>
-                <TableCell>{row.evt_block_time ? new Date(row.evt_block_time).toLocaleString() : 'N/A'}</TableCell>
-                <TableCell>{row.amount_invested || 'N/A'}</TableCell>
-                <TableCell>{row.exposure || 'N/A'}</TableCell>
-                <TableCell>{row.percent_exp || 'N/A'}</TableCell>
+                <TableCell>{row.symbol || '-'}</TableCell>
+                <TableCell>{row.Pool_name || '-'}</TableCell>
+                <TableCell>{row.issuer || '-'}</TableCell>
+                <TableCell>{row.APY || '-'}</TableCell>
+                <TableCell>{row.Tranche || '-'}</TableCell>
+                <TableCell>{row.price || '-'}</TableCell>
+                <TableCell>{row.profitloss || '-'}</TableCell>
+                <TableCell>{row.evt_block_time ? new Date(row.evt_block_time).toLocaleString() : '-'}</TableCell>
+                <TableCell>{row.amount_invested || '-'}</TableCell>
+                <TableCell>{row.exposure || '-'}</TableCell>
+                <TableCell>{row.percent_exp || '-'}</TableCell>
                 <TableCell>
                   {actionBtns && <Box display="flex" width="100%" paddingY="10px" justifyContent="flex-end">
                     {withdrawalAmount[`remaining${row.Tranche}Token`].gt(BigNumber.from(0)) && <Button
