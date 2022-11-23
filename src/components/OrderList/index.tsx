@@ -9,10 +9,14 @@ import {
   TableCell,
   TableContainer, Box,
 } from '@mui/material';
-import './style.scss';
-import { useNavigate } from 'react-router-dom';
-import { backendUrl } from '../../constants';
+import { useSelector } from 'react-redux';
 import { CircularProgress } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
+
+import { backendUrl } from '../../constants';
+import { RootState } from '../../store';
+
+import './style.scss';
 
 export interface IAssetsheet {
   secId: string;
@@ -72,23 +76,9 @@ function OrderList() {
     ),
   ];
   const navigate = useNavigate();
-  const [executionId, setExecutionId] = useState<string>();
+  const executionId = useSelector((state: RootState) => state.account.assetListExecution);
   const [apiCallStatus, setApiCallStatus] = useState<boolean>(false);
   const [assetList, setAssetList] = useState<any[]>([]);
-
-  const executeQuery = () => {
-    fetch(`${backendUrl}/dune/execute/1629073`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-      .then((resp) => resp.json())
-      .then((respJson) => setExecutionId(respJson.data.execution_id))
-      .catch((error) => {
-        console.error('query execution failed: ', error)
-      });
-  };
 
   const fetchAssetList = useCallback(async () => {
     if (!executionId) {
@@ -102,10 +92,6 @@ function OrderList() {
     setApiCallStatus(false);
     setAssetList(respJson.data.rows);
   }, [executionId]);
-
-  useEffect(() => {
-    executeQuery()
-  }, [])
 
   useEffect(() => {
     if (executionId) {
