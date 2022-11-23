@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./view-base.scss";
 import Header from "../Header";
 import { Hidden, useMediaQuery } from "@mui/material";
 import { Theme } from "@mui/material/styles";
 import { DRAWER_WIDTH, TRANSITION_DURATION } from "../../constants/style";
-import MobileDrawer from "../Drawer/mobile-drawer";
 import Drawer from "../Drawer";
 import { Paper, Box } from "@mui/material";
+import { useDispatch } from 'react-redux';
 import { useLocation } from "react-router-dom";
+import MobileDrawer from "../Drawer/mobile-drawer";
 import { makeStyles } from "@mui/styles";
+import { backendUrl } from '../../constants';
+import { updateAssetListExecution } from '../../store/slices/account';
 
 interface IViewBaseProps {
   children: React.ReactNode;
@@ -19,6 +22,26 @@ function ViewBase({ children }: IViewBaseProps) {
 
   const isSmallerScreen = useMediaQuery("(max-width: 960px)");
   const location = useLocation();
+  const dispatch = useDispatch();
+  const executeQuery = () => {
+    fetch(`${backendUrl}/dune/execute/1629073`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then((resp) => resp.json())
+      .then((respJson) => dispatch(updateAssetListExecution({
+        assetListExecution: respJson.data.execution_id,
+      })))
+      .catch((error) => {
+        console.error('query execution failed: ', error)
+      });
+  };
+  useEffect(() => {
+    executeQuery();
+    setInterval(executeQuery, 10 * 60 * 1000);
+  }, [])
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
