@@ -1,4 +1,5 @@
 import { Networks } from "../constants/blockchain";
+import { utils } from 'ethers';
 
 const switchRequest = () => {
   return window.ethereum.request({
@@ -25,6 +26,10 @@ const addChainRequest = () => {
     ],
   });
 };
+
+export const toHexTrimZero = (value: number) => {
+  return utils.hexStripZeros(utils.hexlify(value))
+}
 
 export const switchNetwork = async () => {
   if (window.ethereum) {

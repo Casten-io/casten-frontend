@@ -48,6 +48,7 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
   const address: string = useSelector(
     (state: RootState) => state.account.address
   );
+  const networkInfo = useSelector((state: RootState) => state.account.networkInfo);
 
   const navigate = useNavigate();
 
@@ -63,7 +64,7 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
           <img src={Casten} alt="Casten Logo" className="casten-logo" />
         </div>
         <div className="dapp-items">
-          {address && (
+          {address && networkInfo && [137, 80001].includes(networkInfo.chainId) && (
             <div className="portfolio-container">
               <div className="portfolio-button" onClick={handlePortfolioClick}>
                 Portfolio Manager

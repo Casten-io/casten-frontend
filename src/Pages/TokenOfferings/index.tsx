@@ -49,26 +49,26 @@ function TokenOfferings() {
       <div className="content-container">
         <div className="content-header">
           <div className="action-container">
-            <div className="action">
-              <Typography className="order-type">Order Type</Typography>
-              <FormControl className="form">
-                <Select
-                  labelId="order"
-                  id="demo-simple-select"
-                  value={action}
-                  className="select"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={"Buy"} className="menu">
-                    Buy
-                  </MenuItem>
-                  <MenuItem value={"Sell"} className="menu">
-                    Sell
-                  </MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <div className="action-amount">
+              {/*`<div className="action">*/}
+              {/*  <Typography className="order-type">Order Type</Typography>*/}
+              {/*  <FormControl className="form">*/}
+              {/*    <Select*/}
+              {/*      labelId="order"*/}
+              {/*      id="demo-simple-select"*/}
+              {/*      value={action}*/}
+              {/*      className="select"*/}
+              {/*      onChange={handleChange}*/}
+              {/*    >*/}
+              {/*      <MenuItem value={"Buy"} className="menu">*/}
+              {/*        Buy*/}
+              {/*      </MenuItem>*/}
+              {/*      <MenuItem value={"Sell"} className="menu">*/}
+              {/*        Sell*/}
+              {/*      </MenuItem>*/}
+              {/*    </Select>*/}
+              {/*  </FormControl>*/}
+              {/*</div>`*/}
+            <div className="action-amount" style={{ marginLeft: 0 }}>
               <Typography className="amount">Enter Amount</Typography>
               <TextField
                 id="outlined-basic"
