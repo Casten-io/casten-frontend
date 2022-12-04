@@ -6,15 +6,10 @@ import "./drawer-content.scss";
 import DocsIcon from "../../../assets/icons/stake.svg";
 import classnames from "classnames";
 import { useNavigate } from "react-router-dom";
-import {
-  DashboardIcon,
-  SecurityIcon,
-  PortfolioIcon,
-  BorrowerIcon,
-} from "./icons";
+import { DashboardIcon, SecurityIcon, PortfolioIcon, BorrowerIcon } from "./icons";
 
 function NavContent() {
-  const [active, setActive] = useState("security");
+  const [active, setActive] = useState("token");
   const navigate = useNavigate();
   const navigateToPage = (route: string) => {
     navigate(route);
@@ -26,42 +21,30 @@ function NavContent() {
       <div className="dapp-nav">
         <div className="dapp-menu-item" onClick={() => navigateToPage("/")}>
           <DashboardIcon />
-          <p className={active === "" ? "text-special" : "text"}>Dashboard</p>
-        </div>
-        <div
-          className={
-            active === "portfolio" ? "dapp-menu-item-special" : "dapp-menu-item"
-          }
-          onClick={() => navigateToPage("/portfolio")}
-        >
-          <PortfolioIcon />
-          <p className={active === "portfolio" ? "text-special" : "text"}>
-            Portfolio Manager
-          </p>
+          <p className={active === "" ? "text-special" : "text"}>All Offerings</p>
         </div>
 
         <div
-          className={
-            active === "borrower" ? "dapp-menu-item-special" : "dapp-menu-item"
-          }
+          className={active === "borrower" ? "dapp-menu-item-special" : "dapp-menu-item"}
           onClick={() => navigateToPage("/borrower")}
         >
           <BorrowerIcon />
-          <p className={active === "borrower" ? "text-special" : "text"}>
-            Borrower Profile
-          </p>
+          <p className={active === "borrower" ? "text-special" : "text"}>Borrower Profile</p>
         </div>
 
         <div
-          className={
-            active === "token" ? "dapp-menu-item-special" : "dapp-menu-item"
-          }
+          className={active === "token" ? "dapp-menu-item-special" : "dapp-menu-item"}
           onClick={() => navigateToPage("/token")}
         >
           <SecurityIcon />
-          <p className={active === "token" ? "text-special" : "text"}>
-            Token Offerings
-          </p>
+          <p className={active === "token" ? "text-special" : "text"}>Token Offerings</p>
+        </div>
+        <div
+          className={active === "portfolio" ? "dapp-menu-item-special-port" : "dapp-menu-item-port"}
+          onClick={() => navigateToPage("/portfolio")}
+        >
+          <PortfolioIcon />
+          <p className={active === "portfolio" ? "text-special" : "text"}>Portfolio Manager</p>
         </div>
       </div>
 

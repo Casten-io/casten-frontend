@@ -5,7 +5,7 @@ $lg: 1200px;
 $xl: 1536px;
 
 .appbar {
-  background-color: #ffffff;
+  background-color: #ffffff6b;
   z-index: 10000;
   .dapp-topbar {
     display: flex;
@@ -19,7 +19,7 @@ $xl: 1536px;
       align-items: center;
       margin-right: 20px;
       .portfolio-container {
-        background: #ffffff;
+        background: #fff;
         border: 1px solid rgba(28, 163, 174, 0.2);
         border-radius: 6px;
         margin-right: 12px;
@@ -30,7 +30,7 @@ $xl: 1536px;
         padding: 11px 34px;
         cursor: pointer;
         .portfolio-button {
-          color: black;
+          color: #000;
           font-weight: 500;
         }
       }

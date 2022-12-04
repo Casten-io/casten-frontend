@@ -45,9 +45,7 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
   // const classes = useStyles();
   const isVerySmallScreen = useMediaQuery("(max-width: 400px)");
   const isWrapShow = useMediaQuery("(max-width: 480px)");
-  const address: string = useSelector(
-    (state: RootState) => state.account.address
-  );
+  const address: string = useSelector((state: RootState) => state.account.address);
   const networkInfo = useSelector((state: RootState) => state.account.networkInfo);
 
   const navigate = useNavigate();
@@ -56,11 +54,15 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
     navigate("/portfolio");
   };
 
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   return (
     // <div className={`${classes.topBar} ${!drawe && classes.topBarShift}`}>
     <AppBar className="appbar" style={{ background: "#fff", height: "70px" }}>
       <Toolbar disableGutters className="dapp-topbar">
-        <div>
+        <div onClick={handleLogoClick} style={{ cursor: "pointer" }}>
           <img src={Casten} alt="Casten Logo" className="casten-logo" />
         </div>
         <div className="dapp-items">

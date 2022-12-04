@@ -27,21 +27,19 @@ function Dashboard() {
 
   const card = (text: string) => (
     <CardContent>
-      <Typography style={{ color: "#4B584D", fontFamily: "OpenSans" }}>
-        {text}
-      </Typography>
+      <Typography style={{ color: "#4B584D", fontFamily: "OpenSans" }}>{text}</Typography>
       <Typography variant="h5" component="div">
-        $12,000,000.00
+        $12,000,000
       </Typography>
     </CardContent>
   );
 
   return (
     <div className="dashboard-view">
-      <div className="dashboard-header">
-        <Typography className="title">Lending Marketplace</Typography>
-      </div>
       <div className="numbers">
+        <div className="dashboard-header">
+          <Typography className="title">Investment Opportunities</Typography>
+        </div>
         <div className="protocol-stats">
           <Box className="stat-box">
             <Card variant="outlined">{card("Total Value Locked")}</Card>
@@ -50,7 +48,7 @@ function Dashboard() {
             <Card variant="outlined">{card("Loan Originated")}</Card>
           </Box>
         </div>
-        <div className="personal-stats">
+        {/* <div className="personal-stats">
           <Box className="stat-box">
             <Card variant="outlined">{card("Portfolio Balance")}</Card>
           </Box>
@@ -59,8 +57,9 @@ function Dashboard() {
               {card("USDC Locked")}
             </Card>
           </Box>
-        </div>
+        </div> */}
       </div>
+
       <ProductList />
     </div>
   );

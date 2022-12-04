@@ -1,16 +1,8 @@
 import { ethers, BigNumber } from "ethers";
 import "./style.scss";
 import { useEffect, useState } from "react";
-import {
-  Grid,
-  Paper,
-  Table,
-  TableBody,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableContainer,
-} from "@mui/material";
+import { Modal, Typography, Box, Button } from "@mui/material";
+import { Grid, Paper, Table, TableBody, TableHead, TableRow, TableCell, TableContainer } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { Address, ADDRESS_BY_NETWORK_ID } from "../../constants/address";
@@ -82,16 +74,29 @@ function FactList({ amount }: { amount: string }) {
     ),
   ];
 
-  const networkInfo = useSelector(
-    (state: RootState) => state.account.networkInfo
-  );
+  const networkInfo = useSelector((state: RootState) => state.account.networkInfo);
   const provider = useSelector((state: RootState) => state.account.provider);
   const address = useSelector((state: RootState) => state.account.address);
 
-  console.log(networkInfo?.chainId)
+  console.log(networkInfo?.chainId);
 
-  const contractInfo =
-    ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "80001"];
+  const contractInfo = ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "80001"];
+
+  // const openModal = (invest: string) => {
+  //   return (
+  //     <Modal open={open} onClose={() => setOpen(!open)}>
+  //       <Box>
+  //         <Typography id="modal-modal-title" variant="h6" component="h2">
+  //           Text in a modal
+  //         </Typography>
+  //         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+  //           Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+  //         </Typography>
+  //         <Button onClick={() => investNow(invest)} />
+  //       </Box>
+  //     </Modal>
+  //   );
+  // };
 
   const investNow = async (investType: string): Promise<void> => {
     const DaiContract = new ethers.Contract(
@@ -147,11 +152,7 @@ function FactList({ amount }: { amount: string }) {
         </TableHead>
         <TableBody className="table-body">
           {rows.map((row) => (
-            <TableRow
-              key={row.secId}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              className="body-row"
-            >
+            <TableRow key={row.secId} sx={{ "&:last-child td, &:last-child th": { border: 0 } }} className="body-row">
               <TableCell component="th" scope="row">
                 {row.secId}
               </TableCell>
@@ -165,7 +166,14 @@ function FactList({ amount }: { amount: string }) {
               <TableCell>{row.leverage}</TableCell>
               <TableCell>{row.current}</TableCell>
               <TableCell className="invest-button">
-                <span className="invest" onClick={() => investNow(row.tranche)}>
+                <span
+                  className="invest"
+                  onClick={() => investNow(row.tranche)}
+                  // onClick={() => {
+                  //   setOpen(true);
+                  //   setInvest(row.tranche);
+                  // }}
+                >
                   Invest
                 </span>
               </TableCell>
