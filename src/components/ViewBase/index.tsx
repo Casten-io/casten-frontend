@@ -11,7 +11,7 @@ import { useLocation } from "react-router-dom";
 import MobileDrawer from "../Drawer/mobile-drawer";
 import { makeStyles } from "@mui/styles";
 import { backendUrl } from '../../constants';
-import { updateAssetListExecution } from '../../store/slices/account';
+import { updateAssetListExecution, updateTotalOriginatedLoans } from '../../store/slices/account';
 
 interface IViewBaseProps {
   children: React.ReactNode;
@@ -38,9 +38,28 @@ function ViewBase({ children }: IViewBaseProps) {
         console.error('query execution failed: ', error)
       });
   };
+  const executeQueryTOL = () => {
+    fetch(`${backendUrl}/dune/execute/1681617`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then((resp) => resp.json())
+      .then((respJson) => dispatch(updateTotalOriginatedLoans({
+        totalOriginatedLoans: respJson.data.execution_id,
+      })))
+      .catch((error) => {
+        console.error('query execution failed: ', error)
+      });
+  };
   useEffect(() => {
     executeQuery();
-    setInterval(executeQuery, 10 * 60 * 1000);
+    executeQueryTOL();
+    setInterval(() => {
+      executeQuery();
+      executeQueryTOL();
+    }, 10 * 60 * 1000);
   }, [])
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

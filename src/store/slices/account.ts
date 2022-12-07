@@ -14,6 +14,7 @@ export interface AccountState {
     networkInfo: null | NetworkInfo,
     executionId?: string
     assetListExecution?: string
+    totalOriginatedLoans?: string
 }
 
 const initialState: AccountState = {
@@ -37,10 +38,18 @@ export const accountSlice = createSlice({
         updateAssetListExecution: (state, action) => {
           state.assetListExecution = action.payload.assetListExecution;
         },
+        updateTotalOriginatedLoans: (state, action) => {
+          state.totalOriginatedLoans = action.payload.totalOriginatedLoans;
+        },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { walletConnect, updateExecution, updateAssetListExecution } = accountSlice.actions
+export const {
+  walletConnect,
+  updateExecution,
+  updateAssetListExecution,
+  updateTotalOriginatedLoans,
+} = accountSlice.actions
 
 export default accountSlice.reducer
