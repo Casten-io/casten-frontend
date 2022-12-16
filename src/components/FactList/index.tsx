@@ -1,7 +1,7 @@
 import { ethers, BigNumber } from "ethers";
 import "./style.scss";
-import { useEffect, useState } from "react";
-import { Modal, Typography, Box, Button } from "@mui/material";
+import { useCallback, useEffect, useState } from "react";
+import { Modal, Typography, Box, Button, TextField } from "@mui/material";
 import { Grid, Paper, Table, TableBody, TableHead, TableRow, TableCell, TableContainer } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
@@ -26,6 +26,7 @@ function createData(
   tranche: string,
   totalIssuance: string,
   apy: string,
+  APY: number,
   frequency: string,
   maturity: string,
   ltv: string,
@@ -38,6 +39,7 @@ function createData(
     tranche,
     totalIssuance,
     apy,
+    APY,
     frequency,
     maturity,
     ltv,
@@ -46,7 +48,19 @@ function createData(
   };
 }
 
-function FactList({ amount }: { amount: string }) {
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '90%',
+  maxWidth: 500,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+};
+
+function FactList() {
   const rows = [
     createData(
       "AFT001",
@@ -54,6 +68,7 @@ function FactList({ amount }: { amount: string }) {
       "Senior",
       "$5MM",
       "11.00%",
+      11,
       "Monthly",
       "Dec 23",
       "0.8",
@@ -66,6 +81,7 @@ function FactList({ amount }: { amount: string }) {
       "Junior",
       "$2MM",
       "15.00%",
+      15,
       "Monthly",
       "Dec 23",
       "0.8",
@@ -77,8 +93,9 @@ function FactList({ amount }: { amount: string }) {
   const networkInfo = useSelector((state: RootState) => state.account.networkInfo);
   const provider = useSelector((state: RootState) => state.account.provider);
   const address = useSelector((state: RootState) => state.account.address);
-
-  console.log(networkInfo?.chainId);
+  const [investIn, setInvestIn] = useState<any | null>(null);
+  const [investAmount, setInvestAmount] = useState<number>();
+  const [investAmountError, setInvestAmountError] = useState(false);
 
   const contractInfo = ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "80001"];
 
@@ -98,7 +115,10 @@ function FactList({ amount }: { amount: string }) {
   //   );
   // };
 
-  const investNow = async (investType: string): Promise<void> => {
+  const investNow = useCallback(async (): Promise<void> => {
+    if (!investIn) {
+      return;
+    }
     const DaiContract = new ethers.Contract(
       contractInfo.DAI_TOKEN.address,
       contractInfo.DAI_TOKEN.ABI,
@@ -116,8 +136,8 @@ function FactList({ amount }: { amount: string }) {
     );
     const SeniorTranche = contractInfo.SENIOR_TRANCHE.address;
     const JuniorTranche = contractInfo.JUNIOR_TRANCHE.address;
-    const amountBN = BigNumber.from(amount).mul(BigNumber.from(10).pow(contractInfo.DAI_TOKEN.TOKEN_DECIMALS || 18));
-    if (investType === "Senior") {
+    const amountBN = BigNumber.from(investAmount).mul(BigNumber.from(10).pow(contractInfo.DAI_TOKEN.TOKEN_DECIMALS || 18));
+    if (investIn.tranche === "Senior") {
       const allowance = await DaiContract.allowance(address, SeniorTranche);
       if (allowance.lt(amountBN)) {
         await DaiContract.approve(SeniorTranche, amountBN);
@@ -130,45 +150,46 @@ function FactList({ amount }: { amount: string }) {
       }
       await juniorOperatorContract.supplyOrder(amountBN);
     }
-  };
+  }, [investIn]);
 
   return (
-    <TableContainer component={Paper} className="table-container">
-      <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table">
-        <TableHead className="table-head">
-          <TableRow className="head-row">
-            <TableCell className="head-cell">SecID</TableCell>
-            <TableCell className="head-cell">Sec Name</TableCell>
-            <TableCell className="head-cell">Tranche</TableCell>
-            <TableCell className="head-cell">Total Issuance</TableCell>
-            <TableCell className="head-cell">APY</TableCell>
-            <TableCell className="head-cell">Frequency</TableCell>
-            <TableCell className="head-cell">Maturity</TableCell>
-            <TableCell className="head-cell">LTV</TableCell>
-            <TableCell className="head-cell">Leverage</TableCell>
-            <TableCell className="head-cell">Current</TableCell>
-            <TableCell className="head-cell"></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody className="table-body">
-          {rows.map((row) => (
-            <TableRow key={row.secId} sx={{ "&:last-child td, &:last-child th": { border: 0 } }} className="body-row">
-              <TableCell component="th" scope="row">
-                {row.secId}
-              </TableCell>
-              <TableCell>{row.secName}</TableCell>
-              <TableCell>{row.tranche}</TableCell>
-              <TableCell>{row.totalIssuance}</TableCell>
-              <TableCell>{row.apy}</TableCell>
-              <TableCell>{row.frequency}</TableCell>
-              <TableCell>{row.maturity}</TableCell>
-              <TableCell>{row.ltv}</TableCell>
-              <TableCell>{row.leverage}</TableCell>
-              <TableCell>{row.current}</TableCell>
-              <TableCell className="invest-button">
+    <>
+      <TableContainer component={Paper} className="table-container">
+        <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table">
+          <TableHead className="table-head">
+            <TableRow className="head-row">
+              <TableCell className="head-cell">SecID</TableCell>
+              <TableCell className="head-cell">Sec Name</TableCell>
+              <TableCell className="head-cell">Tranche</TableCell>
+              <TableCell className="head-cell">Total Issuance</TableCell>
+              <TableCell className="head-cell">APY</TableCell>
+              <TableCell className="head-cell">Frequency</TableCell>
+              <TableCell className="head-cell">Maturity</TableCell>
+              <TableCell className="head-cell">LTV</TableCell>
+              <TableCell className="head-cell">Leverage</TableCell>
+              <TableCell className="head-cell">Current</TableCell>
+              <TableCell className="head-cell"></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className="table-body">
+            {rows.map((row) => (
+              <TableRow key={row.secId} sx={{ "&:last-child td, &:last-child th": { border: 0 } }} className="body-row">
+                <TableCell component="th" scope="row">
+                  {row.secId}
+                </TableCell>
+                <TableCell>{row.secName}</TableCell>
+                <TableCell>{row.tranche}</TableCell>
+                <TableCell>{row.totalIssuance}</TableCell>
+                <TableCell>{row.apy}</TableCell>
+                <TableCell>{row.frequency}</TableCell>
+                <TableCell>{row.maturity}</TableCell>
+                <TableCell>{row.ltv}</TableCell>
+                <TableCell>{row.leverage}</TableCell>
+                <TableCell>{row.current}</TableCell>
+                <TableCell className="invest-button">
                 <span
                   className="invest"
-                  onClick={() => investNow(row.tranche)}
+                  onClick={() => setInvestIn(row)}
                   // onClick={() => {
                   //   setOpen(true);
                   //   setInvest(row.tranche);
@@ -176,12 +197,57 @@ function FactList({ amount }: { amount: string }) {
                 >
                   Invest
                 </span>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Modal
+        open={Boolean(investIn?.secId)}
+        onClose={() => setInvestIn(null)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Enter Amount to Invest in {investIn?.tranche} Pool.
+          </Typography>
+          <Box mb={2}>
+            <TextField
+              id="outlined-basic"
+              label="$"
+              variant="outlined"
+              type="number"
+              fullWidth
+              onChange={(e) => {
+                setInvestAmount(Number(e.target.value))
+                setInvestAmountError(BigNumber
+                  .from(Number(e.target.value) || 0)
+                  .mul(BigNumber.from(10).pow(18))
+                  .lte(BigNumber.from(0)));
+              }}
+              error={investAmountError}
+            />
+            {investAmountError && <Typography id="invest-amount-error" variant="caption" component="span" color="red">
+              Please enter valid amount to invest
+            </Typography>}
+            {!!investAmount && <Typography id="investment-apy" variant="caption" component="span">
+              you are depositing in {investIn?.tranche} tranche, which is has an estimated APY for {investIn?.apy}%.
+              You will be eligible to withdraw ${(investAmount * (investIn?.APY / 100)).toFixed(2)} if you stay deposited for 1 year
+            </Typography>}
+          </Box>
+          <Box display="flex" justifyContent="space-between">
+            <Button onClick={() => setInvestIn(null)} variant="outlined" color="warning">
+              Cancel
+            </Button>
+            <Button onClick={investNow} variant="outlined" color="success">
+              Invest Now
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+    </>
   );
 }
 

@@ -26,7 +26,6 @@ function TokenOfferings() {
   const provider = useSelector((state: RootState) => state.account.provider);
 
   const [action, setAction] = useState("Buy");
-  const [amount, setAmount] = useState("0");
 
   const contractInfo =
     ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "80001"];
@@ -34,10 +33,6 @@ function TokenOfferings() {
   const handleChange = (event: any) => {
     // let target = event.target as HTMLInputElement;
     setAction(event.target.value);
-  };
-
-  const handleInputChange = (event: any) => {
-    setAmount(event.target.value);
   };
 
   return (
@@ -68,15 +63,6 @@ function TokenOfferings() {
               {/*    </Select>*/}
               {/*  </FormControl>*/}
               {/*</div>`*/}
-            <div className="action-amount" style={{ marginLeft: 0 }}>
-              <Typography className="amount">Enter Amount</Typography>
-              <TextField
-                id="outlined-basic"
-                label="$"
-                variant="outlined"
-                onChange={handleInputChange}
-              />
-            </div>
           </div>
           <div className="balance-container">
             <div className="balance">
@@ -87,7 +73,7 @@ function TokenOfferings() {
         </div>
         <div className="factsheet-container">
           <Typography className="factsheet">Factsheet</Typography>
-          <FactList amount={amount} />
+          <FactList />
         </div>
         <div className="assetlist-container">
           <Typography className="assetlist">Asset List</Typography>
