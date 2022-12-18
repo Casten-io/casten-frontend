@@ -37,7 +37,7 @@ function NavContent() {
           onClick={() => navigateToPage("/token")}
         >
           <SecurityIcon />
-          <p className={active === "token" ? "text-special" : "text"}>Token Offerings</p>
+          <p className={active === "token" ? "text-special" : "text"}>Tranches/Assets</p>
         </div>
         <div
           className={active === "portfolio" ? "dapp-menu-item-special-port" : "dapp-menu-item-port"}
