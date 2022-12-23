@@ -68,7 +68,7 @@ function BorrowerProfile() {
                 <div>
                   <div className="heading-title-one">
                     <img src={Cauris} alt="cauris-1"/>
-                    Cauris Fund #3: Africa Innovation Pool
+                    Cauris Pool #1
                   </div>
                 </div>
                 <a
@@ -79,7 +79,7 @@ function BorrowerProfile() {
                 </a>
               </div>
               <div className="main-title">
-                Cauris Fund #3: Africa Innovation Pool
+                Cauris Pool #1
               </div>
               <div>
                 <div className="sub-title" style={{ width: '6.40244%' }}>
@@ -94,7 +94,7 @@ function BorrowerProfile() {
               <div className="goal-value">
                 Goal
                 <span>
-                  $10,000,000.00
+                  $5,000,000.00
                 </span>
               </div>
             </div>
@@ -109,7 +109,15 @@ function BorrowerProfile() {
                   <div className="tab-content">
                     <div>
                       <div className="deal-overview section">
-                        <h2 className="title">Deal Overview</h2>
+                        <h2 className="title">
+                          <a
+                            href="https://docsend.com/view/s/e8uu7misbs9bs5xq"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Deal Overview
+                          </a>
+                        </h2>
                         <div className="text-content">
                         <span>
                           Proceeds will be used to provide additional backing to African fintechs in their quest to provide access to financial services to millions of traditionally underbanked customers. Our investments will include senior secured loans with covenants for additional downside protection. All loans will be secured by all-asset debentures, including our borrowers' lending receivables.
@@ -148,115 +156,179 @@ function BorrowerProfile() {
                           <div className="table">
                             <table className="chain-data-table">
                               <tbody>
-                              <tr>
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Interest Rate</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>10.00%</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Drawdown cap</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>$10,000,000.00</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Payment frequency</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>30 days</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Payment term</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>1095 days</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Default interest rate</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>0.00%</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Deal type</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>Multitranche</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Current leverage ratio</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>4x</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Opening date</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>May 3, 2022</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Contract address</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>0xd43a4f3041069c6178b99d55295b00d0db955bb5</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Borrower address</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>0xd750033cd9ab91ead99074f671bbcbce0ffd91a8</td>*/}
+                              {/*</tr>*/}
+                              <tr className="border border-sand-200">
                                 <th scope="row">
                                   <div>
-                                    <div className="th-title">Interest Rate</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
+                                    <div className="th-title">Interest</div>
                                   </div>
                                 </th>
-                                <td>10.00%</td>
+                                <td>13.5%</td>
                               </tr>
-                              <tr>
+                              <tr className="border border-sand-200">
                                 <th scope="row">
                                   <div>
-                                    <div className="th-title">Drawdown cap</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
+                                    <div className="th-title">Drawdowncap</div>
                                   </div>
                                 </th>
-                                <td>$10,000,000.00</td>
+                                <td>$5,000,000.00</td>
                               </tr>
-                              <tr>
+                              <tr className="border border-sand-200">
                                 <th scope="row">
                                   <div>
-                                    <div className="th-title">Payment frequency</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
+                                    <div className="th-title">Opening Date</div>
                                   </div>
                                 </th>
-                                <td>30 days</td>
+                                <td>1<sup>st</sup> Dec 2022</td>
                               </tr>
-                              <tr>
+                              <tr className="border border-sand-200">
                                 <th scope="row">
                                   <div>
-                                    <div className="th-title">Payment term</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
+                                    <div className="th-title">Contract Address</div>
                                   </div>
                                 </th>
-                                <td>1095 days</td>
+                                <td>
+                                  <ul>
+                                    <li>
+                                      <a
+                                        className="link"
+                                        href="https://polygonscan.com/address/0xfeE0006935FbF1142aFbF15155932973f0c14973"
+                                        target="_blank"
+                                      >
+                                        0xfeE0006935FbF1142aFbF15155932973f0c14973
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </td>
                               </tr>
-                              <tr>
+                              <tr className="border border-sand-200">
                                 <th scope="row">
                                   <div>
-                                    <div className="th-title">Default interest rate</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
+                                    <div className="th-title">Borrower Address</div>
                                   </div>
                                 </th>
-                                <td>0.00%</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">
-                                  <div>
-                                    <div className="th-title">Deal type</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
-                                  </div>
-                                </th>
-                                <td>Multitranche</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">
-                                  <div>
-                                    <div className="th-title">Current leverage ratio</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
-                                  </div>
-                                </th>
-                                <td>4x</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">
-                                  <div>
-                                    <div className="th-title">Opening date</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
-                                  </div>
-                                </th>
-                                <td>May 3, 2022</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">
-                                  <div>
-                                    <div className="th-title">Contract address</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
-                                  </div>
-                                </th>
-                                <td>0xd43a4f3041069c6178b99d55295b00d0db955bb5</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">
-                                  <div>
-                                    <div className="th-title">Borrower address</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
-                                  </div>
-                                </th>
-                                <td>0xd750033cd9ab91ead99074f671bbcbce0ffd91a8</td>
+                                <td>
+                                  <ul>
+                                    <li>
+                                      <a
+                                        className="link"
+                                        href="https://polygonscan.com/address/0x428995b6b3e2ed27387ce15d224c2e669a284bc0"
+                                        target="_blank"
+                                      >
+                                        0x428995b6b3e2ed27387ce15d224c2e669a284bc0
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </td>
                               </tr>
                               </tbody>
                             </table>
@@ -415,23 +487,31 @@ function BorrowerProfile() {
                             <tr className="border border-sand-200">
                               <th scope="row">
                                 <div>
-                                  <div className="th-title">Total amount of loans originated to date</div>
+                                  <div className="th-title">Interest</div>
                                 </div>
                               </th>
-                              <td>$25,000,000.00</td>
+                              <td>13.5%</td>
                             </tr>
                             <tr className="border border-sand-200">
                               <th scope="row">
                                 <div>
-                                  <div className="th-title">AUM</div>
+                                  <div className="th-title">Drawdowncap</div>
                                 </div>
                               </th>
-                              <td>$25,000,000.00</td>
+                              <td>$5,000,000.00</td>
                             </tr>
                             <tr className="border border-sand-200">
                               <th scope="row">
                                 <div>
-                                  <div className="th-title">Past deals on-chain</div>
+                                  <div className="th-title">Opening Date</div>
+                                </div>
+                              </th>
+                              <td>1<sup>st</sup> Dec 2022</td>
+                            </tr>
+                            <tr className="border border-sand-200">
+                              <th scope="row">
+                                <div>
+                                  <div className="th-title">Contract Address</div>
                                 </div>
                               </th>
                               <td>
@@ -439,25 +519,10 @@ function BorrowerProfile() {
                                   <li>
                                     <a
                                       className="link"
-                                      href="/pools/0x538473c3a69da2b305cf11a40cf2f3904de8db5f"
+                                      href="https://polygonscan.com/address/0xfeE0006935FbF1142aFbF15155932973f0c14973"
+                                      target="_blank"
                                     >
-                                      Pool 0x538473c3a69da2b305cf11a40cf2f3904de8db5f
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a
-                                      className="link"
-                                      href="/pools/0xc9bdd0d3b80cc6efe79a82d850f44ec9b55387ae"
-                                    >
-                                      Cauris
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a
-                                      className="link"
-                                      href="/pools/0xd09a57127bc40d680be7cb061c2a6629fe71abef"
-                                    >
-                                      Cauris Fund #2: Africa Innovation Pool
+                                      0xfeE0006935FbF1142aFbF15155932973f0c14973
                                     </a>
                                   </li>
                                 </ul>
@@ -466,23 +531,43 @@ function BorrowerProfile() {
                             <tr className="border border-sand-200">
                               <th scope="row">
                                 <div>
-                                  <div className="th-title">Off-chain debt providers</div>
+                                  <div className="th-title">Borrower Address</div>
                                 </div>
                               </th>
                               <td>
                                 <ul>
-                                  <li>Undisclosed VC firm</li>
+                                  <li>
+                                    <a
+                                      className="link"
+                                      href="https://polygonscan.com/address/0x428995b6b3e2ed27387ce15d224c2e669a284bc0"
+                                      target="_blank"
+                                    >
+                                      0x428995b6b3e2ed27387ce15d224c2e669a284bc0
+                                    </a>
+                                  </li>
                                 </ul>
                               </td>
                             </tr>
-                            <tr className="border border-sand-200">
-                              <th scope="row">
-                                <div>
-                                  <div className="th-title">Audited</div>
-                                </div>
-                              </th>
-                              <td>No</td>
-                            </tr>
+                            {/*<tr className="border border-sand-200">*/}
+                            {/*  <th scope="row">*/}
+                            {/*    <div>*/}
+                            {/*      <div className="th-title">Off-chain debt providers</div>*/}
+                            {/*    </div>*/}
+                            {/*  </th>*/}
+                            {/*  <td>*/}
+                            {/*    <ul>*/}
+                            {/*      <li>Undisclosed VC firm</li>*/}
+                            {/*    </ul>*/}
+                            {/*  </td>*/}
+                            {/*</tr>*/}
+                            {/*<tr className="border border-sand-200">*/}
+                            {/*  <th scope="row">*/}
+                            {/*    <div>*/}
+                            {/*      <div className="th-title">Audited</div>*/}
+                            {/*    </div>*/}
+                            {/*  </th>*/}
+                            {/*  <td>No</td>*/}
+                            {/*</tr>*/}
                             </tbody>
                           </table>
                         </div>

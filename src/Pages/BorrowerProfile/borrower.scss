@@ -4,6 +4,7 @@
   column-gap: 2.5rem;
   grid-template-columns: 100%;
   grid-template-rows: auto 1fr;
+  font-family: "Open Sans", sans-serif;
   grid-template-areas: "heading" "widgets" "info";
   @media (min-width: 1024px) {
       grid-template-columns: calc(65% - 1.25rem) calc(35% - 1.25rem);
@@ -82,7 +83,7 @@
       font-weight: 700;
       font-size: 3rem;
       line-height: 1;
-      font-family: Newsreader Display, serif;
+      font-family: inherit;
       text-align: center;
       margin-bottom: 3rem;
     }
@@ -109,7 +110,7 @@
     div > .goal-progress {
       background-repeat: repeat;
       --tw-bg-opacity: 1;
-      background-color: rgb(231 229 228/var(--tw-bg-opacity));
+      background-color: rgba(231, 229, 228, 1);
       border-radius: 0.25rem;
       overflow: hidden;
       height: 2rem;
@@ -120,7 +121,7 @@
         transition-property: max-width;
         transition-timing-function: cubic-bezier(.4,0,.2,1);
         --tw-bg-opacity: 1;
-        background-color: rgb(209 118 115/var(--tw-bg-opacity));
+        background-color: black;
         width: 100%;
       }
       .gray {
@@ -129,7 +130,7 @@
         transition-property: max-width;
         transition-timing-function: cubic-bezier(.4,0,.2,1);
         --tw-bg-opacity: 1;
-        background-color: rgb(63 74 126/var(--tw-bg-opacity));
+        background-color: #1ca3ae;
         width: 100%;
       }
       .gray > .full-box, .red > .full-box {
@@ -303,7 +304,7 @@
           font-weight: 600;
           font-size: 1.125rem!important;
           line-height: 1.75rem!important;
-          font-family: Inter,sans-serif;
+          font-family: inherit;
           margin-bottom: 2rem;
         }
         ul.highlights-points {
@@ -329,6 +330,13 @@
           font-size: 1.875rem;
           line-height: 2.25rem;
           margin-bottom: 2rem;
+          a {
+            text-decoration: none;
+            color: inherit;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
         }
         .text-content {
           span {
@@ -348,7 +356,7 @@
           font-weight: 600;
           font-size: 1.125rem!important;
           line-height: 1.75rem!important;
-          font-family: Inter,sans-serif;
+          font-family: inherit;
           margin-bottom: 2rem;
         }
         .list {

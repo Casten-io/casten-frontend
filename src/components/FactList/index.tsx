@@ -370,7 +370,13 @@ function FactList() {
               </a>
             </Box>}
             <Box display="flex" justifyContent="space-between">
-              <Button onClick={() => setInvestIn(null)} variant="outlined" color="warning">
+              <Button
+                onClick={() => setInvestIn(null)}
+                variant="outlined"
+                color="warning"
+                type="button"
+                disabled={supplying || approving}
+              >
                 Cancel
               </Button>
               <Button
