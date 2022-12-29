@@ -8,6 +8,8 @@ import { RootState } from "../../store";
 import { Address, ADDRESS_BY_NETWORK_ID } from "../../constants/address";
 import ArrowNE from '../../assets/icons/Arrow-NorthEast.svg';
 import { scanTxLink } from '../../utils';
+import { backendUrl } from '../../constants';
+import SwitchNetworkModal from '../Commons/WalletConnect/SwitchNetworkModal';
 
 export interface IFactsheet {
   secId: string;
@@ -96,16 +98,19 @@ function FactList() {
   const networkInfo = useSelector((state: RootState) => state.account.networkInfo);
   const provider = useSelector((state: RootState) => state.account.provider);
   const address = useSelector((state: RootState) => state.account.address);
+  const executionId = useSelector((state: RootState) => state.account.executionId);
+  const [switchNetworkOpen, setSwitchNetworkOpen] = useState(false);
   const [investIn, setInvestIn] = useState<any | null>(null);
   const [investAmount, setInvestAmount] = useState<number | null>(null);
   const [investAmountError, setInvestAmountError] = useState(false);
   const [needApproval, setNeedApproval] = useState(true);
-  const [checkingAllowance, setCheckingAllowance] = useState<boolean>(false)
-  const [approving, setApproving] = useState<boolean>(false)
-  const [supplying, setSupplying] = useState<boolean>(false)
-  const [supplied, setSupplied] = useState<boolean>(false)
-  const [approvalTxHash, setApprovalTxHash] = useState<string>()
-  const [supplyTxHash, setSupplyTxHash] = useState<string>()
+  const [checkingAllowance, setCheckingAllowance] = useState<boolean>(false);
+  const [approving, setApproving] = useState<boolean>(false);
+  const [supplying, setSupplying] = useState<boolean>(false);
+  const [supplied, setSupplied] = useState<boolean>(false);
+  const [approvalTxHash, setApprovalTxHash] = useState<string>();
+  const [supplyTxHash, setSupplyTxHash] = useState<string>();
+  const [currentInvestment, setCurrentInvestment] = useState<any>({});
 
   const contractInfo = ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "80001"];
 
@@ -124,6 +129,21 @@ function FactList() {
   //     </Modal>
   //   );
   // };
+
+  const fetchUserOrders = useCallback(() => {
+    if (!executionId) {
+      return;
+    }
+    fetch(`${backendUrl}/dune/execute-and-serve/1620692/${executionId}`, {
+      method: 'POST',
+    })
+      .then((resp) => resp.json())
+      .then((respJson) => {
+        setCurrentInvestment(
+          Object.fromEntries(respJson.data.rows.map((row: any) => [row.Tranche, row.amount_invested])),
+        );
+      });
+  }, [executionId, address]);
 
   const getContracts = (tranche: string) => {
     const token = new ethers.Contract(
@@ -196,6 +216,11 @@ function FactList() {
     }
   }, [investIn, investAmount]);
 
+  const clearAmounts = () => {
+    setInvestAmount(null);
+    setInvestAmountError(false);
+  }
+
   const approveAmount  = useCallback(async (): Promise<void> => {
     if (!investIn) {
       return;
@@ -223,10 +248,17 @@ function FactList() {
     return () => {
       debouncedAllowanceCheck.clear();
     }
-  }, [investIn, investAmount])
+  }, [investIn, investAmount]);
+
+  useEffect(() => {
+    fetchUserOrders()
+  }, [fetchUserOrders])
+
+  const wrongNetwork = provider && networkInfo && address && !['80001', '137'].includes(networkInfo.chainId?.toString())
 
   return (
     <>
+      <SwitchNetworkModal close={() => setSwitchNetworkOpen(false)} open={switchNetworkOpen}/>
       <TableContainer component={Paper} className="table-container">
         <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table">
           <TableHead className="table-head">
@@ -262,7 +294,12 @@ function FactList() {
                 <TableCell className="invest-button">
                 <button
                   className="invest"
-                  onClick={() => setInvestIn(row)}
+                  onClick={() => {
+                    if (wrongNetwork) {
+                      setSwitchNetworkOpen(true);
+                    }
+                    setInvestIn(row);
+                  }}
                   // onClick={() => {
                   //   setOpen(true);
                   //   setInvest(row.tranche);
@@ -279,8 +316,11 @@ function FactList() {
         </Table>
       </TableContainer>
       <Modal
-        open={Boolean(investIn?.secId)}
-        onClose={() => setInvestIn(null)}
+        open={Boolean(investIn?.secId) && !wrongNetwork}
+        onClose={() => {
+          setInvestIn(null);
+          clearAmounts();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -315,7 +355,9 @@ function FactList() {
               </Typography>}
               {!!investAmount && <Typography id="investment-apy" variant="caption" component="span">
                 you are depositing in {investIn?.tranche} tranche, which is has an estimated APY for {investIn?.apy}.
-                You will be eligible to withdraw ${(investAmount * (investIn?.APY / 100)).toFixed(2)} if you stay deposited for 1 year
+                You will be eligible to withdraw&nbsp;
+                ${((currentInvestment[investIn?.tranche] || 0) + investAmount + (investAmount * (investIn?.APY / 100))).toFixed(2)}&nbsp;
+                if you stay deposited for 1 year
               </Typography>}
             </Box>
             {(
@@ -371,7 +413,10 @@ function FactList() {
             </Box>}
             <Box display="flex" justifyContent="space-between">
               <Button
-                onClick={() => setInvestIn(null)}
+                onClick={() => {
+                  setInvestIn(null);
+                  clearAmounts();
+                }}
                 variant="outlined"
                 color="warning"
                 type="button"

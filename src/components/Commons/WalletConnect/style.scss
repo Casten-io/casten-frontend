@@ -10,6 +10,10 @@
   padding: 3px 18px;
   cursor: pointer;
 
+  &.connected {
+    background-color: #fff;
+  }
+
   .wallet-text {
     color: #f2f2f2;
     font-weight: 500;
