@@ -7,9 +7,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { Address, ADDRESS_BY_NETWORK_ID } from "../../constants/address";
 import ArrowNE from '../../assets/icons/Arrow-NorthEast.svg';
-import { scanTxLink } from '../../utils';
+import { parseBalance, scanTxLink } from '../../utils';
 import { backendUrl } from '../../constants';
 import SwitchNetworkModal from '../Commons/WalletConnect/SwitchNetworkModal';
+import Casten from '../../assets/icons/Casten.png';
+import useTokenBalance from '../../hooks/useTokenBalance';
 
 export interface IFactsheet {
   secId: string;
@@ -50,20 +52,6 @@ function createData(
     current,
   };
 }
-
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '90%',
-  maxWidth: 500,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  border: 'none',
-  borderRadius: 2,
-  p: 4,
-};
 
 function FactList() {
   const rows = [
@@ -113,6 +101,7 @@ function FactList() {
   const [currentInvestment, setCurrentInvestment] = useState<any>({});
 
   const contractInfo = ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "80001"];
+  const { data: tokenBalance } = useTokenBalance(address, contractInfo?.DAI_TOKEN?.address)
 
   // const openModal = (invest: string) => {
   //   return (
@@ -232,7 +221,7 @@ function FactList() {
       const tx = await token.approve(trancheAddress, amountBN);
       setApprovalTxHash(tx.hash);
       await tx.wait();
-      debouncedAllowanceCheck();
+      setNeedApproval(false);
     } catch (error) {
       console.error('approving amount failed: ', error);
     } finally {
@@ -318,47 +307,68 @@ function FactList() {
       <Modal
         open={Boolean(investIn?.secId) && !wrongNetwork}
         onClose={() => {
+          if (approving || supplying) {
+            return;
+          }
           setInvestIn(null);
           clearAmounts();
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box className="invest-modal">
           {supplied ? <Box>
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Congratulations you&apos;ve successfully invested ${investAmount} in {investIn}.
             </Typography>
           </Box> : <>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Enter Amount to Invest in {investIn?.tranche} Pool.
-            </Typography>
-            <Box mb={2} mt={1}>
-              <TextField
-                id="outlined-basic"
-                label="$"
-                variant="outlined"
-                type="number"
-                fullWidth
-                disabled={checkingAllowance || supplying || approving}
-                onChange={(e) => {
-                  setInvestAmount(Number(e.target.value));
-                  setInvestAmountError(BigNumber
-                    .from(Number(e.target.value) || 0)
-                    .mul(BigNumber.from(10).pow(18))
-                    .lte(BigNumber.from(0)));
-                }}
-                error={investAmountError}
-              />
-              {investAmountError && <Typography id="invest-amount-error" variant="caption" component="span" color="red">
-                Please enter valid amount to invest
-              </Typography>}
-              {!!investAmount && <Typography id="investment-apy" variant="caption" component="span">
-                you are depositing in {investIn?.tranche} tranche, which is has an estimated APY for {investIn?.apy}.
-                You will be eligible to withdraw&nbsp;
-                ${((currentInvestment[investIn?.tranche] || 0) + investAmount + (investAmount * (investIn?.APY / 100))).toFixed(2)}&nbsp;
-                if you stay deposited for 1 year
-              </Typography>}
+            <Box className="header-img">
+              <img src={Casten} alt="Casten Logo" className="casten-logo" />
+            </Box>
+            <Box className="form-block">
+              <div className="label">USDC Balance</div>
+              <div className="value-input">{parseBalance(tokenBalance || 0, 2, contractInfo?.DAI_TOKEN?.TOKEN_DECIMALS)} USDC</div>
+              <div className="label">Deposit Amount</div>
+              <div className="value-input">
+                <TextField
+                  id="outlined-basic"
+                  label="$"
+                  variant="outlined"
+                  type="number"
+                  className="form-input"
+                  fullWidth
+                  disabled={checkingAllowance || supplying || approving}
+                  value={investAmount}
+                  onChange={(e) => {
+                    setInvestAmount(Number(e.target.value));
+                    setInvestAmountError(BigNumber
+                      .from(Number(e.target.value) || 0)
+                      .mul(BigNumber.from(10).pow(18))
+                      .lte(BigNumber.from(0)));
+                  }}
+                  error={investAmountError}
+                  inputProps={{
+                    className: 'input'
+                  }}
+                />
+                {investAmountError && <div className="error">
+                  <Typography id="invest-amount-error" variant="caption" component="span" color="red">
+                    Please enter valid amount to invest
+                  </Typography>
+                </div>}
+                {/*{!!investAmount && <Typography id="investment-apy" variant="caption" component="span">*/}
+                {/*  you are depositing in {investIn?.tranche} tranche, which is has an estimated APY for {investIn?.apy}.*/}
+                {/*  You will be eligible to withdraw&nbsp;*/}
+                {/*  ${((currentInvestment[investIn?.tranche] || 0) + investAmount + (investAmount * (investIn?.APY / 100))).toFixed(2)}&nbsp;*/}
+                {/*  if you stay deposited for 1 year*/}
+                {/*</Typography>}*/}
+              </div>
+              <div className="label">{investIn?.tranche} Pool APY</div>
+              <div className="value-input">{investIn?.apy}</div>
+              <div className="label">Interest Payout Frequency</div>
+              <div className="value-input">Monthly</div>
+              <div className="label">Interest Payout Based on Frequency</div>
+              <div className="value-input">${(((investAmount || 0) * (investIn?.APY / 100)) / 12).toFixed(2)}</div>
             </Box>
             {(
               checkingAllowance ||
@@ -369,9 +379,10 @@ function FactList() {
                 sx={{
                   height: '15px',
                   borderRadius: '4px',
-                  width: '100%'
+                  width: '100%',
                 }}
-                color={checkingAllowance ? 'info' : approving ? 'primary' : 'success'}
+                color="primary"
+                classes={{ colorPrimary: 'colorPrimary', barColorPrimary: 'barColorPrimary' }}
               />
               <Typography id="loader-text" variant="caption" component="span">
                 {checkingAllowance && <span>
@@ -411,28 +422,32 @@ function FactList() {
                 Tx <img src={ArrowNE} alt="arrow-north-east"/>
               </a>
             </Box>}
-            <Box display="flex" justifyContent="space-between">
-              <Button
+            <Box className="form-btns">
+              <button
+                onClick={approveAmount}
+                type="button"
+                disabled={!investAmount || approving || !needApproval}
+              >
+                Approve USDC for {investIn?.tranche} Tranche Deposit
+              </button>
+              <button
+                onClick={supplyOrder}
+                type="button"
+                disabled={supplying || approving || needApproval}
+              >
+                Deposit
+              </button>
+              <button
                 onClick={() => {
                   setInvestIn(null);
                   clearAmounts();
                 }}
-                variant="outlined"
-                color="warning"
                 type="button"
+                className="cancel"
                 disabled={supplying || approving}
               >
                 Cancel
-              </Button>
-              <Button
-                onClick={needApproval ? approveAmount : supplyOrder}
-                variant="outlined"
-                color="success"
-                type="button"
-                disabled={supplying || approving}
-              >
-                {needApproval ? 'Approve' : 'Invest'}
-              </Button>
+              </button>
             </Box>
           </>}
         </Box>

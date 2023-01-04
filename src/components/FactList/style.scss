@@ -67,3 +67,99 @@
     }
   }
 }
+
+.invest-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 496px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgb(0 0 0 / 20%) 0 11px 15px -7px, rgb(0 0 0 / 14%) 0 24px 38px 3px, rgb(0 0 0 / 12%) 0 9px 46px 8px;
+  border: none;
+  border-radius: 8px;
+  padding: 50px 45px;
+  display: block;
+  font-size: 16px;
+  font-family: "Open Sans", sans-serif;
+
+  .header-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 45px;
+    img.casten-logo {
+      max-width: 166px;
+      width: 85%;
+    }
+  }
+
+  .form-block {
+    gap: 1rem;
+    grid-template-columns: repeat(3,minmax(0,2fr));
+    display: grid;
+    margin-bottom: 3rem;
+    .label {
+      display: flex;
+      align-items: center;
+      font-weight: bolder;
+    }
+    .value-input {
+      justify-content: center;
+      flex-direction: column;
+      grid-column-start: span 2;
+      grid-column-end: span 2;
+      .error {
+        width: 100%;
+      }
+      .form-input {
+        .input {
+          padding: 6px 7px;
+        }
+        label {
+          transform: translate(14px, 7px) scale(1);
+          &.Mui-focused, &.MuiFormLabel-filled {
+            transform: translate(14px, -9px) scale(1);
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+  }
+
+  .colorPrimary {
+    background-color: #AEECF1B8;
+  }
+  .barColorPrimary {
+    background-color: #1CA3AEB8;
+  }
+
+  .form-btns {
+    gap: 1rem;
+    grid-template-columns: repeat(1,minmax(0,1fr));
+    display: grid;
+
+    button {
+      border: none;
+      border-radius: 6px;
+      padding: 10px;
+      background: #1CA3AEB8;
+      font-weight: 600;
+      font-size: 16px;
+      color: #fff;
+      &:disabled {
+        background: #AEECF1B8;
+        color: #9f9f9f;
+      }
+      &:hover {
+        opacity: 0.8;
+      }
+      &.cancel {
+        background: #fff;
+        border: 1px solid #1CA3AEB8;
+        color: #000;
+      }
+    }
+  }
+}
