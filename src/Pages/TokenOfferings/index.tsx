@@ -64,12 +64,12 @@ function TokenOfferings() {
               {/*  </FormControl>*/}
               {/*</div>`*/}
           </div>
-          <div className="balance-container">
-            <div className="balance">
-              <Typography className="amount">Available Balance: </Typography>
-              <Typography className="amount">$1,000,000 </Typography>
-            </div>
-          </div>
+          {/*<div className="balance-container">*/}
+          {/*  <div className="balance">*/}
+          {/*    <Typography className="amount">Available Balance: </Typography>*/}
+          {/*    <Typography className="amount">$1,000,000 </Typography>*/}
+          {/*  </div>*/}
+          {/*</div>*/}
         </div>
         <div className="factsheet-container">
           <Typography className="factsheet">Factsheet</Typography>

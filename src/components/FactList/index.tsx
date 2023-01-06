@@ -245,6 +245,10 @@ function FactList() {
 
   const wrongNetwork = provider && networkInfo && address && !['80001', '137'].includes(networkInfo.chainId?.toString())
 
+  const apy = (investAmount || 0) * (investIn?.APY / 100);
+  const apyDeduction = apy * 0.1;
+  const insufficientBalance =
+    Number(parseBalance(tokenBalance || 0, 2, contractInfo?.DAI_TOKEN?.TOKEN_DECIMALS)) < Number(investAmount);
   return (
     <>
       <SwitchNetworkModal close={() => setSwitchNetworkOpen(false)} open={switchNetworkOpen}/>
@@ -368,7 +372,7 @@ function FactList() {
               <div className="label">Interest Payout Frequency</div>
               <div className="value-input">Monthly</div>
               <div className="label">Interest Payout Based on Frequency</div>
-              <div className="value-input">${(((investAmount || 0) * (investIn?.APY / 100)) / 12).toFixed(2)}</div>
+              <div className="value-input">${((apy - apyDeduction) / 12).toFixed(2)}</div>
             </Box>
             {(
               checkingAllowance ||
@@ -426,14 +430,14 @@ function FactList() {
               <button
                 onClick={approveAmount}
                 type="button"
-                disabled={!investAmount || approving || !needApproval}
+                disabled={!investAmount || insufficientBalance || approving || !needApproval}
               >
-                Approve USDC for {investIn?.tranche} Tranche Deposit
+                {insufficientBalance ? 'Insufficient Balance' : `Approve USDC for ${investIn?.tranche} Tranche Deposit`}
               </button>
               <button
                 onClick={supplyOrder}
                 type="button"
-                disabled={supplying || approving || needApproval}
+                disabled={supplying || insufficientBalance || approving || needApproval}
               >
                 Deposit
               </button>
