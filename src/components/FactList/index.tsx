@@ -164,7 +164,7 @@ function FactList() {
 
   const debouncedAllowanceCheck = debounce(() => {
     setCheckingAllowance(true);
-    const { token, trancheAddress } = getContracts(investIn);
+    const { token, trancheAddress } = getContracts(investIn.tranche);
     const amountBN = BigNumber.from(investAmount).mul(BigNumber.from(10).pow(contractInfo.DAI_TOKEN.TOKEN_DECIMALS || 18));
     token.allowance(address, trancheAddress)
       .then((allowance: BigNumber) => {
@@ -187,7 +187,7 @@ function FactList() {
     }
     try {
       setSupplying(true);
-      const { operator } = getContracts(investIn);
+      const { operator } = getContracts(investIn.tranche);
       const amountBN = BigNumber.from(investAmount).mul(BigNumber.from(10).pow(contractInfo.DAI_TOKEN.TOKEN_DECIMALS || 18));
       const tx = await operator.supplyOrder(amountBN);
       setSupplyTxHash(tx.hash);
@@ -216,7 +216,7 @@ function FactList() {
     }
     try {
       setApproving(true);
-      const { token, trancheAddress } = getContracts(investIn);
+      const { token, trancheAddress } = getContracts(investIn.tranche);
       const amountBN = BigNumber.from(investAmount).mul(BigNumber.from(10).pow(contractInfo.DAI_TOKEN.TOKEN_DECIMALS || 18));
       const tx = await token.approve(trancheAddress, amountBN);
       setApprovalTxHash(tx.hash);
