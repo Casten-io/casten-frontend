@@ -323,7 +323,7 @@ function FactList() {
         <Box className="invest-modal">
           {supplied ? <Box>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Congratulations you&apos;ve successfully invested ${investAmount} in {investIn}.
+              Congratulations you&apos;ve successfully invested ${investAmount} in {investIn.tranche}.
             </Typography>
           </Box> : <>
             <Box className="header-img">
