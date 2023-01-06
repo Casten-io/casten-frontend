@@ -1,17 +1,20 @@
-import { ethers, BigNumber } from "ethers";
-import "./style.scss";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { Modal, Typography, Box, Button, TextField, debounce, LinearProgress } from "@mui/material";
-import { Grid, Paper, Table, TableBody, TableHead, TableRow, TableCell, TableContainer } from "@mui/material";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { Address, ADDRESS_BY_NETWORK_ID } from "../../constants/address";
+import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { ethers, BigNumber } from 'ethers';
+import { Modal, Typography, Box, TextField, debounce, LinearProgress } from '@mui/material';
+import { Paper, Table, TableBody, TableHead, TableRow, TableCell, TableContainer } from '@mui/material';
+
+import { RootState } from '../../store';
+import { Address, ADDRESS_BY_NETWORK_ID } from '../../constants/address';
 import ArrowNE from '../../assets/icons/Arrow-NorthEast.svg';
 import { parseBalance, scanTxLink } from '../../utils';
 import { backendUrl } from '../../constants';
 import SwitchNetworkModal from '../Commons/WalletConnect/SwitchNetworkModal';
 import Casten from '../../assets/icons/Casten.png';
 import useTokenBalance from '../../hooks/useTokenBalance';
+
+import './style.scss';
 
 export interface IFactsheet {
   secId: string;
@@ -83,6 +86,7 @@ function FactList() {
     ),
   ];
 
+  const navigate = useNavigate();
   const networkInfo = useSelector((state: RootState) => state.account.networkInfo);
   const provider = useSelector((state: RootState) => state.account.provider);
   const address = useSelector((state: RootState) => state.account.address);
@@ -95,10 +99,13 @@ function FactList() {
   const [checkingAllowance, setCheckingAllowance] = useState<boolean>(false);
   const [approving, setApproving] = useState<boolean>(false);
   const [supplying, setSupplying] = useState<boolean>(false);
+  const [warningPendingSupply, setWarningPendingSupply] = useState<any>(null);
+  const [checkingPendingOrders, setCheckingPendingOrders] = useState<boolean>(false);
   const [supplied, setSupplied] = useState<boolean>(false);
   const [approvalTxHash, setApprovalTxHash] = useState<string>();
   const [supplyTxHash, setSupplyTxHash] = useState<string>();
   const [currentInvestment, setCurrentInvestment] = useState<any>({});
+  const [pendingSupply, setPendingSupply] = useState<any>({});
 
   const contractInfo = ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "80001"];
   const { data: tokenBalance } = useTokenBalance(address, contractInfo?.DAI_TOKEN?.address)
@@ -240,6 +247,35 @@ function FactList() {
   }, [investIn, investAmount]);
 
   useEffect(() => {
+    if (address) {
+      checkPendingSupplyOrders()
+        .catch((e) => {
+          console.error('failed to calculate withdrawal amount', e);
+        });
+    }
+  }, [address]);
+
+  const checkPendingSupplyOrders = useCallback(async () => {
+    try {
+      if (!address) {
+        return;
+      }
+      setCheckingPendingOrders(true);
+      const seniorTrancheContract = new ethers.Contract(contractInfo.SENIOR_TRANCHE.address, contractInfo.SENIOR_TRANCHE.ABI, provider?.getSigner());
+      const seniorDisburseDetails = await seniorTrancheContract['calcDisburse(address)'](address);
+      const juniorTrancheContract = new ethers.Contract(contractInfo.JUNIOR_TRANCHE.address, contractInfo.JUNIOR_TRANCHE.ABI, provider?.getSigner());
+      const juniorDisburseDetails = await juniorTrancheContract['calcDisburse(address)'](address);
+      setPendingSupply({
+        Junior: juniorDisburseDetails.payoutTokenAmount,
+        Senior: seniorDisburseDetails.payoutTokenAmount,
+      });
+      setCheckingPendingOrders(false);
+    } catch (e) {
+      console.error('failed to check pending supply orders: ', e);
+    }
+  }, [address]);
+
+  useEffect(() => {
     fetchUserOrders()
   }, [fetchUserOrders])
 
@@ -285,29 +321,65 @@ function FactList() {
                 <TableCell>{row.leverage}</TableCell>
                 <TableCell>{row.current}</TableCell>
                 <TableCell className="invest-button">
-                <button
-                  className="invest"
-                  onClick={() => {
-                    if (wrongNetwork) {
-                      setSwitchNetworkOpen(true);
-                    }
-                    setInvestIn(row);
-                  }}
-                  // onClick={() => {
-                  //   setOpen(true);
-                  //   setInvest(row.tranche);
-                  // }}
-                  disabled={!address}
-                  title={'Please connect your wallet to enable invest'}
-                >
-                  Invest
-                </button>
+                  <button
+                    className="invest"
+                    onClick={() => {
+                      if (wrongNetwork) {
+                        setSwitchNetworkOpen(true);
+                      }
+                      if (pendingSupply[row.tranche].gt(BigNumber.from(0))) {
+                        setWarningPendingSupply(row);
+                        return;
+                      }
+                      setInvestIn(row);
+                    }}
+                    disabled={!address || checkingPendingOrders}
+                    title={'Please connect your wallet to enable invest'}
+                  >
+                    Invest
+                  </button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      <Modal
+        open={Boolean(investIn?.secId) && !wrongNetwork}
+        onClose={() => {
+          setWarningPendingSupply(null);
+        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box className="invest-modal">
+          <Box className="header-img">
+            <img src={Casten} alt="Casten Logo" className="casten-logo" />
+          </Box>
+          <Typography id="pending-supply-warning-title">
+            Previous deposits are not supplied! Please complete your pending {warningPendingSupply?.tranche} claims.
+          </Typography>
+          <Box className="form-btns grid-2">
+            <button
+              onClick={() => {
+                navigate('/portfolio');
+              }}
+              type="button"
+            >
+              Take me to My Portfolio
+            </button>
+            <button
+              onClick={() => {
+                setWarningPendingSupply(null);
+              }}
+              type="button"
+              className="cancel"
+            >
+              Close
+            </button>
+          </Box>
+        </Box>
+      </Modal>
       <Modal
         open={Boolean(investIn?.secId) && !wrongNetwork}
         onClose={() => {

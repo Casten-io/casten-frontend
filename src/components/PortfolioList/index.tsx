@@ -52,6 +52,7 @@ const style = {
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: 4,
+  borderRadius: 2
 };
 
 function createData(
@@ -287,7 +288,7 @@ function PortfolioList() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography id="modal-modal-title">
             Enter Amount to Withdraw or leave it blank to withdraw full amount
           </Typography>
           <TextField
@@ -295,6 +296,7 @@ function PortfolioList() {
             label="$"
             variant="outlined"
             type="number"
+            fullWidth
             onChange={(e) => setInputWithdrawal(Number(e.target.value))}
             error={BigNumber
               .from(inputWithdrawal || 0)
@@ -310,15 +312,16 @@ function PortfolioList() {
             </Typography>}
           <Typography>
             available amount of {selectedTranche} Pool
-            is {(Number(withdrawalAmount[selectedTranche === 'Senior' ? 'remainingSeniorToken' : 'remainingJuniorToken']) / (10 ** 18)).toString()}
+            is {(
+              Number(withdrawalAmount[selectedTranche === 'Senior' ? 'remainingSeniorToken' : 'remainingJuniorToken']) / (10 ** (contractInfo.DAI_TOKEN.TOKEN_DECIMALS || 18))).toFixed(4)}
           </Typography>
-          <Box display="flex" justifyContent="space-between">
-            <Button onClick={() => setOpenWithdraw(false)} variant="outlined" color="warning">
+          <Box display="flex" justifyContent="space-between" mt={2}>
+            <button onClick={() => setOpenWithdraw(false)} className="action-btn cancel" type="button">
               Cancel
-            </Button>
-            <Button onClick={withdraw} variant="outlined" color="info">
+            </button>
+            <button onClick={withdraw} className="action-btn" type="button">
               Withdraw
-            </Button>
+            </button>
           </Box>
         </Box>
       </Modal>
@@ -370,27 +373,27 @@ function PortfolioList() {
                 <TableCell>{row.percent_exp || '-'}</TableCell>
                 <TableCell>
                   {actionBtns && <Box display="flex" width="100%" paddingY="10px" justifyContent="flex-end">
-                    {withdrawalAmount[`remaining${row.Tranche}Token`].gt(BigNumber.from(0)) && <Button
+                    {withdrawalAmount[`remaining${row.Tranche}Token`].gt(BigNumber.from(0)) && <button
                       onClick={() => {
                         setSelectedTranche(row.Tranche)
                         setOpenWithdraw(true)
                       }}
-                      variant="outlined"
-                      color="success"
-                      sx={{ mr: 2 }}
+                      style={{ marginRight: '2rem' }}
+                      type="button"
+                      className="action-btn"
                     >
                       Withdraw
-                    </Button>}
-                    {withdrawalAmount[`${row.Tranche.toLowerCase()}Token`].gt(BigNumber.from(0)) && <Button
+                    </button>}
+                    {withdrawalAmount[`${row.Tranche.toLowerCase()}Token`].gt(BigNumber.from(0)) && <button
                       onClick={() => {
                         setSelectedTranche(row.Tranche)
                         setOpenClaim(true)
                       }}
-                      variant="outlined"
-                      color="success"
+                      type="button"
+                      className="action-btn"
                     >
                       Claim
-                    </Button>}
+                    </button>}
                   </Box>}
                 </TableCell>
               </TableRow>
