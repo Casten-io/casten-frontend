@@ -62,7 +62,7 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
     // <div className={`${classes.topBar} ${!drawe && classes.topBarShift}`}>
     <AppBar className="appbar" style={{ background: "#fff", height: "70px" }}>
       <Toolbar disableGutters className="dapp-topbar">
-        <div onClick={handleLogoClick} style={{ cursor: "pointer" }}>
+        <div onClick={handleLogoClick} style={{ cursor: "pointer" }} className="header-logo">
           <img src={Casten} alt="Casten Logo" className="casten-logo" />
         </div>
         <div className="dapp-items">

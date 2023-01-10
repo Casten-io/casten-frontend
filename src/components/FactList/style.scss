@@ -44,7 +44,7 @@
         .invest-button {
           .invest {
             border: none;
-            background-color: #1ca3ae;
+            background-color: #74AFFF;
             border-radius: 45px;
             color: #fff;
             padding: 10px 25px;
@@ -52,12 +52,12 @@
         }
       }
       .body-row:hover {
-        background-color: #d2edef;
+        background-color: #C4DDFF;
         cursor: pointer;
         .invest-button {
           .invest {
             border: none;
-            background-color: #1ca3ae;
+            background-color: #74AFFF;
             border-radius: 45px;
             color: #fff;
             padding: 10px 25px;
@@ -82,7 +82,7 @@
   padding: 50px 45px;
   display: block;
   font-size: 16px;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Inter", sans-serif;
 
   .header-img {
     display: flex;
@@ -91,7 +91,7 @@
     margin-bottom: 45px;
     img.casten-logo {
       max-width: 166px;
-      width: 85%;
+      height: 85%;
     }
   }
 
@@ -129,10 +129,10 @@
   }
 
   .colorPrimary {
-    background-color: #AEECF1B8;
+    background-color: #C4DDFF;
   }
   .barColorPrimary {
-    background-color: #1CA3AEB8;
+    background-color: #74AFFF;
   }
 
   .form-btns {
@@ -148,12 +148,12 @@
       border: none;
       border-radius: 6px;
       padding: 10px;
-      background: #1CA3AEB8;
+      background: #74AFFF;
       font-weight: 600;
       font-size: 16px;
       color: #fff;
       &:disabled {
-        background: #AEECF1B8;
+        background: #C4DDFF;
         color: #9f9f9f;
       }
       &:hover {
@@ -161,7 +161,7 @@
       }
       &.cancel {
         background: #fff;
-        border: 1px solid #1CA3AEB8;
+        border: 1px solid #74AFFF;
         color: #000;
       }
     }

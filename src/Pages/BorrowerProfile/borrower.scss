@@ -4,7 +4,7 @@
   column-gap: 2.5rem;
   grid-template-columns: 100%;
   grid-template-rows: auto 1fr;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Inter", sans-serif;
   grid-template-areas: "heading" "widgets" "info";
   @media (min-width: 1024px) {
       grid-template-columns: calc(65% - 1.25rem) calc(35% - 1.25rem);
@@ -130,7 +130,7 @@
         transition-property: max-width;
         transition-timing-function: cubic-bezier(.4,0,.2,1);
         --tw-bg-opacity: 1;
-        background-color: #1ca3ae;
+        background-color: #74AFFF;
         width: 100%;
       }
       .gray > .full-box, .red > .full-box {
@@ -579,7 +579,7 @@
     margin-top: 10px;
 
     .title {
-      font-family: "Open Sans";
+      font-family: "Inter";
       font-style: normal;
       font-weight: 600;
       font-size: 24px;
@@ -590,7 +590,7 @@
       margin: 10px 0px;
     }
     .subtitle {
-      font-family: "Open Sans";
+      font-family: "Inter";
       font-style: normal;
       font-weight: 600;
       font-size: 20px;
@@ -608,7 +608,7 @@
       justify-content: flex-start;
       align-items: flex-start;
       .factsheet {
-        font-family: "Open Sans";
+        font-family: "Inter";
         font-style: normal;
         font-weight: 600;
         font-size: 24px;
@@ -626,7 +626,7 @@
         .details-item {
           margin: 5px;
           .bold {
-            font-family: "Open Sans";
+            font-family: "Inter";
             font-style: normal;
             font-weight: 700;
             font-size: 14px;
@@ -634,7 +634,7 @@
             color: #000000;
           }
           .normie {
-            font-family: "Open Sans";
+            font-family: "Inter";
             font-style: normal;
             font-weight: 400;
             font-size: 14px;

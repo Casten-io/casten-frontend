@@ -9,7 +9,7 @@
     }
     .table-body {
       .body-row:hover {
-        background-color: #d2edef;
+        background-color: #C4DDFF;
         cursor: pointer;
       }
     }
@@ -18,14 +18,14 @@
 
 .action-btn {
   border: none;
-  background-color: #1ca3ae;
+  background-color: #74AFFF;
   border-radius: 45px;
   color: #fff;
   padding: 10px 25px;
   cursor: pointer;
   &.cancel {
     background-color: #fff;
-    border: 1px solid #1ca3ae;
-    color: #1ca3ae;
+    border: 1px solid #74AFFF;
+    color: #74AFFF;
   }
 }

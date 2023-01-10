@@ -12,6 +12,13 @@ $xl: 1536px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    .header-logo {
+      height: 50px;
+      width: 160px;
+      img.casten-logo {
+        width: 100%;
+      }
+    }
     .dapp-items {
       display: flex;
       flex-direction: row;

@@ -2,7 +2,6 @@
   min-width: 280px;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
   margin-top: 100px;
   z-index: 0;
   .dapp-nav {
@@ -20,7 +19,7 @@
       width: 100%;
       cursor: pointer;
       .text {
-        font-family: "Open Sans";
+        font-family: "Inter";
         font-style: normal;
         font-weight: 600;
         font-size: 16px;
@@ -29,7 +28,7 @@
         color: #959595;
       }
       .text-special {
-        font-family: "Open Sans";
+        font-family: "Inter";
         font-style: normal;
         font-weight: 600;
         font-size: 16px;
@@ -44,13 +43,13 @@
       justify-content: flex-start;
       align-items: center;
 
-      background-color: #cee9eb;
+      background-color: #C4DDFF;
       border-radius: 8px;
       padding: 0px 8px;
       width: 100%;
       cursor: pointer;
       .text {
-        font-family: "Open Sans";
+        font-family: "Inter";
         font-style: normal;
         font-weight: 600;
         font-size: 16px;
@@ -59,7 +58,7 @@
         color: #959595;
       }
       .text-special {
-        font-family: "Open Sans";
+        font-family: "Inter";
         font-style: normal;
         font-weight: 600;
         font-size: 16px;
@@ -75,13 +74,13 @@
       flex-direction: row;
       justify-content: flex-start;
       align-items: center;
-      background-color: #cee9eb;
+      background-color: #C4DDFF;
       border-radius: 8px;
       padding: 0px 8px;
       width: 100%;
       cursor: pointer;
       .text {
-        font-family: "Open Sans";
+        font-family: "Inter";
         font-style: normal;
         font-weight: 600;
         font-size: 16px;
@@ -90,7 +89,7 @@
         color: #959595;
       }
       .text-special {
-        font-family: "Open Sans";
+        font-family: "Inter";
         font-style: normal;
         font-weight: 600;
         font-size: 16px;
@@ -110,7 +109,7 @@
       width: 100%;
       cursor: pointer;
       .text {
-        font-family: "Open Sans";
+        font-family: "Inter";
         font-style: normal;
         font-weight: 600;
         font-size: 16px;
@@ -119,7 +118,7 @@
         color: #959595;
       }
       .text-special {
-        font-family: "Open Sans";
+        font-family: "Inter";
         font-style: normal;
         font-weight: 600;
         font-size: 16px;
