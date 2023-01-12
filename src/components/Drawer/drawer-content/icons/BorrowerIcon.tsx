@@ -13,7 +13,7 @@ function BorrowerIcon() {
         rx="10"
         ry="4.4"
         fill="black"
-        fill-opacity="0.5"
+        fillOpacity="0.5"
       />
       <ellipse
         cx="10"
@@ -21,7 +21,7 @@ function BorrowerIcon() {
         rx="5"
         ry="4.8"
         fill="black"
-        fill-opacity="0.5"
+        fillOpacity="0.5"
       />
     </svg>
   );

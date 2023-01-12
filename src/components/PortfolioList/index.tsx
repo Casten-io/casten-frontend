@@ -313,7 +313,7 @@ function PortfolioList() {
           <Typography>
             available amount of {selectedTranche} Pool
             is {(
-              Number(withdrawalAmount[selectedTranche === 'Senior' ? 'remainingSeniorToken' : 'remainingJuniorToken']) / (10 ** (contractInfo.DAI_TOKEN.TOKEN_DECIMALS || 18))).toFixed(4)}
+              Number(withdrawalAmount[selectedTranche === 'Senior' ? 'remainingSeniorToken' : 'remainingJuniorToken']) / (10 ** (contractInfo?.DAI_TOKEN?.TOKEN_DECIMALS || 18))).toFixed(4)}
           </Typography>
           <Box display="flex" justifyContent="space-between" mt={2}>
             <button onClick={() => setOpenWithdraw(false)} className="action-btn cancel" type="button">
@@ -340,7 +340,7 @@ function PortfolioList() {
               <TableCell className="head-cell">Invested On</TableCell>
               <TableCell className="head-cell">Amt. Invested</TableCell>
               <TableCell className="head-cell">Exposure</TableCell>
-              <TableCell className="head-cell">% Exp</TableCell>
+              <TableCell className="head-cell">Claim Interest</TableCell>
               <TableCell className="head-cell">Claim/Withdraw</TableCell>
             </TableRow>
           </TableHead>
@@ -351,9 +351,9 @@ function PortfolioList() {
                   <CircularProgress />
                 </Box>
               </TableCell>
-            </TableRow> : orderList.map((row) => (
+            </TableRow> : orderList.map((row, i) => (
               <TableRow
-                key={row.sec_name}
+                key={i}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 className="body-row"
               >
@@ -370,7 +370,16 @@ function PortfolioList() {
                 <TableCell>{row.evt_block_time ? new Date(row.evt_block_time).toLocaleString() : '-'}</TableCell>
                 <TableCell>{row.amount_invested || '-'}</TableCell>
                 <TableCell>{row.exposure || '-'}</TableCell>
-                <TableCell>{row.percent_exp || '-'}</TableCell>
+                <TableCell>
+                  <button
+                    style={{ marginRight: '2rem' }}
+                    type="button"
+                    className="action-btn outlined"
+                    disabled={i % 3 === 0}
+                  >
+                    Claim Interest
+                  </button>
+                </TableCell>
                 <TableCell>
                   {actionBtns && <Box display="flex" width="100%" paddingY="10px" justifyContent="flex-end">
                     {withdrawalAmount[`remaining${row.Tranche}Token`].gt(BigNumber.from(0)) && <button

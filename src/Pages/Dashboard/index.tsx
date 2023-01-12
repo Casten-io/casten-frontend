@@ -46,7 +46,7 @@ function Dashboard() {
       .catch((error) => console.error('error while fetching user\'s orders: ', error));
   }, [tolExecutionId]);
 
-  const card = (text: string, value: number = 12000000.00, sym: string = '$') => (
+  const card = (text: string, value: number = 10000.00, sym: string = '$') => (
     <CardContent>
       <Typography style={{ color: "#4B584D", fontFamily: "OpenSans" }}>{text}</Typography>
       <Typography variant="h5" component="div">
