@@ -38,3 +38,31 @@ $xl: 1536px;
     z-index: 0;
   }
 }
+
+
+.action-btn {
+  border: none;
+  background-color: #74AFFF;
+  border-radius: 45px;
+  color: #fff;
+  padding: 10px 25px;
+  cursor: pointer;
+  &:disabled {
+    background-color: #C3DDFF;
+  }
+  &.cancel {
+    background-color: #fff;
+    border: 1px solid #74AFFF;
+    color: #74AFFF;
+  }
+  &.outlined {
+    background-color: #FFF;
+    border: 2px solid #74AFFF;
+    color: #74Afff;
+    font-weight: bolder;
+    &:disabled {
+      border-color: #C3DDFF;
+      color: #C3DDFF;
+    }
+  }
+}

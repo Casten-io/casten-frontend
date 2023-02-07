@@ -3,7 +3,7 @@ import { store } from "./store";
 import { Provider, useDispatch } from "react-redux";
 import ViewBase from "./components/ViewBase";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import { Dashboard, TokenOfferings, BorrowerProfile, Portfolio } from "./Pages";
+import { Dashboard, TokenOfferings, BorrowerProfile, Portfolio, SecuritizeAuthorize } from "./Pages";
 
 import Order from "./components/Order";
 
@@ -19,6 +19,7 @@ function App() {
               <Route path="/asset" element={<Order />} />
               <Route path="/borrower" element={<BorrowerProfile />} />
               <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/securitize-authorize" element={<SecuritizeAuthorize />} />
             </Routes>
           </ViewBase>
         </div>

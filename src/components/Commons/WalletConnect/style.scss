@@ -13,6 +13,10 @@
   &.connected {
     background-color: #fff;
   }
+  &.disconnect {
+    padding: 3px 7px;
+    margin-left: 5px;
+  }
 
   .wallet-text {
     color: #f2f2f2;

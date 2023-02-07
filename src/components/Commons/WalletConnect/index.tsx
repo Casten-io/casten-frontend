@@ -5,8 +5,9 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { updateExecution, walletConnect } from "../../../store/slices/account";
+import { updateExecution, walletConnect, disconnect } from "../../../store/slices/account";
 import { RootState } from "../../../store";
+import LogoutIcon from '../../../assets/icons/logout.svg'
 import "./style.scss";
 import { backendUrl } from '../../../constants';
 import SwitchNetworkModal from './SwitchNetworkModal';
@@ -16,6 +17,7 @@ function WalletConnect() {
   const [wrongNetwork, setWrongNetwork] = useState<boolean>(false)
   const [showSwitchNetworkModal, setShowSwitchNetworkModal] = useState<boolean>(false)
   const dispatch = useDispatch();
+  const isWalletConnected = useSelector((state: RootState) => state.account.isWalletConnected);
   const address = useSelector((state: RootState) => state.account.address);
   const stateProvider = useSelector((state: RootState) => state.account.provider);
   const stateNetworkInfo = useSelector((state: RootState) => state.account.networkInfo);
@@ -97,6 +99,7 @@ function WalletConnect() {
     // Subscribe to provider disconnection
     provider.on("disconnect", (error: { code: number; message: string }) => {
       console.log(error);
+      dispatch(disconnect());
     });
   }
 
@@ -108,7 +111,7 @@ function WalletConnect() {
     const ethersProvider = new providers.Web3Provider(provider);
     const network = await ethersProvider.getNetwork();
     const userAddress = await ethersProvider.getSigner().getAddress();
-    subscribeProvider(provider)
+    subscribeProvider(provider);
     dispatch(
       walletConnect({
         provider: ethersProvider,
@@ -116,8 +119,16 @@ function WalletConnect() {
         networkInfo: network
       })
     );
-    executeQuery(userAddress)
+    executeQuery(userAddress);
   }
+
+  useEffect(() => {
+    if (web3Modal && !address && isWalletConnected) {
+      console.log('connecting')
+      connectWallet()
+        .catch((err) => console.error('error while reconnecting: ', err));
+    }
+  }, [address, isWalletConnected, web3Modal])
 
   if (wrongNetwork && address) {
     return (
@@ -138,24 +149,31 @@ function WalletConnect() {
     );
   }
   return (
-    <div className={`wallet-connect${address ? ' connected' : ''}`} onClick={connectWallet}>
-      {!address && <p className="wallet-text">Connect Wallet</p>}
-      {!wrongNetwork && address && (
-        <div className="connected-items">
-          <div className="metamask">
-            <Jazzicon
-              diameter={20}
-              seed={jsNumberForAddress(address)}
-            />
+    <>
+      <div className={`wallet-connect${address ? ' connected' : ''}`} onClick={connectWallet}>
+        {!address && <p className="wallet-text">Connect Wallet</p>}
+        {!wrongNetwork && address && (
+          <div className="connected-items">
+            <div className="metamask">
+              <Jazzicon
+                diameter={20}
+                seed={jsNumberForAddress(address)}
+              />
+            </div>
+            <p className="address">
+              {address.substring(0, 5) +
+                "..." +
+                address.substring(address.length - 5)}
+            </p>
           </div>
-          <p className="address">
-            {address.substring(0, 5) +
-              "..." +
-              address.substring(address.length - 5)}
-          </p>
+        )}
+      </div>
+      {!wrongNetwork && address && <div className="wallet-connect connected disconnect" onClick={() => dispatch(disconnect())}>
+        <div className="connected-items">
+          <img src={LogoutIcon} style={{width: 20, height: 20}} alt="logout" />
         </div>
-      )}
-    </div>
+      </div>}
+    </>
   );
 }
 

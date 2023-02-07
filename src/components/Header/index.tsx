@@ -9,7 +9,7 @@ import "./header.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { makeStyles } from "@mui/styles";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface IHeader {
   handleDrawerToggle: () => void;
@@ -49,6 +49,7 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
   const networkInfo = useSelector((state: RootState) => state.account.networkInfo);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handlePortfolioClick = () => {
     navigate("/portfolio");
@@ -66,7 +67,7 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
           <img src={Casten} alt="Casten Logo" className="casten-logo" />
         </div>
         <div className="dapp-items">
-          {address && networkInfo && [137, 80001].includes(networkInfo.chainId) && (
+          {!['/securitize-authorize'].includes(location.pathname) && address && networkInfo && [137, 80001].includes(networkInfo.chainId) && (
             <div className="portfolio-container">
               <div className="portfolio-button" onClick={handlePortfolioClick}>
                 Portfolio Manager
