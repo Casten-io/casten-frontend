@@ -20,6 +20,7 @@ function App() {
               <Route path="/borrower" element={<BorrowerProfile />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/securitize-authorize" element={<SecuritizeAuthorize />} />
+              <Route path="/securitize-kyc-doc-uploaded" element={<SecuritizeAuthorize />} />
             </Routes>
           </ViewBase>
         </div>

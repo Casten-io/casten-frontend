@@ -1,19 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Box, CircularProgress } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { backendUrl, securitizeDomainId, securitizeURL } from '../../constants';
-import { updateSercuritizeDetails } from '../../store/slices/account';
+import { updateKYCStatus, updateSercuritizeDetails } from '../../store/slices/account';
 import { RootState } from '../../store';
 
 const SecuritizeAuthorize = () => {
   const [query] = useSearchParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const wallet = useSelector((state: RootState) => state.account.address)
-  const securitizeAT = useSelector((state: RootState) => state.account.securitizeAT)
+  const wallet = useSelector((state: RootState) => state.account.address);
+  const securitizeAT = useSelector((state: RootState) => state.account.securitizeAT);
+  const kycStatus = useSelector((state: RootState) => state.account.kycStatus);
+  const [checking, setChecking] = useState<boolean>(true)
 
   const authorizeCode = () => {
     fetch(`${backendUrl}/auth/authenticate-securitize`, {
@@ -29,7 +31,8 @@ const SecuritizeAuthorize = () => {
     })
       .then((resp) => resp.json())
       .then((respJson: any) => {
-        dispatch(updateSercuritizeDetails(respJson.data))
+        dispatch(updateSercuritizeDetails(respJson.data));
+        fetchKycStatus();
         // navigate('/')
       })
       .catch((error) => {
@@ -37,13 +40,40 @@ const SecuritizeAuthorize = () => {
       });
   }
 
+  const fetchKycStatus = () => {
+    fetch(`${backendUrl}/investor/kyc-status/${wallet}`, {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        'Content-type': 'application/json',
+      },
+    })
+      .then((resp) => resp.json())
+      .then((respJson: any) => {
+        dispatch(updateKYCStatus(respJson.data));
+        setChecking(false);
+        if (['verified', 'manual-review', 'processing'].includes(respJson.data.kycStatus)) {
+          return navigate('/');
+        }
+      })
+      .catch((error) => {
+        console.error('failed to authenticate code: ', error);
+      });
+  }
+
   useEffect(() => {
     console.log('code: ', query.get('code'))
-    if (!query.get('code')) {
+    if (!query.get('code') && !query.get('kycDocUploaded')) {
       return navigate('/');
     }
     if (wallet) {
-      authorizeCode()
+      if (query.get('code') && !securitizeAT) {
+        authorizeCode();
+        return;
+      }
+      if (query.get('kycDocUploaded')) {
+        fetchKycStatus();
+      }
     }
   }, [wallet]);
 
@@ -55,15 +85,30 @@ const SecuritizeAuthorize = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-    }}
+      }}
     >
       {!securitizeAT && <CircularProgress sx={{ width: 200, height: 200 }}/>}
-      {securitizeAT && <a
-        href={`${securitizeURL}/#/profile/verification/type?issuerId=${securitizeDomainId}&scope=info%20details%20verification&redirecturl=${window.location.origin}/securitize-authorize?kyc-doc-upload=1`}
-        className="action-btn"
+
+      {securitizeAT && !checking && <Box
+        sx={{
+          maxWidth: '500px',
+          width: '90%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
       >
-        Upload KYC Documents
-      </a>}
+        {kycStatus && ['updates-required', 'rejected', 'expired'].includes(kycStatus) && <p>
+          KYC {kycStatus === 'updates-required' ? 'requires a update' : `is ${kycStatus}`}
+        </p>}
+        <a
+          href={`${securitizeURL}/#/profile/verification/type?issuerId=${securitizeDomainId}&scope=info%20details%20verification&redirecturl=${window.location.origin}/securitize-kyc-doc-uploaded`}
+          className="action-btn"
+        >
+          Upload your KYC Documents{kycStatus && ['updates-required', 'rejected', 'expired'].includes(kycStatus) && ' again'}
+        </a>
+      </Box>}
     </Box>
   </>;
 };

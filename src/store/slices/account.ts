@@ -17,6 +17,7 @@ export interface AccountState {
     securitizeAT?: string;
     securitizeRT?: string;
     securitizeId?: string;
+    kycStatus?: string;
 }
 
 const initialState: AccountState = {
@@ -26,7 +27,8 @@ const initialState: AccountState = {
     isWalletConnected: Boolean(Number(localStorage?.getItem('isWalletConnected'))),
     securitizeAT: localStorage?.getItem('sAT') || undefined,
     securitizeRT: localStorage?.getItem('sRT') || undefined,
-    securitizeId: localStorage?.getItem('sID') || undefined
+    securitizeId: localStorage?.getItem('sID') || undefined,
+    kycStatus: localStorage?.getItem('sKS') || undefined,
 }
 
 export const accountSlice = createSlice({
@@ -49,6 +51,10 @@ export const accountSlice = createSlice({
         updateTotalOriginatedLoans: (state, action) => {
             state.totalOriginatedLoans = action.payload.totalOriginatedLoans;
         },
+        updateKYCStatus: (state, action) => {
+            state.kycStatus = action.payload.kycStatus;
+            localStorage?.setItem('sKS', action.payload.kycStatus || state.kycStatus);
+        },
         updateSercuritizeDetails: (state, action) => {
             state.securitizeAT = action.payload.at || state.securitizeAT;
             state.securitizeRT = action.payload.rt || state.securitizeRT;
@@ -65,10 +71,12 @@ export const accountSlice = createSlice({
             state.securitizeAT = undefined;
             state.securitizeRT = undefined;
             state.securitizeId = undefined;
+            state.kycStatus = undefined;
             localStorage?.removeItem('sAT');
             localStorage?.removeItem('sRT');
             localStorage?.removeItem('sID');
             localStorage?.removeItem('isWalletConnected');
+            localStorage?.removeItem('sKS');
         },
     },
 })
@@ -81,6 +89,7 @@ export const {
     updateTotalOriginatedLoans,
     updateSercuritizeDetails,
     disconnect,
+    updateKYCStatus,
 } = accountSlice.actions
 
 export default accountSlice.reducer

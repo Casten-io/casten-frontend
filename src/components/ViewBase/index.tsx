@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./view-base.scss";
 import Header from "../Header";
-import { Contract } from "ethers";
-import { Hidden, Modal, TextField, Typography, useMediaQuery } from "@mui/material";
+import { BigNumber, Contract } from "ethers";
+import { Hidden, LinearProgress, Modal, TextField, Typography, useMediaQuery } from "@mui/material";
 import { Theme } from "@mui/material/styles";
 import { DRAWER_WIDTH, TRANSITION_DURATION } from "../../constants/style";
 import Drawer from "../Drawer";
@@ -15,6 +15,9 @@ import { backendUrl, securitizeDomainId, securitizeURL } from '../../constants';
 import { updateAssetListExecution, updateTotalOriginatedLoans } from '../../store/slices/account';
 import { RootState } from '../../store';
 import { Address, ADDRESS_BY_NETWORK_ID } from '../../constants/address';
+import Casten from '../../assets/icons/Casten.png';
+import { parseBalance, scanTxLink } from '../../utils';
+import ArrowNE from '../../assets/icons/Arrow-NorthEast.svg';
 
 interface IViewBaseProps {
   children: React.ReactNode;
@@ -138,26 +141,55 @@ function ViewBase({ children }: IViewBaseProps) {
         </div>
       )}
       <Modal
-        open={Boolean(address && !memberListChecking && !isMember && !securitizeAT)}
+        open={Boolean(address && !memberListChecking && !isMember && !securitizeAT && location.pathname !== '/securitize-authorize')}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title">
-            Please complete your KYC
-          </Typography>
-          <Box display="flex" justifyContent="space-between" mt={2}>
-            {!securitizeAT && <a href={`${
-              securitizeURL
-            }/#/authorize?issuerId=${
-              securitizeDomainId
-            }&scope=info%20details%20verification&redirecturl=${window.location.origin}/securitize-authorize`}
-                className="action-btn" type="button">
-              Complete KYC
-            </a>}
-          </Box>
+        <Box className="invest-modal">
+          <>
+            <Box className="header-img">
+              <img src={Casten} alt="Casten Logo" className="casten-logo" />
+            </Box>
+            <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" mb={2}>
+              <Typography id="loader-text" variant="caption" component="span">
+                Please complete the KYC process to enable investment.
+              </Typography>
+            </Box>
+            <Box className="form-btns">
+              {!securitizeAT && <a
+                href={`${
+                  securitizeURL
+                }/#/authorize?issuerId=${
+                  securitizeDomainId
+                }&scope=info%20details%20verification&redirecturl=${window.location.origin}/securitize-authorize`}
+              >
+                Complete KYC
+              </a>}
+            </Box>
+          </>
         </Box>
       </Modal>
+      {/*<Modal*/}
+      {/*  open={Boolean(address && !memberListChecking && !isMember && !securitizeAT && location.pathname !== '/securitize-authorize')}*/}
+      {/*  aria-labelledby="modal-modal-title"*/}
+      {/*  aria-describedby="modal-modal-description"*/}
+      {/*>*/}
+      {/*  <Box sx={style}>*/}
+      {/*    <Typography id="modal-modal-title">*/}
+      {/*      Please complete your KYC*/}
+      {/*    </Typography>*/}
+      {/*    <Box display="flex" justifyContent="space-between" mt={2}>*/}
+      {/*      {!securitizeAT && <a href={`${*/}
+      {/*        securitizeURL*/}
+      {/*      }/#/authorize?issuerId=${*/}
+      {/*        securitizeDomainId*/}
+      {/*      }&scope=info%20details%20verification&redirecturl=${window.location.origin}/securitize-authorize`}*/}
+      {/*          className="action-btn" type="button">*/}
+      {/*        Complete KYC*/}
+      {/*      </a>}*/}
+      {/*    </Box>*/}
+      {/*  </Box>*/}
+      {/*</Modal>*/}
       {!['/', '/securitize-authorize'].includes(location.pathname) && <div className={"content"}>{children}</div>}
       {['/', '/securitize-authorize'].includes(location.pathname) && (
         <div className={`content-dash`}>{children}</div>
