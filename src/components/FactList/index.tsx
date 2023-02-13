@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { ethers, BigNumber } from 'ethers';
+import { useDispatch, useSelector } from 'react-redux';
+import { ethers, BigNumber, Contract } from 'ethers';
 import { Modal, Typography, Box, TextField, debounce, LinearProgress } from '@mui/material';
 import { Paper, Table, TableBody, TableHead, TableRow, TableCell, TableContainer } from '@mui/material';
 
@@ -15,6 +15,7 @@ import Casten from '../../assets/icons/Casten.png';
 import useTokenBalance from '../../hooks/useTokenBalance';
 
 import './style.scss';
+import { toggleKycModal, updateWhitelistStatus } from '../../store/slices/account';
 
 export interface IFactsheet {
   secId: string;
@@ -87,9 +88,12 @@ function FactList() {
   ];
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const networkInfo = useSelector((state: RootState) => state.account.networkInfo);
   const provider = useSelector((state: RootState) => state.account.provider);
   const address = useSelector((state: RootState) => state.account.address);
+  const whitelistStatus = useSelector((state: RootState) => state.account.whitelistStatus);
+  const whitelistStatusTimestamp = useSelector((state: RootState) => state.account.whitelistCheckTimestamp) || 0;
   const executionId = useSelector((state: RootState) => state.account.executionId);
   const [switchNetworkOpen, setSwitchNetworkOpen] = useState(false);
   const [investIn, setInvestIn] = useState<any | null>(null);
@@ -275,6 +279,48 @@ function FactList() {
     }
   }, [address]);
 
+  const checkWhitelistAndOpenInvestPopup = (investFact: any) => async () => {
+    if (wrongNetwork) {
+      setSwitchNetworkOpen(true);
+    }
+    const timestampDiff = Date.now() / 1000 - whitelistStatusTimestamp
+    if (!whitelistStatus) {
+      let isMember: boolean = whitelistStatus;
+      if (timestampDiff > 240) {
+        if (!contractInfo || !networkInfo?.chainId || !address || !provider) {
+          return;
+        }
+        const memberContract = new Contract(
+          contractInfo.JUNIOR_MEMBER_LIST.address,
+          contractInfo.JUNIOR_MEMBER_LIST.ABI,
+          provider.getSigner(),
+        );
+
+        isMember = await memberContract.hasMember(address);
+        if (networkInfo?.chainId === 80001) {
+          const memberContract = new Contract(
+            contractInfo.SENIOR_MEMBER_LIST.address,
+            contractInfo.SENIOR_MEMBER_LIST.ABI,
+            provider.getSigner(),
+          );
+
+          const isSeniorMember = await memberContract.hasMember(address);
+          isMember = isMember && isSeniorMember;
+        }
+        dispatch(updateWhitelistStatus(isMember));
+      }
+      if (!isMember) {
+        dispatch(toggleKycModal());
+        return;
+      }
+    }
+    if (pendingSupply[investFact.tranche].gt(BigNumber.from(0))) {
+      setWarningPendingSupply(investFact);
+      return;
+    }
+    setInvestIn(investFact);
+  }
+
   useEffect(() => {
     fetchUserOrders()
   }, [fetchUserOrders])
@@ -285,6 +331,7 @@ function FactList() {
   const apyDeduction = apy * 0.1;
   const insufficientBalance =
     Number(parseBalance(tokenBalance || 0, 2, contractInfo?.DAI_TOKEN?.TOKEN_DECIMALS)) < Number(investAmount);
+  console.log('invest button disabled: ', !address, checkingPendingOrders, !whitelistStatusTimestamp)
   return (
     <>
       <SwitchNetworkModal close={() => setSwitchNetworkOpen(false)} open={switchNetworkOpen}/>
@@ -323,17 +370,8 @@ function FactList() {
                 <TableCell className="invest-button">
                   <button
                     className="invest"
-                    onClick={() => {
-                      if (wrongNetwork) {
-                        setSwitchNetworkOpen(true);
-                      }
-                      if (pendingSupply[row.tranche].gt(BigNumber.from(0))) {
-                        setWarningPendingSupply(row);
-                        return;
-                      }
-                      setInvestIn(row);
-                    }}
-                    disabled={!address || checkingPendingOrders}
+                    onClick={checkWhitelistAndOpenInvestPopup(row)}
+                    disabled={!address || checkingPendingOrders || !whitelistStatusTimestamp}
                     title={'Please connect your wallet to enable invest'}
                   >
                     Invest
@@ -483,9 +521,7 @@ function FactList() {
                 Tx <img src={ArrowNE} alt="arrow-north-east"/>
               </a>
             </Box>}
-            {(
-              supplyTxHash
-            ) && <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+            {supplyTxHash && <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
               <Typography id="supply-tx-link" variant="caption" component="span">
                 Supply Transaction
               </Typography>

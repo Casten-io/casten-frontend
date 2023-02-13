@@ -18,6 +18,9 @@ export interface AccountState {
     securitizeRT?: string;
     securitizeId?: string;
     kycStatus?: string;
+    whitelistStatus: boolean;
+    whitelistCheckTimestamp?: number;
+    showKycModal?: boolean;
 }
 
 const initialState: AccountState = {
@@ -29,6 +32,7 @@ const initialState: AccountState = {
     securitizeRT: localStorage?.getItem('sRT') || undefined,
     securitizeId: localStorage?.getItem('sID') || undefined,
     kycStatus: localStorage?.getItem('sKS') || undefined,
+    whitelistStatus: false,
 }
 
 export const accountSlice = createSlice({
@@ -54,6 +58,13 @@ export const accountSlice = createSlice({
         updateKYCStatus: (state, action) => {
             state.kycStatus = action.payload.kycStatus;
             localStorage?.setItem('sKS', action.payload.kycStatus || state.kycStatus);
+        },
+        updateWhitelistStatus: (state, action) => {
+            state.whitelistStatus = action.payload;
+            state.whitelistCheckTimestamp = Date.now() / 1000
+        },
+        toggleKycModal: (state) => {
+            state.showKycModal = !state.showKycModal;
         },
         updateSercuritizeDetails: (state, action) => {
             state.securitizeAT = action.payload.at || state.securitizeAT;
@@ -90,6 +101,8 @@ export const {
     updateSercuritizeDetails,
     disconnect,
     updateKYCStatus,
+    updateWhitelistStatus,
+    toggleKycModal,
 } = accountSlice.actions
 
 export default accountSlice.reducer

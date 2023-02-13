@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { Box, CircularProgress } from '@mui/material'
+import { Box, CircularProgress, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -16,6 +16,7 @@ const SecuritizeAuthorize = () => {
   const securitizeAT = useSelector((state: RootState) => state.account.securitizeAT);
   const kycStatus = useSelector((state: RootState) => state.account.kycStatus);
   const [checking, setChecking] = useState<boolean>(true)
+  const [error, setError] = useState<any | null>()
 
   const authorizeCode = () => {
     fetch(`${backendUrl}/auth/authenticate-securitize`, {
@@ -31,12 +32,17 @@ const SecuritizeAuthorize = () => {
     })
       .then((resp) => resp.json())
       .then((respJson: any) => {
+        if (respJson.statusCode === 409) {
+          setChecking(false);
+          setError(respJson);
+          return;
+        }
         dispatch(updateSercuritizeDetails(respJson.data));
         fetchKycStatus();
         // navigate('/')
       })
       .catch((error) => {
-        console.error('failed to authenticate code: ', error)
+        console.error('failed to authenticate code: ', error);
       });
   }
 
@@ -87,7 +93,7 @@ const SecuritizeAuthorize = () => {
         justifyContent: 'center',
       }}
     >
-      {!securitizeAT && <CircularProgress sx={{ width: 200, height: 200 }}/>}
+      {!securitizeAT && checking && <CircularProgress sx={{ width: 200, height: 200 }}/>}
 
       {securitizeAT && !checking && <Box
         sx={{
@@ -107,6 +113,29 @@ const SecuritizeAuthorize = () => {
           className="action-btn"
         >
           Upload your KYC Documents{kycStatus && ['updates-required', 'rejected', 'expired'].includes(kycStatus) && ' again'}
+        </a>
+      </Box>}
+      {error?.statusCode === 409 && !checking && <Box
+        sx={{
+          maxWidth: '500px',
+          width: '90%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Typography id="loader-text" variant="caption" component="span" sx={{ marginBottom: '10px' }}>
+          Securitize Account already connected with another wallet. Sign out of existing account and Sign In with different account.
+        </Typography>
+        {kycStatus && ['updates-required', 'rejected', 'expired'].includes(kycStatus) && <p>
+          KYC {kycStatus === 'updates-required' ? 'requires a update' : `is ${kycStatus}`}
+        </p>}
+        <a
+          href={`${securitizeURL}/#/authorize?issuerId=${securitizeDomainId}&scope=info%20details%20verification&redirecturl=${window.location.origin}/securitize-authorize`}
+          className="action-btn"
+        >
+          Reconnect Securitize Account
         </a>
       </Box>}
     </Box>
