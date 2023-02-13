@@ -59,7 +59,8 @@ const SecuritizeAuthorize = () => {
         dispatch(updateKYCStatus(respJson.data));
         setChecking(false);
         if (['verified', 'manual-review', 'processing'].includes(respJson.data.kycStatus)) {
-          return navigate('/');
+          setTimeout(() => navigate('/'), 1000);
+          return;
         }
       })
       .catch((error) => {
