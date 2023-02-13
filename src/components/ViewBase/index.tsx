@@ -103,7 +103,17 @@ function ViewBase({ children }: IViewBaseProps) {
       provider.getSigner(),
     );
 
-    const isMember = await memberContract.hasMember(address);
+    let isMember = await memberContract.hasMember(address);
+    if (networkInfo?.chainId === 80001) {
+      const memberContract = new Contract(
+        contractInfo.SENIOR_MEMBER_LIST.address,
+        contractInfo.SENIOR_MEMBER_LIST.ABI,
+        provider.getSigner(),
+      );
+
+      const isSeniorMember = await memberContract.hasMember(address);
+      isMember = isMember && isSeniorMember;
+    }
     setIsMember(isMember);
     setMemberListChecking(false);
   }, [address, networkInfo, contractInfo, provider]);
