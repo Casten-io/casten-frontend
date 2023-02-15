@@ -171,7 +171,7 @@ function ViewBase({ children }: IViewBaseProps) {
             ['processing', 'none', 'updates-required', 'rejected', 'expired'].includes(kycStatus) ||
             (!isMember && !securitizeAT)
           ) &&
-          showKycModal && !['/securitize-authorize', '/securitize-kyc-doc-uploaded'].includes(location.pathname)
+          showKycModal
         )}
         onClose={() => dispatch(toggleKycModal())}
         aria-labelledby="modal-modal-title"
@@ -188,7 +188,7 @@ function ViewBase({ children }: IViewBaseProps) {
                 'Please complete the KYC process to enable investment.'
                 :
                 ['none', 'updates-required', 'expired'].includes(kycStatus) ?
-                  'Please upload your KYC document to verify'
+                  'Please upload your KYC documents to verify'
                   :
                   kycStatus === 'rejected' ?
                     <span>KYC verification is <b>Rejected</b></span>

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { backendUrl, securitizeDomainId, securitizeURL } from '../../constants';
-import { updateKYCStatus, updateSercuritizeDetails } from '../../store/slices/account';
+import { toggleKycModal, updateKYCStatus, updateSercuritizeDetails } from '../../store/slices/account';
 import { RootState } from '../../store';
 
 const SecuritizeAuthorize = () => {
@@ -62,6 +62,8 @@ const SecuritizeAuthorize = () => {
         if (['verified', 'manual-review', 'processing'].includes(respJson.data.kycStatus)) {
           navigate('/');
           return;
+        } else {
+          dispatch(toggleKycModal())
         }
       })
       .catch((error) => {
@@ -71,7 +73,7 @@ const SecuritizeAuthorize = () => {
 
   useEffect(() => {
     console.log('code: ', query.get('code'))
-    if (!query.get('code') && !query.get('kycDocUploaded')) {
+    if (!query.get('code') && location.pathname !== '/securitize-kyc-doc-uploaded') {
       return navigate('/');
     }
     if (wallet) {
@@ -97,26 +99,26 @@ const SecuritizeAuthorize = () => {
     >
       {!securitizeAT && checking && <CircularProgress sx={{ width: 200, height: 200 }}/>}
 
-      {securitizeAT && !checking && <Box
-        sx={{
-          maxWidth: '500px',
-          width: '90%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        {kycStatus && ['updates-required', 'expired'].includes(kycStatus) && <p>
-          KYC {kycStatus === 'updates-required' ? 'requires a update' : `is ${kycStatus}`}
-        </p>}
-        <a
-          href={`${securitizeURL}/#/profile/verification/type?issuerId=${securitizeDomainId}&scope=info%20details%20verification&redirecturl=${window.location.origin}/securitize-kyc-doc-uploaded`}
-          className="action-btn"
-        >
-          Upload your KYC Documents{kycStatus && ['updates-required', 'expired'].includes(kycStatus) && ' again'}
-        </a>
-      </Box>}
+      {/*{securitizeAT && !checking && <Box*/}
+      {/*  sx={{*/}
+      {/*    maxWidth: '500px',*/}
+      {/*    width: '90%',*/}
+      {/*    display: 'flex',*/}
+      {/*    flexDirection: 'column',*/}
+      {/*    alignItems: 'center',*/}
+      {/*    justifyContent: 'center',*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  {kycStatus && ['updates-required', 'expired'].includes(kycStatus) && <p>*/}
+      {/*    KYC document {kycStatus === 'updates-required' ? 'requires a update' : `is ${kycStatus}`}*/}
+      {/*  </p>}*/}
+      {/*  <a*/}
+      {/*    href={`${securitizeURL}/#/profile/verification/type?issuerId=${securitizeDomainId}&scope=info%20details%20verification&redirecturl=${window.location.origin}/securitize-kyc-doc-uploaded`}*/}
+      {/*    className="action-btn"*/}
+      {/*  >*/}
+      {/*    Upload your KYC Documents{kycStatus && ['updates-required', 'expired'].includes(kycStatus) && ' again'}*/}
+      {/*  </a>*/}
+      {/*</Box>}*/}
       {error?.statusCode === 409 && !checking && <Box
         sx={{
           maxWidth: '500px',
@@ -130,9 +132,6 @@ const SecuritizeAuthorize = () => {
         <Typography id="loader-text" variant="caption" component="span" sx={{ marginBottom: '10px' }}>
           Securitize Account already connected with another wallet. Sign out of existing account and Sign In with different account.
         </Typography>
-        {kycStatus && ['updates-required', 'expired'].includes(kycStatus) && <p>
-          KYC {kycStatus === 'updates-required' ? 'requires a update' : `is ${kycStatus}`}
-        </p>}
         <a
           href={`${securitizeURL}/#/authorize?issuerId=${securitizeDomainId}&scope=info%20details%20verification&redirecturl=${window.location.origin}/securitize-authorize`}
           className="action-btn"
