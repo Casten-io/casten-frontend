@@ -261,7 +261,7 @@ function FactList() {
 
   const checkPendingSupplyOrders = useCallback(async () => {
     try {
-      if (!address) {
+      if (!address || !whitelistStatus) {
         return;
       }
       setCheckingPendingOrders(true);
@@ -331,7 +331,6 @@ function FactList() {
   const apyDeduction = apy * 0.1;
   const insufficientBalance =
     Number(parseBalance(tokenBalance || 0, 2, contractInfo?.DAI_TOKEN?.TOKEN_DECIMALS)) < Number(investAmount);
-  console.log('invest button disabled: ', !address, checkingPendingOrders, !whitelistStatusTimestamp)
   return (
     <>
       <SwitchNetworkModal close={() => setSwitchNetworkOpen(false)} open={switchNetworkOpen}/>
@@ -371,7 +370,7 @@ function FactList() {
                   <button
                     className="invest"
                     onClick={checkWhitelistAndOpenInvestPopup(row)}
-                    disabled={!address || checkingPendingOrders || !whitelistStatusTimestamp}
+                    disabled={!address || checkingPendingOrders}
                     title={'Please connect your wallet to enable invest'}
                   >
                     Invest

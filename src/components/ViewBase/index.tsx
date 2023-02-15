@@ -21,6 +21,7 @@ import {
 import { RootState } from '../../store';
 import { Address, ADDRESS_BY_NETWORK_ID } from '../../constants/address';
 import Casten from '../../assets/icons/Casten.png';
+import SecuritizeLogo from '../../assets/images/securitize-logo.svg';
 import Close from '../../assets/icons/close.svg';
 import { parseBalance, scanTxLink } from '../../utils';
 import ArrowNE from '../../assets/icons/Arrow-NorthEast.svg';
@@ -140,7 +141,11 @@ function ViewBase({ children }: IViewBaseProps) {
         handleDrawerToggle={handleDrawerToggle}
       />
 
-      {!['/', '/securitize-authorize'].includes(location.pathname) && (
+      {![
+        '/',
+        '/securitize-authorize',
+        '/securitize-kyc-doc-uploaded',
+      ].includes(location.pathname) && (
         <div className="drawer">
           <Box
             sx={{ display: { xs: "block", sm: "none" }, zIndex: 0 }}
@@ -166,7 +171,7 @@ function ViewBase({ children }: IViewBaseProps) {
             ['processing', 'none', 'updates-required', 'rejected', 'expired'].includes(kycStatus) ||
             (!isMember && !securitizeAT)
           ) &&
-          showKycModal && location.pathname !== '/securitize-authorize'
+          showKycModal && !['/securitize-authorize', '/securitize-kyc-doc-uploaded'].includes(location.pathname)
         )}
         onClose={() => dispatch(toggleKycModal())}
         aria-labelledby="modal-modal-title"
@@ -182,30 +187,40 @@ function ViewBase({ children }: IViewBaseProps) {
               {!securitizeAT ?
                 'Please complete the KYC process to enable investment.'
                 :
-                ['none', 'updates-required', 'rejected', 'expired'].includes(kycStatus) ?
+                ['none', 'updates-required', 'expired'].includes(kycStatus) ?
                   'Please upload your KYC document to verify'
                   :
-                  ['processing'].includes(kycStatus) && <span>KYC verification is in <b>Progress</b></span>
+                  kycStatus === 'rejected' ?
+                    <span>KYC verification is <b>Rejected</b></span>
+                    :
+                    kycStatus === 'processing' && <span>KYC verification is in <b>Progress</b></span>
               }
             </Typography>
           </Box>
           <Box className="form-btns">
-
-            {(!securitizeAT || ['none', 'updates-required', 'rejected', 'expired'].includes(kycStatus)) && <a
+            {(!securitizeAT || ['none', 'updates-required', 'expired'].includes(kycStatus)) && <a
               href={
-                ['none', 'updates-required', 'rejected', 'expired'].includes(kycStatus) ?
+                ['none', 'updates-required', 'expired'].includes(kycStatus) ?
                   `${securitizeURL}/#/profile/verification/type?issuerId=${securitizeDomainId}&scope=info%20details%20verification&redirecturl=${window.location.origin}/securitize-kyc-doc-uploaded`
                   :
                   `${securitizeURL}/#/authorize?issuerId=${securitizeDomainId}&scope=info%20details%20verification&redirecturl=${window.location.origin}/securitize-authorize`
               }
             >
-              {['none', 'updates-required', 'rejected', 'expired'].includes(kycStatus) ? 'Upload KYC Documents' : 'Complete KYC'}
+              {['none', 'updates-required', 'expired'].includes(kycStatus) ? 'Upload KYC Documents' : 'Complete KYC'}
             </a>}
+          </Box>
+          <Box className="modal-footer">
+            <Typography id="power-by-text" variant="caption" component="span">
+              powered by
+            </Typography>
+            <a href="https://securitize.io/securitize-id" target="_blank" rel="noreferrer noopener">
+              <img src={SecuritizeLogo} className="logo" alt="securitize-logo"/>
+            </a>
           </Box>
         </Box>
       </Modal>
-      {!['/', '/securitize-authorize'].includes(location.pathname) && <div className={"content"}>{children}</div>}
-      {['/', '/securitize-authorize'].includes(location.pathname) && (
+      {!['/', '/securitize-authorize', '/securitize-kyc-doc-uploaded'].includes(location.pathname) && <div className={"content"}>{children}</div>}
+      {['/', '/securitize-authorize', '/securitize-kyc-doc-uploaded'].includes(location.pathname) && (
         <div className={`content-dash`}>{children}</div>
       )}
     </div>

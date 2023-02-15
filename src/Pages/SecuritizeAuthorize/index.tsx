@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { Box, CircularProgress, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { backendUrl, securitizeDomainId, securitizeURL } from '../../constants';
 import { updateKYCStatus, updateSercuritizeDetails } from '../../store/slices/account';
@@ -12,6 +12,7 @@ const SecuritizeAuthorize = () => {
   const [query] = useSearchParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const wallet = useSelector((state: RootState) => state.account.address);
   const securitizeAT = useSelector((state: RootState) => state.account.securitizeAT);
   const kycStatus = useSelector((state: RootState) => state.account.kycStatus);
@@ -59,7 +60,7 @@ const SecuritizeAuthorize = () => {
         dispatch(updateKYCStatus(respJson.data));
         setChecking(false);
         if (['verified', 'manual-review', 'processing'].includes(respJson.data.kycStatus)) {
-          setTimeout(() => navigate('/'), 1000);
+          navigate('/');
           return;
         }
       })
@@ -78,7 +79,7 @@ const SecuritizeAuthorize = () => {
         authorizeCode();
         return;
       }
-      if (query.get('kycDocUploaded')) {
+      if (location.pathname === '/securitize-kyc-doc-uploaded') {
         fetchKycStatus();
       }
     }
@@ -106,14 +107,14 @@ const SecuritizeAuthorize = () => {
           justifyContent: 'center',
         }}
       >
-        {kycStatus && ['updates-required', 'rejected', 'expired'].includes(kycStatus) && <p>
+        {kycStatus && ['updates-required', 'expired'].includes(kycStatus) && <p>
           KYC {kycStatus === 'updates-required' ? 'requires a update' : `is ${kycStatus}`}
         </p>}
         <a
           href={`${securitizeURL}/#/profile/verification/type?issuerId=${securitizeDomainId}&scope=info%20details%20verification&redirecturl=${window.location.origin}/securitize-kyc-doc-uploaded`}
           className="action-btn"
         >
-          Upload your KYC Documents{kycStatus && ['updates-required', 'rejected', 'expired'].includes(kycStatus) && ' again'}
+          Upload your KYC Documents{kycStatus && ['updates-required', 'expired'].includes(kycStatus) && ' again'}
         </a>
       </Box>}
       {error?.statusCode === 409 && !checking && <Box
@@ -129,7 +130,7 @@ const SecuritizeAuthorize = () => {
         <Typography id="loader-text" variant="caption" component="span" sx={{ marginBottom: '10px' }}>
           Securitize Account already connected with another wallet. Sign out of existing account and Sign In with different account.
         </Typography>
-        {kycStatus && ['updates-required', 'rejected', 'expired'].includes(kycStatus) && <p>
+        {kycStatus && ['updates-required', 'expired'].includes(kycStatus) && <p>
           KYC {kycStatus === 'updates-required' ? 'requires a update' : `is ${kycStatus}`}
         </p>}
         <a

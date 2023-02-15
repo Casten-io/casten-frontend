@@ -69,7 +69,7 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
           <img src={Casten} alt="Casten Logo" className="casten-logo" />
         </div>
         <div className="dapp-items">
-          {!['/securitize-authorize'].includes(location.pathname) && address && networkInfo && [137, 80001].includes(networkInfo.chainId) && (
+          {!['/securitize-authorize', '/securitize-kyc-doc-uploaded'].includes(location.pathname) && address && networkInfo && [137, 80001].includes(networkInfo.chainId) && (
             <div className="portfolio-container">
               <div className="portfolio-button" onClick={handlePortfolioClick}>
                 Portfolio Manager

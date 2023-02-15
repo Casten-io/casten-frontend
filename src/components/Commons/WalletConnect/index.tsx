@@ -9,7 +9,7 @@ import { updateExecution, walletConnect, disconnect } from "../../../store/slice
 import { RootState } from "../../../store";
 import LogoutIcon from '../../../assets/icons/logout.svg'
 import "./style.scss";
-import { backendUrl } from '../../../constants';
+import { backendUrl, infuraId } from '../../../constants';
 import SwitchNetworkModal from './SwitchNetworkModal';
 
 function WalletConnect() {
@@ -27,7 +27,7 @@ function WalletConnect() {
       walletconnect: {
         package: WalletConnectProvider,
         options: {
-          infuraId: "",
+          infuraId,
         },
       },
     };

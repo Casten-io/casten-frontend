@@ -178,4 +178,14 @@ $xl: 1536px;
       }
     }
   }
+  .modal-footer {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img.logo {
+      height: 30px;
+      margin-left: 5px;
+    }
+  }
 }
