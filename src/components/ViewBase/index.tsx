@@ -21,6 +21,7 @@ import {
 import { RootState } from '../../store';
 import { Address, ADDRESS_BY_NETWORK_ID } from '../../constants/address';
 import Casten from '../../assets/icons/Casten.png';
+import KYCDoc from '../../assets/doc/KYC-procedures.pdf';
 import SecuritizeLogo from '../../assets/images/securitize-logo.svg';
 import Close from '../../assets/icons/close.svg';
 import { parseBalance, scanTxLink } from '../../utils';
@@ -184,16 +185,27 @@ function ViewBase({ children }: IViewBaseProps) {
           </Box>
           <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" mb={2}>
             <Typography id="loader-text" variant="caption" component="span">
-              {!securitizeAT ?
-                'Please complete the KYC process to enable investment.'
+              {!securitizeAT || ['none', 'updates-required', 'expired'].includes(kycStatus) ?
+                <>
+                  It appears you have not been approved to deposit on this Casten pool. To get approved,&nbsp;
+                  you need to Submit you <a href={KYCDoc} target="_blank" rel="noopener noreferrer">KYC Documents</a>.
+                  Once the information you provide is validated, you will be approved to deposit.
+                </>
                 :
-                ['none', 'updates-required', 'expired'].includes(kycStatus) ?
-                  'Please upload your KYC documents to verify'
+                kycStatus === 'rejected' ?
+                  <>
+                    Sorry! You are not approved to deposit at this time, please try again later.&nbsp;
+                    If you think this is a mistake, please reach us on&nbsp;
+                    <a
+                      href="https://discord.gg/gRUMG7R7"
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      discord
+                    </a>
+                  </>
                   :
-                  kycStatus === 'rejected' ?
-                    <span>KYC verification is <b>Rejected</b></span>
-                    :
-                    kycStatus === 'processing' && <span>KYC verification is in <b>Progress</b></span>
+                  kycStatus === 'processing' && <span>KYC verification is in <b>Progress</b></span>
               }
             </Typography>
           </Box>

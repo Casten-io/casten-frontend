@@ -84,14 +84,28 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
         display: 'flex',
         justifyContent: 'center',
         p: '8px 10px',
-        backgroundColor: '#C3DDFF',
+        color: kycStatus === 'rejected' || ['none', 'updates-required', 'expired'].includes(kycStatus) ? '#361F23' : '#FFF',
+        backgroundColor: kycStatus === 'rejected' ?
+          '#FFCCCA' : ['none', 'updates-required', 'expired'].includes(kycStatus) ?
+            '#FFE4D8' : '#C3DDFF',
       }}>
-        {['none', 'updates-required', 'rejected', 'expired'].includes(kycStatus) && <a
+        {['none', 'updates-required', 'expired'].includes(kycStatus) && <a
           href={`${securitizeURL}/#/profile/verification/type?issuerId=${securitizeDomainId}&scope=info%20details%20verification&redirecturl=${window.location.origin}/securitize-kyc-doc-uploaded`}
         >
           Upload your KYC Documents{kycStatus && ['updates-required', 'rejected', 'expired'].includes(kycStatus) && ' again'}
         </a>}
-        {['processing'].includes(kycStatus) && <span>KYC verification is in <b>Progress</b></span>}
+        {kycStatus === 'processing' && <span>KYC verification is in <b>Progress</b></span>}
+        {kycStatus === 'rejected' && <>
+          Sorry! You are not approved to deposit at this time, please try again later.&nbsp;
+          If you think this is a mistake, please reach us on&nbsp;
+          <a
+            href="https://discord.gg/gRUMG7R7"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            discord
+          </a>
+        </>}
       </Box>}
     </AppBar>
   );
