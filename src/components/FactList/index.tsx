@@ -371,7 +371,7 @@ function FactList() {
                     className="invest"
                     onClick={checkWhitelistAndOpenInvestPopup(row)}
                     disabled={!address || checkingPendingOrders}
-                    title={'Please connect your wallet to enable invest'}
+                    title={checkingPendingOrders ? 'checking for pending supply orders' : !address ? 'Please connect your wallet to enable invest' : ''}
                   >
                     Invest
                   </button>

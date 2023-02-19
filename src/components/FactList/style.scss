@@ -48,6 +48,10 @@
             border-radius: 45px;
             color: #fff;
             padding: 10px 25px;
+            cursor: pointer;
+            &:disabled {
+              cursor: not-allowed;
+            }
           }
         }
       }
@@ -61,6 +65,10 @@
             border-radius: 45px;
             color: #fff;
             padding: 10px 25px;
+            cursor: pointer;
+            &:disabled {
+              cursor: not-allowed;
+            }
           }
         }
       }
