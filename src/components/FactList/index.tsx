@@ -277,7 +277,7 @@ function FactList() {
     } catch (e) {
       console.error('failed to check pending supply orders: ', e);
     }
-  }, [address]);
+  }, [address, whitelistStatus]);
 
   const checkWhitelistAndOpenInvestPopup = (investFact: any) => async () => {
     if (wrongNetwork) {
