@@ -134,7 +134,6 @@ function ViewBase({ children }: IViewBaseProps) {
       .catch((error) => console.error('failed to check member in whitelist', error));
   }, [checkMemberInWhitelist]);
 
-  console.log('kycStatus: ', showKycModal);
   return (
     <div className="view-base-root">
       <Header

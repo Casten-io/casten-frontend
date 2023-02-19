@@ -314,7 +314,7 @@ function FactList() {
         return;
       }
     }
-    if (pendingSupply[investFact.tranche].gt(BigNumber.from(0))) {
+    if (pendingSupply[investFact.tranche]?.gt(BigNumber.from(0))) {
       setWarningPendingSupply(investFact);
       return;
     }
