@@ -251,13 +251,13 @@ function FactList() {
   }, [investIn, investAmount]);
 
   useEffect(() => {
-    if (address) {
+    if (address && whitelistStatus) {
       checkPendingSupplyOrders()
         .catch((e) => {
           console.error('failed to calculate withdrawal amount', e);
         });
     }
-  }, [address]);
+  }, [address, whitelistStatus]);
 
   const checkPendingSupplyOrders = useCallback(async () => {
     try {
