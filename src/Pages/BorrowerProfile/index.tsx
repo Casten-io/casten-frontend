@@ -107,7 +107,7 @@ function BorrowerProfile() {
                 <div>
                   <div className="tab-content">
                     <div>
-                      <div className="deal-overview section">
+                      <div className="deal-overview section" style={{ marginBottom: '0.5rem' }}>
                         <h2 className="title">
                           <a
                             href="https://docsend.com/view/s/hr387j9ft6kut5wg"
@@ -117,23 +117,23 @@ function BorrowerProfile() {
                             Deal Overview
                           </a>
                         </h2>
-                        <div className="text-content">
-                        <span>
-                          Proceeds will be used to provide additional backing to African fintechs in their quest to provide access to financial services to millions of traditionally underbanked customers. Our investments will include senior secured loans with covenants for additional downside protection. All loans will be secured by all-asset debentures, including our borrowers' lending receivables.
-                        </span>
-                        </div>
+                        {/*<div className="text-content">*/}
+                        {/*<span>*/}
+                        {/*  Proceeds will be used to provide additional backing to African fintechs in their quest to provide access to financial services to millions of traditionally underbanked customers. Our investments will include senior secured loans with covenants for additional downside protection. All loans will be secured by all-asset debentures, including our borrowers' lending receivables.*/}
+                        {/*</span>*/}
+                        {/*</div>*/}
                       </div>
-                      <div className="highlights section">
-                        <h2 className="title"><span>Highlights</span></h2>
-                        <ul className="list">
-                          <li><span className="">Cauris uses data-driven approaches to underwriting and portfolio management efforts and a combination of strong asset-level underwriting, structural and legal protections and advanced analytics to secure our debt investments in all fintech partners.</span>
-                          </li>
-                          <li><span className="">Cauris only invests in Fintechs characterized by management teams with deep, relevant experience in their companies' sectors; well-performing loan books to use as collateral; and support by marquee VC, PE and strategic investors.</span>
-                          </li>
-                          <li><span className="">Pool investments will target companies providing consumer and SME lending products as well as trade and equipment financing.</span>
-                          </li>
-                        </ul>
-                      </div>
+                      {/*<div className="highlights section">*/}
+                      {/*  <h2 className="title"><span>Highlights</span></h2>*/}
+                      {/*  <ul className="list">*/}
+                      {/*    <li><span className="">Cauris uses data-driven approaches to underwriting and portfolio management efforts and a combination of strong asset-level underwriting, structural and legal protections and advanced analytics to secure our debt investments in all fintech partners.</span>*/}
+                      {/*    </li>*/}
+                      {/*    <li><span className="">Cauris only invests in Fintechs characterized by management teams with deep, relevant experience in their companies' sectors; well-performing loan books to use as collateral; and support by marquee VC, PE and strategic investors.</span>*/}
+                      {/*    </li>*/}
+                      {/*    <li><span className="">Pool investments will target companies providing consumer and SME lending products as well as trade and equipment financing.</span>*/}
+                      {/*    </li>*/}
+                      {/*  </ul>*/}
+                      {/*</div>*/}
                       <div className="section">
                         <div>
                           <div className="chain-data">
