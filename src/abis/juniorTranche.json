@@ -255,7 +255,7 @@
     "name": "coordinator",
     "outputs": [
       {
-        "internalType": "contract CoordinatorLike_4",
+        "internalType": "contract CoordinatorLike_2",
         "name": "",
         "type": "address"
       }
@@ -268,7 +268,7 @@
     "name": "currency",
     "outputs": [
       {
-        "internalType": "contract ERC20Like_3",
+        "internalType": "contract ERC20Like_2",
         "name": "",
         "type": "address"
       }
@@ -545,7 +545,7 @@
     "name": "reserve",
     "outputs": [
       {
-        "internalType": "contract ReserveLike_5",
+        "internalType": "contract ReserveLike_3",
         "name": "",
         "type": "address"
       }
@@ -696,7 +696,7 @@
     "name": "token",
     "outputs": [
       {
-        "internalType": "contract ERC20Like_3",
+        "internalType": "contract ERC20Like_2",
         "name": "",
         "type": "address"
       }

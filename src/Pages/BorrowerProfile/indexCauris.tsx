@@ -1,6 +1,7 @@
-import { useState, SyntheticEvent } from "react";
+import { useState, useEffect, SyntheticEvent } from "react";
 import "./borrower.scss";
 import {
+  Grid,
   InputAdornment,
   OutlinedInput,
   Backdrop,
@@ -12,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import Office from "../../assets/icons/office.png";
-import QuickCheck from "../../assets/icons/quick-check.jpg";
+import Cauris from "../../assets/icons/cauris-1.jpg";
 import ArrowNE from "../../assets/icons/Arrow-NorthEast.svg";
 import InfoIcon from "../../assets/icons/info.svg";
 import Twitter from "../../assets/icons/twitter.svg";
@@ -66,24 +67,24 @@ function BorrowerProfile() {
               <div className="heading-title">
                 <div>
                   <div className="heading-title-one">
-                    <img src={QuickCheck} alt="quick-check-1"/>
-                    QuickCheck Pool #1
+                    <img src={Cauris} alt="cauris-1"/>
+                    Cauris Pool #1
                   </div>
                 </div>
                 <a
                   className="borrower-contract-link"
-                  href="https://polygonscan.com/address/0xA3EB50Cf1D0047bD08432f9fBDdAE43Bb022f83f" target="_blank"
+                  href="https://etherscan.io/address/0xd43a4f3041069c6178b99d55295b00d0db955bb5" target="_blank"
                   rel="noopener">Contract
                   <img src={ArrowNE} alt="arrow-north-east"/>
                 </a>
               </div>
               <div className="main-title">
-                QuickCheck Pool #1
+                Cauris Pool #1
               </div>
               <div>
                 <div className="sub-title" style={{ width: '6.40244%' }}>
                   Supplied
-                  <span>$0</span>
+                  <span>$640,243.76</span>
                 </div>
                 <div className="goal-progress" style={{ backgroundImage: `url('${BlankProgress}')` }}>
                   <div className="red" style={{width: '1.28049%'}}><div className="full-box"/></div>
@@ -93,7 +94,7 @@ function BorrowerProfile() {
               <div className="goal-value">
                 Goal
                 <span>
-                  $200,000.00
+                  $5,000,000.00
                 </span>
               </div>
             </div>
@@ -110,7 +111,7 @@ function BorrowerProfile() {
                       <div className="deal-overview section">
                         <h2 className="title">
                           <a
-                            href="https://docsend.com/view/s/hr387j9ft6kut5wg"
+                            href="https://docsend.com/view/s/e8uu7misbs9bs5xq"
                             target="_blank"
                             rel="noopener noreferrer"
                           >
@@ -147,8 +148,7 @@ function BorrowerProfile() {
                             </div>
                             <a
                               className="borrower-contract-link"
-                              href="https://polygonscan.com/address/0xA3EB50Cf1D0047bD08432f9fBDdAE43Bb022f83f"
-                              target="_blank"
+                              href="https://etherscan.io/address/0xd43a4f3041069c6178b99d55295b00d0db955bb5" target="_blank"
                               rel="noopener">Contract
                               <img src={ArrowNE} alt="arrow-north-east"/>
                             </a>
@@ -156,116 +156,116 @@ function BorrowerProfile() {
                           <div className="table">
                             <table className="chain-data-table">
                               <tbody>
-                              {/*<tr>
-                                <th scope="row">
-                                  <div>
-                                    <div className="th-title">Interest Rate</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
-                                  </div>
-                                </th>
-                                <td>10.00%</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">
-                                  <div>
-                                    <div className="th-title">Drawdown cap</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
-                                  </div>
-                                </th>
-                                <td>$10,000,000.00</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">
-                                  <div>
-                                    <div className="th-title">Payment frequency</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
-                                  </div>
-                                </th>
-                                <td>30 days</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">
-                                  <div>
-                                    <div className="th-title">Payment term</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
-                                  </div>
-                                </th>
-                                <td>1095 days</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">
-                                  <div>
-                                    <div className="th-title">Default interest rate</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
-                                  </div>
-                                </th>
-                                <td>0.00%</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">
-                                  <div>
-                                    <div className="th-title">Deal type</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
-                                  </div>
-                                </th>
-                                <td>Multitranche</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">
-                                  <div>
-                                    <div className="th-title">Current leverage ratio</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
-                                  </div>
-                                </th>
-                                <td>4x</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">
-                                  <div>
-                                    <div className="th-title">Opening date</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
-                                  </div>
-                                </th>
-                                <td>May 3, 2022</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">
-                                  <div>
-                                    <div className="th-title">Contract address</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
-                                  </div>
-                                </th>
-                                <td>0xd43a4f3041069c6178b99d55295b00d0db955bb5</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">
-                                  <div>
-                                    <div className="th-title">Borrower address</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
-                                  </div>
-                                </th>
-                                <td>0xd750033cd9ab91ead99074f671bbcbce0ffd91a8</td>
-                              </tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Interest Rate</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>10.00%</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Drawdown cap</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>$10,000,000.00</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Payment frequency</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>30 days</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Payment term</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>1095 days</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Default interest rate</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>0.00%</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Deal type</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>Multitranche</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Current leverage ratio</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>4x</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Opening date</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>May 3, 2022</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Contract address</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>0xd43a4f3041069c6178b99d55295b00d0db955bb5</td>*/}
+                              {/*</tr>*/}
+                              {/*<tr>*/}
+                              {/*  <th scope="row">*/}
+                              {/*    <div>*/}
+                              {/*      <div className="th-title">Borrower address</div>*/}
+                              {/*      <div className="th-info">*/}
+                              {/*        <img src={InfoIcon} alt="info-icon"/>*/}
+                              {/*      </div>*/}
+                              {/*    </div>*/}
+                              {/*  </th>*/}
+                              {/*  <td>0xd750033cd9ab91ead99074f671bbcbce0ffd91a8</td>*/}
+                              {/*</tr>*/}
                               <tr className="border border-sand-200">
                                 <th scope="row">
                                   <div>
@@ -280,7 +280,7 @@ function BorrowerProfile() {
                                     <div className="th-title">Drawdowncap</div>
                                   </div>
                                 </th>
-                                <td>$200,000.00</td>
+                                <td>$5,000,000.00</td>
                               </tr>
                               <tr className="border border-sand-200">
                                 <th scope="row">
@@ -301,10 +301,10 @@ function BorrowerProfile() {
                                     <li>
                                       <a
                                         className="link"
-                                        href="https://polygonscan.com/address/0xDb178D0cd0D28470a354921E257B9b0988Ff7e38"
+                                        href="https://polygonscan.com/address/0xfeE0006935FbF1142aFbF15155932973f0c14973"
                                         target="_blank"
                                       >
-                                        0xDb178D0cd0D28470a354921E257B9b0988Ff7e38
+                                        0xfeE0006935FbF1142aFbF15155932973f0c14973
                                       </a>
                                     </li>
                                   </ul>
@@ -350,37 +350,37 @@ function BorrowerProfile() {
                               </tr>
                               </thead>
                               <tbody>
-                              {/*<tr>*/}
-                              {/*  <td>*/}
-                              {/*    <div>*/}
-                              {/*      <button className="address-btn">*/}
-                              {/*        <span>0x1e10...13db</span>*/}
-                              {/*      </button>*/}
-                              {/*    </div>*/}
-                              {/*  </td>*/}
-                              {/*  <td>*/}
-                              {/*    <div className="text-left">Withdrawal</div>*/}
-                              {/*  </td>*/}
-                              {/*  <td>*/}
-                              {/*    <div>-$500.00 USDC</div>*/}
-                              {/*  </td>*/}
-                              {/*  <td>*/}
-                              {/*    <div>Nov 24, 2022</div>*/}
-                              {/*  </td>*/}
-                              {/*  <td>*/}
-                              {/*    <a*/}
-                              {/*      className="link"*/}
-                              {/*      target="_blank"*/}
-                              {/*      rel="noopener noreferrer"*/}
-                              {/*      href="https://etherscan.io/tx/0x42f481bd81071f96fb95f5832a78cffa7ef8c12ec8a60c6b0b3c5cd5e8a113e8"*/}
-                              {/*    >*/}
-                              {/*      Tx*/}
-                              {/*      <ArrowNorthEast*/}
-                              {/*        size="20"*/}
-                              {/*        fill="rgb(168 162 158/1)"*/}
-                              {/*      />*/}
-                              {/*    </a></td>*/}
-                              {/*</tr>*/}
+                              <tr>
+                                <td>
+                                  <div>
+                                    <button className="address-btn">
+                                      <span>0x1e10...13db</span>
+                                    </button>
+                                  </div>
+                                </td>
+                                <td>
+                                  <div className="text-left">Withdrawal</div>
+                                </td>
+                                <td>
+                                  <div>-$500.00 USDC</div>
+                                </td>
+                                <td>
+                                  <div>Nov 24, 2022</div>
+                                </td>
+                                <td>
+                                  <a
+                                    className="link"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    href="https://etherscan.io/tx/0x42f481bd81071f96fb95f5832a78cffa7ef8c12ec8a60c6b0b3c5cd5e8a113e8"
+                                  >
+                                    Tx
+                                    <ArrowNorthEast
+                                      size="20"
+                                      fill="rgb(168 162 158/1)"
+                                    />
+                                  </a></td>
+                              </tr>
                               </tbody>
                             </table>
                           </div>
@@ -398,8 +398,8 @@ function BorrowerProfile() {
                         <div className="title">
                           <div className="main-title">
                             <div className="names">
-                              <img src={QuickCheck} alt="cauris-2"/>
-                              <h2>QuickCheck</h2>
+                              <img src={Cauris} alt="cauris-2"/>
+                              <h2>Cauris</h2>
                             </div>
                             <div className="social-btns">
                               <div className="social-btn">
@@ -408,7 +408,7 @@ function BorrowerProfile() {
                                   className="link"
                                   target="_blank"
                                   rel="noreferrer"
-                                  href="https://quickcheck.ng/"
+                                  href="https://www.caurisfinance.com/"
                                 >
                                   <span>Website</span>
                                 </a>
@@ -419,7 +419,7 @@ function BorrowerProfile() {
                                   className="link"
                                   target="_blank"
                                   rel="noreferrer"
-                                  href="https://www.linkedin.com/company/quickcheck-nigeria/"
+                                  href="https://www.linkedin.com/company/cauris-inc/"
                                 >
                                   <span>LinkedIn</span>
                                 </a>
@@ -430,81 +430,52 @@ function BorrowerProfile() {
                                   className="link"
                                   target="_blank"
                                   rel="noreferrer"
-                                  href="https://twitter.com/quickcheckng"
+                                  href="https://twitter.com/Caurisfinance"
                                 >
                                   <span>Twitter</span>
                                 </a>
                               </div>
                             </div>
                           </div>
-                          {/*<div className="sub-title">*/}
-                          {/*  Africa fintech credit fund*/}
-                          {/*</div>*/}
+                          <div className="sub-title">
+                            Africa fintech credit fund
+                          </div>
                         </div>
                       </div>
                       <div className="profile-content profile-section">
-                        <p style={{ marginBottom: '2rem' }}>
-                          QuickCheck is a Fintech Company specialized in digital lending to SMEs. The Company was
-                          founded in September 2017 with the goal of driving financial inclusion and providing access to
-                          credit in Nigeria. The Company grants short-term loans of NGN30,000 –
-                          NGN1,000,000 ($70 - $2400) for 30 – 360 days based on eligibility criteria built around its
-                          credit scoring model. QuickCheck provides
-                          productive credit with responsible pricing targeted at entrepreneur’s through a superior user
-                          experience.<br/><br/>
-                          With an underbanked/financially excluded adult population (100m) of greater than 50% and less
-                          than 5% having access to credit, QuickCheck seeks to bridge this huge gap using its strong
-                          underwriting capabilities and unique credit scoring model. QuickCheck has disbursed loans of
-                          over $50 million to 1.1 million users since inception out of 3.3 million applications.
-                        </p>
-                        <h3 className="highlights-title" style={{marginBottom: '0.5rem'}}>
-                          Team
-                        </h3>
-                        <p style={{ marginBottom: '2rem' }}>
-                          The Company is also led by a strong management team with relevant experience in Management
-                          Consulting (McKinsey), Technology and Artificial Intelligence (The European Organization for
-                          Nuclear Research - CERN), Corporate and Investment Banking/Treasury (Coronation Merchant Bank)
-                          and Credit Risk (UBA). The Company also has the presence of board members/shareholders with
-                          proven track record of successful performance in the domestic banking industry
+                        <p style={{marginBottom: '2rem'}}>
+                          Cauris is a mission-driven investment firm that delivers growth capital to
+                          best-in-class Fintechs and high risk-adjusted returns to investors. We aim to facilitate the
+                          extension of financial services to 100 million people, accelerating the rise of the global
+                          middle class and enabling economic growth in emerging markets.
+                          Cauris's debt financing enables its partners to scale efforts that deliver financial services
+                          to small businesses and consumers--many of which are traditionally underserved--that are the
+                          economic engines of every economy. Leveraging cutting edge technology and highly structured
+                          underwriting, Cauris delivers both consistent financial returns and compelling social impact.
                         </p>
                         <h3 className="highlights-title">
-                          Loan Originations and underlying exposure
+                          Highlights
                         </h3>
-                        <h4 className="highlights-sub-title">
-                          How they source the loans
-                        </h4>
-                        <p style={{ marginBottom: '0.2rem' }}>
-                          QuickCheck uses various digital advertising platforms such as facebook and google to provide
-                          visibility to the app and attract target customers. QuickCheck also leverages on its presence
-                          in other social media platforms to publicize the app. Users download the app through google
-                          playstore and apply for the loan through the app. <br/><br/>
-                          In line with agreed data privacy agreements, behavioural data is obtained directly from
-                          smartphones requesting for Customers’ data on:
-                        </p>
-                        <ul className="highlights-points dashes">
+                        <ul className="highlights-points">
                           <li>
-                            Age, Occupation, Geolocation, Phone logs, Social Media, Contacts, Device Storage, etc. some
-                            of which are through synchronization with the users’ phones
+                            Founded by a team of former fintech entrepreneurs, operators, investment professionals and
+                            bankers with expertise in credit and structured finance, direct experience working with
+                            Fintechs in the Global South and deep industry experience in financial inclusion
+                          </li>
+                          <li>
+                            Growing portfolio of fintech investments are supported by disciplined and robust
+                            underwriting while enabling our fintechs partners to continue innovating and growing
+                          </li>
+                          <li>
+                            Cauris has high-quality portfolio companies in Africa, Asia and Latin America; borrowers
+                            are backed by marquee equity investors like A16Z, Tiger Global and the World Bank
+                          </li>
+                          <li>
+                            Strong performance track record with $15M borrowed on Goldfinch to date, generating
+                            healthy risk-adjusted yields for investors with zero delays or defaults in borrower
+                            repayments
                           </li>
                         </ul>
-                        <p style={{ marginBottom: '0.2rem' }}>
-                          Also, QuickCheck is integrated with various platforms via API to obtain financial data on:
-                        </p>
-                        <ul className="highlights-points dashes">
-                          <li>
-                            Credit History, Account Statement, Fraud detection through integration with global fraud
-                            detection experts, etc.
-                          </li>
-                        </ul>
-                        <h4 className="highlights-sub-title">
-                          How they decide to lend
-                        </h4>
-                        <p>
-                          Using a unique credit scoring model and algorithm driven by AI and machine learning to build
-                          risk profiles based on the collected data on prospective borrowers, prospective borrowers are
-                          segmented into different risk categories with returning users that have relatively long
-                          repayment history assigned to a lower risk category. We calculate the repayment probability
-                          based on the input from data and disburse loans to users with higher repayment probability.
-                        </p>
                       </div>
                       <div className="profile-section borrower-finance">
                         <h2 className="title">
@@ -519,7 +490,7 @@ function BorrowerProfile() {
                                   <div className="th-title">Interest</div>
                                 </div>
                               </th>
-                              <td>16.2%</td>
+                              <td>13.5%</td>
                             </tr>
                             <tr className="border border-sand-200">
                               <th scope="row">
@@ -527,7 +498,7 @@ function BorrowerProfile() {
                                   <div className="th-title">Drawdowncap</div>
                                 </div>
                               </th>
-                              <td>$200,000.00</td>
+                              <td>$5,000,000.00</td>
                             </tr>
                             <tr className="border border-sand-200">
                               <th scope="row">
@@ -535,7 +506,7 @@ function BorrowerProfile() {
                                   <div className="th-title">Opening Date</div>
                                 </div>
                               </th>
-                              <td>6<sup>th</sup> March 2023</td>
+                              <td>1<sup>st</sup> Dec 2022</td>
                             </tr>
                             <tr className="border border-sand-200">
                               <th scope="row">
@@ -548,10 +519,10 @@ function BorrowerProfile() {
                                   <li>
                                     <a
                                       className="link"
-                                      href="https://polygonscan.com/address/0xABC38F394CfC5b5c544fD4A38ef8A9a66aBE48B7"
+                                      href="https://polygonscan.com/address/0xfeE0006935FbF1142aFbF15155932973f0c14973"
                                       target="_blank"
                                     >
-                                      0xABC38F394CfC5b5c544fD4A38ef8A9a66aBE48B7
+                                      0xfeE0006935FbF1142aFbF15155932973f0c14973
                                     </a>
                                   </li>
                                 </ul>

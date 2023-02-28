@@ -12,6 +12,12 @@
         background-color: #C4DDFF;
         cursor: pointer;
       }
+      .body-row.disabled:hover {
+        cursor: not-allowed;
+      }
+      .body-row.disabled {
+        filter: blur(3px);
+      }
       .body-row {
         .special-cell {
           .button {

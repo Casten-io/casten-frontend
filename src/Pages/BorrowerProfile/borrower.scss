@@ -307,9 +307,22 @@
           font-family: inherit;
           margin-bottom: 2rem;
         }
+        .highlights-sub-title {
+          --tw-text-opacity: 1;
+          color: rgb(41 37 36/var(--tw-text-opacity));
+          letter-spacing: .02rem;
+          font-weight: 600;
+          font-size: 1rem!important;
+          line-height: 1.625rem!important;
+          font-family: inherit;
+          margin-bottom: 0.5rem;
+        }
         ul.highlights-points {
           padding-left: 1.25rem;
           list-style-type: disc;
+          &.dashes {
+            list-style-type: unset;
+          }
           li {
             --tw-space-y-reverse: 0;
             margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));

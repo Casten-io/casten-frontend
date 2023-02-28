@@ -30,11 +30,11 @@ export const ADDRESS_BY_NETWORK_ID: Record<Address, ContractRecord> = {
         },
         SHELF:  {
             address: "0x459A7C7dF9F128863710A652AA9026Fe3E809DE6",
-            ABI: JUNIOR_OPERATOR_ABI
+            ABI: SHELF_ABI
         },
         JUNIOR_OPERATOR: {
             address: "0x2cFC555dE9D265E849b9a30002E8958249FA9737",
-            ABI: SHELF_ABI
+            ABI: JUNIOR_OPERATOR_ABI
         },
         SENIOR_OPERATOR: {
             address: "0xaF43A94A59D76CE7398fAdf329D64ef50751E035",
@@ -72,40 +72,83 @@ export const ADDRESS_BY_NETWORK_ID: Record<Address, ContractRecord> = {
             TOKEN_DECIMALS: 6
         },
         SHELF:  {
-            address: "0x94E9316eBD73d06Fcd8B49029506cc497A0c481d",
-            ABI: JUNIOR_OPERATOR_ABI
-        },
-        JUNIOR_OPERATOR: {
-            address: "0x6e39f30B1e9F05915E51D5A6f526268FE0854Fdd",
+            address: "0xA3EB50Cf1D0047bD08432f9fBDdAE43Bb022f83f",
             ABI: SHELF_ABI
         },
+        JUNIOR_OPERATOR: {
+            address: "0x80ac6C85C18dBaD49894b208b71F738bFb6727d0",
+            ABI: JUNIOR_OPERATOR_ABI
+        },
         SENIOR_OPERATOR: {
-            address: "0x71b00166bDa4f9FC8E44fB92B86529C530C69227",
+            address: "0xcdCAbcdaB768Ea7FB7d5e2c4Ff56bD87de5E1317",
             ABI: SENIOR_OPERATOR_ABI
         },
         JUNIOR_TOKEN: {
-            address: "0x800ab96e05641a3143a8b2CaF0E33C0Bc61d9FE5",
+            address: "0xCa3F9cEFf2da88F3067061268E40ded014dEF2e7",
             ABI: JUNIOR_TOKEN_ABI
         },
         SENIOR_TOKEN: {
-            address: "0xfd64c0c6aa73350e7C8886ea8654d4CcDD4c06AD",
+            address: "0x3dD8C48dAf9850334A798B85f04d75540432De76",
             ABI: SENIOR_TOKEN_ABI
         },
         SENIOR_TRANCHE: {
-            address: "0xfeE0006935FbF1142aFbF15155932973f0c14973",
+            address: "0xDb178D0cd0D28470a354921E257B9b0988Ff7e38",
             ABI: SENIOR_TRANCHE
         },
         JUNIOR_TRANCHE: {
-            address: "0x72E6CDB05A4E688E7f7B082B1312dcB131A9Fd9F",
+            address: "0x462f9BCF1f552118aB911F803A4eFAae559f6A47",
             ABI: JUNIOR_TRANCHE
         },
         JUNIOR_MEMBER_LIST: {
-            address: "0x224643917128d8353fd60b4D90935705CAD58C83",
+            address: "0x99F43a29ffE37DA242a33EB5DFF5A0f63385CF33",
             ABI: JUNIOR_MEMBER_LIST
         },
         SENIOR_MEMBER_LIST: {
-            address: "0x224643917128d8353fd60b4D90935705CAD58C83",
+            address: "0x99F43a29ffE37DA242a33EB5DFF5A0f63385CF33",
             ABI: SENIOR_MEMBER_LIST
         },
     }
+    // "137": {
+    //     DAI_TOKEN: {
+    //         address: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+    //         ABI: DAI_TOKEN_ABI,
+    //         TOKEN_DECIMALS: 6
+    //     },
+    //     SHELF:  {
+    //         address: "0x94E9316eBD73d06Fcd8B49029506cc497A0c481d",
+    //         ABI: SHELF_ABI
+    //     },
+    //     JUNIOR_OPERATOR: {
+    //         address: "0x6e39f30B1e9F05915E51D5A6f526268FE0854Fdd",
+    //         ABI: JUNIOR_OPERATOR_ABI
+    //     },
+    //     SENIOR_OPERATOR: {
+    //         address: "0x71b00166bDa4f9FC8E44fB92B86529C530C69227",
+    //         ABI: SENIOR_OPERATOR_ABI
+    //     },
+    //     JUNIOR_TOKEN: {
+    //         address: "0x800ab96e05641a3143a8b2CaF0E33C0Bc61d9FE5",
+    //         ABI: JUNIOR_TOKEN_ABI
+    //     },
+    //     SENIOR_TOKEN: {
+    //         address: "0xfd64c0c6aa73350e7C8886ea8654d4CcDD4c06AD",
+    //         ABI: SENIOR_TOKEN_ABI
+    //     },
+    //     SENIOR_TRANCHE: {
+    //         address: "0xfeE0006935FbF1142aFbF15155932973f0c14973",
+    //         ABI: SENIOR_TRANCHE
+    //     },
+    //     JUNIOR_TRANCHE: {
+    //         address: "0x72E6CDB05A4E688E7f7B082B1312dcB131A9Fd9F",
+    //         ABI: JUNIOR_TRANCHE
+    //     },
+    //     JUNIOR_MEMBER_LIST: {
+    //         address: "0x224643917128d8353fd60b4D90935705CAD58C83",
+    //         ABI: JUNIOR_MEMBER_LIST
+    //     },
+    //     SENIOR_MEMBER_LIST: {
+    //         address: "0x224643917128d8353fd60b4D90935705CAD58C83",
+    //         ABI: SENIOR_MEMBER_LIST
+    //     },
+    // }
 }

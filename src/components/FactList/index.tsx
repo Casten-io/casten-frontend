@@ -60,32 +60,60 @@ function createData(
 function FactList() {
   const rows = [
     createData(
-      "AFT001",
-      "Sr. A Fintech 11% 2023",
+      "QC001",
+      "Sr. QuickCheck 15% 2023",
       "Senior",
-      "$5MM",
-      "11.00%",
-      11,
+      "$200K",
+      "15.00%",
+      15,
       "Monthly",
-      "Dec 23",
+      "March 23",
       "0.8",
       "3.0",
       "$1200"
     ),
     createData(
-      "AFT002",
-      "Jr. A Fintech 11% 2023",
+      "QC002",
+      "Jr. QuickCheck 21% 2023",
       "Junior",
-      "$2MM",
-      "15.00%",
-      15,
+      "$200K",
+      "21.00%",
+      21,
       "Monthly",
-      "Dec 23",
+      "March 23",
       "0.8",
       "3.0",
       "$6500"
     ),
   ];
+  // const rows = [
+  //   createData(
+  //     "AFT001",
+  //     "Sr. A Fintech 11% 2023",
+  //     "Senior",
+  //     "$5MM",
+  //     "11.00%",
+  //     11,
+  //     "Monthly",
+  //     "Dec 23",
+  //     "0.8",
+  //     "3.0",
+  //     "$1200"
+  //   ),
+  //   createData(
+  //     "AFT002",
+  //     "Jr. A Fintech 11% 2023",
+  //     "Junior",
+  //     "$2MM",
+  //     "15.00%",
+  //     15,
+  //     "Monthly",
+  //     "Dec 23",
+  //     "0.8",
+  //     "3.0",
+  //     "$6500"
+  //   ),
+  // ];
 
   const navigate = useNavigate();
   const dispatch = useDispatch();

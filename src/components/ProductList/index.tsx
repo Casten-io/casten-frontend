@@ -16,7 +16,8 @@ function createData(
   category: string,
   ltv: string,
   leverage: string,
-  moreInfo: string
+  moreInfo: string,
+  disabled = false,
 ) {
   return {
     secId,
@@ -32,17 +33,36 @@ function createData(
     ltv,
     leverage,
     moreInfo,
+    disabled,
   };
 }
 
 function ProductList() {
   const navigate = useNavigate();
 
-  const navigateToTokenOfferings = () => {
+  const navigateToTokenOfferings = (row: any) => () => {
+    if (row.disabled) {
+      return;
+    }
     navigate("/token");
   };
 
   const rows = [
+    createData(
+      "FTECHSR420",
+      "A Fintech SR 11% 2023",
+      "15%",
+      "21%",
+      "Monthly",
+      "Dec 23",
+      "QuickCheck",
+      "$200K",
+      "$200K",
+      "SME Loans",
+      "0.8",
+      "3.0",
+      "Details"
+    ),
     createData(
       "FTECHSR420",
       "A Fintech SR 11% 2023",
@@ -56,7 +76,8 @@ function ProductList() {
       "Revenue based/Invoice Discounting",
       "0.8",
       "3.0",
-      "Details"
+      "Details",
+      true
     ),
     createData(
       "FTECHSR69",
@@ -71,7 +92,8 @@ function ProductList() {
       "Invoice Discounting",
       "0.8",
       "3.0",
-      "Details"
+      "Details",
+      true
     ),
   ];
   return (
@@ -89,7 +111,7 @@ function ProductList() {
             <TableCell className="head-cell">Junior APY</TableCell>
             {/* <TableCell className="head-cell">Frequency</TableCell>
             <TableCell className="head-cell">Maturity</TableCell>
-            
+
      */}
             {/* <TableCell className="head-cell">LTV</TableCell>
             <TableCell className="head-cell">Leverage</TableCell> */}
@@ -101,8 +123,8 @@ function ProductList() {
             <TableRow
               key={row.secId}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              onClick={navigateToTokenOfferings}
-              className="body-row"
+              onClick={navigateToTokenOfferings(row)}
+              className={`body-row${row.disabled ? ' disabled' : ''}`}
             >
               {/* <TableCell component="th" scope="row">
                 {row.secId}
