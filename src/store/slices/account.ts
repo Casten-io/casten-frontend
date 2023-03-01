@@ -40,9 +40,9 @@ export const accountSlice = createSlice({
     initialState,
     reducers: {
         walletConnect: (state, action) => {
-            state.address = action.payload.address;
-            state.provider = action.payload.provider;
-            state.networkInfo = action.payload.networkInfo;
+            state.address = action.payload.address || state.address;
+            state.provider = action.payload.provider || state.provider;
+            state.networkInfo = action.payload.networkInfo || state.networkInfo;
             state.isWalletConnected = true;
             localStorage?.setItem('isWalletConnected', '1');
         },
@@ -83,11 +83,12 @@ export const accountSlice = createSlice({
             state.securitizeRT = undefined;
             state.securitizeId = undefined;
             state.kycStatus = undefined;
-            localStorage?.removeItem('sAT');
-            localStorage?.removeItem('sRT');
-            localStorage?.removeItem('sID');
-            localStorage?.removeItem('isWalletConnected');
-            localStorage?.removeItem('sKS');
+            // localStorage?.removeItem('sAT');
+            // localStorage?.removeItem('sRT');
+            // localStorage?.removeItem('sID');
+            // localStorage?.removeItem('isWalletConnected');
+            // localStorage?.removeItem('sKS');
+            localStorage?.clear();
         },
     },
 })

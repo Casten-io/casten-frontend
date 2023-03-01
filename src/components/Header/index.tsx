@@ -47,6 +47,7 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
   const isVerySmallScreen = useMediaQuery("(max-width: 400px)");
   const isWrapShow = useMediaQuery("(max-width: 480px)");
   const address: string = useSelector((state: RootState) => state.account.address);
+  // const provider = useSelector((state: RootState) => state.account.provider);
   const kycStatus = useSelector((state: RootState) => state.account.kycStatus);
   const networkInfo = useSelector((state: RootState) => state.account.networkInfo);
 
@@ -76,6 +77,13 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
               </div>
             </div>
           )}
+          {/*{address && <div className="portfolio-container">*/}
+          {/*  <div className="portfolio-button" onClick={() => {*/}
+          {/*    provider?.getSigner()?.signMessage('checking')*/}
+          {/*  }}>*/}
+          {/*    Sign Check*/}
+          {/*  </div>*/}
+          {/*</div>}*/}
           <WalletConnect />
         </div>
       </Toolbar>

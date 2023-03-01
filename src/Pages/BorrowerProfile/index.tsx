@@ -72,9 +72,12 @@ function BorrowerProfile() {
                 </div>
                 <a
                   className="borrower-contract-link"
-                  href="https://polygonscan.com/address/0xA3EB50Cf1D0047bD08432f9fBDdAE43Bb022f83f" target="_blank"
-                  rel="noopener">Contract
-                  <img src={ArrowNE} alt="arrow-north-east"/>
+                  // href="https://polygonscan.com/address/0xA3EB50Cf1D0047bD08432f9fBDdAE43Bb022f83f"
+                  href="#"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Contract <img src={ArrowNE} alt="arrow-north-east"/>
                 </a>
               </div>
               <div className="main-title">
@@ -147,7 +150,8 @@ function BorrowerProfile() {
                             </div>
                             <a
                               className="borrower-contract-link"
-                              href="https://polygonscan.com/address/0xA3EB50Cf1D0047bD08432f9fBDdAE43Bb022f83f"
+                              // href="https://polygonscan.com/address/0xA3EB50Cf1D0047bD08432f9fBDdAE43Bb022f83f"
+                              href="#"
                               target="_blank"
                               rel="noopener">Contract
                               <img src={ArrowNE} alt="arrow-north-east"/>
@@ -288,7 +292,7 @@ function BorrowerProfile() {
                                     <div className="th-title">Opening Date</div>
                                   </div>
                                 </th>
-                                <td>1<sup>st</sup> Dec 2022</td>
+                                <td>6<sup>th</sup> March 2023</td>
                               </tr>
                               <tr className="border border-sand-200">
                                 <th scope="row">
@@ -299,13 +303,14 @@ function BorrowerProfile() {
                                 <td>
                                   <ul>
                                     <li>
-                                      <a
-                                        className="link"
-                                        href="https://polygonscan.com/address/0xDb178D0cd0D28470a354921E257B9b0988Ff7e38"
-                                        target="_blank"
-                                      >
-                                        0xDb178D0cd0D28470a354921E257B9b0988Ff7e38
-                                      </a>
+                                      {/*<a*/}
+                                      {/*  className="link"*/}
+                                      {/*  href="https://polygonscan.com/address/0xDb178D0cd0D28470a354921E257B9b0988Ff7e38"*/}
+                                      {/*  target="_blank"*/}
+                                      {/*>*/}
+                                      {/*  0xDb178D0cd0D28470a354921E257B9b0988Ff7e38*/}
+                                      {/*</a>*/}
+                                      -
                                     </li>
                                   </ul>
                                 </td>
@@ -319,13 +324,14 @@ function BorrowerProfile() {
                                 <td>
                                   <ul>
                                     <li>
-                                      <a
-                                        className="link"
-                                        href="https://polygonscan.com/address/0x428995b6b3e2ed27387ce15d224c2e669a284bc0"
-                                        target="_blank"
-                                      >
-                                        0x428995b6b3e2ed27387ce15d224c2e669a284bc0
-                                      </a>
+                                      {/*<a*/}
+                                      {/*  className="link"*/}
+                                      {/*  href="https://polygonscan.com/address/0x428995b6b3e2ed27387ce15d224c2e669a284bc0"*/}
+                                      {/*  target="_blank"*/}
+                                      {/*>*/}
+                                      {/*  0x428995b6b3e2ed27387ce15d224c2e669a284bc0*/}
+                                      {/*</a>*/}
+                                      -
                                     </li>
                                   </ul>
                                 </td>
@@ -335,57 +341,57 @@ function BorrowerProfile() {
                           </div>
                         </div>
                       </div>
-                      <div className="section recent-activity">
-                        <h2 className="title">Recent Activity</h2>
-                        <div className="table-area">
-                          <div className="table-sub-area">
-                            <table>
-                              <thead>
-                              <tr>
-                                <th>User</th>
-                                <th>Category</th>
-                                <th>Amount</th>
-                                <th>Date</th>
-                                <th>Link</th>
-                              </tr>
-                              </thead>
-                              <tbody>
-                              {/*<tr>*/}
-                              {/*  <td>*/}
-                              {/*    <div>*/}
-                              {/*      <button className="address-btn">*/}
-                              {/*        <span>0x1e10...13db</span>*/}
-                              {/*      </button>*/}
-                              {/*    </div>*/}
-                              {/*  </td>*/}
-                              {/*  <td>*/}
-                              {/*    <div className="text-left">Withdrawal</div>*/}
-                              {/*  </td>*/}
-                              {/*  <td>*/}
-                              {/*    <div>-$500.00 USDC</div>*/}
-                              {/*  </td>*/}
-                              {/*  <td>*/}
-                              {/*    <div>Nov 24, 2022</div>*/}
-                              {/*  </td>*/}
-                              {/*  <td>*/}
-                              {/*    <a*/}
-                              {/*      className="link"*/}
-                              {/*      target="_blank"*/}
-                              {/*      rel="noopener noreferrer"*/}
-                              {/*      href="https://etherscan.io/tx/0x42f481bd81071f96fb95f5832a78cffa7ef8c12ec8a60c6b0b3c5cd5e8a113e8"*/}
-                              {/*    >*/}
-                              {/*      Tx*/}
-                              {/*      <ArrowNorthEast*/}
-                              {/*        size="20"*/}
-                              {/*        fill="rgb(168 162 158/1)"*/}
-                              {/*      />*/}
-                              {/*    </a></td>*/}
-                              {/*</tr>*/}
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
+                      {/*<div className="section recent-activity">*/}
+                      {/*  <h2 className="title">Recent Activity</h2>*/}
+                      {/*  <div className="table-area">*/}
+                      {/*    <div className="table-sub-area">*/}
+                      {/*      <table>*/}
+                      {/*        <thead>*/}
+                      {/*        <tr>*/}
+                      {/*          <th>User</th>*/}
+                      {/*          <th>Category</th>*/}
+                      {/*          <th>Amount</th>*/}
+                      {/*          <th>Date</th>*/}
+                      {/*          <th>Link</th>*/}
+                      {/*        </tr>*/}
+                      {/*        </thead>*/}
+                      {/*        <tbody>*/}
+                      {/*        /!*<tr>*!/*/}
+                      {/*        /!*  <td>*!/*/}
+                      {/*        /!*    <div>*!/*/}
+                      {/*        /!*      <button className="address-btn">*!/*/}
+                      {/*        /!*        <span>0x1e10...13db</span>*!/*/}
+                      {/*        /!*      </button>*!/*/}
+                      {/*        /!*    </div>*!/*/}
+                      {/*        /!*  </td>*!/*/}
+                      {/*        /!*  <td>*!/*/}
+                      {/*        /!*    <div className="text-left">Withdrawal</div>*!/*/}
+                      {/*        /!*  </td>*!/*/}
+                      {/*        /!*  <td>*!/*/}
+                      {/*        /!*    <div>-$500.00 USDC</div>*!/*/}
+                      {/*        /!*  </td>*!/*/}
+                      {/*        /!*  <td>*!/*/}
+                      {/*        /!*    <div>Nov 24, 2022</div>*!/*/}
+                      {/*        /!*  </td>*!/*/}
+                      {/*        /!*  <td>*!/*/}
+                      {/*        /!*    <a*!/*/}
+                      {/*        /!*      className="link"*!/*/}
+                      {/*        /!*      target="_blank"*!/*/}
+                      {/*        /!*      rel="noopener noreferrer"*!/*/}
+                      {/*        /!*      href="https://etherscan.io/tx/0x42f481bd81071f96fb95f5832a78cffa7ef8c12ec8a60c6b0b3c5cd5e8a113e8"*!/*/}
+                      {/*        /!*    >*!/*/}
+                      {/*        /!*      Tx*!/*/}
+                      {/*        /!*      <ArrowNorthEast*!/*/}
+                      {/*        /!*        size="20"*!/*/}
+                      {/*        /!*        fill="rgb(168 162 158/1)"*!/*/}
+                      {/*        /!*      />*!/*/}
+                      {/*        /!*    </a></td>*!/*/}
+                      {/*        /!*</tr>*!/*/}
+                      {/*        </tbody>*/}
+                      {/*      </table>*/}
+                      {/*    </div>*/}
+                      {/*  </div>*/}
+                      {/*</div>*/}
                     </div>
                   </div>
                 </div>
@@ -546,13 +552,14 @@ function BorrowerProfile() {
                               <td>
                                 <ul>
                                   <li>
-                                    <a
-                                      className="link"
-                                      href="https://polygonscan.com/address/0xABC38F394CfC5b5c544fD4A38ef8A9a66aBE48B7"
-                                      target="_blank"
-                                    >
-                                      0xABC38F394CfC5b5c544fD4A38ef8A9a66aBE48B7
-                                    </a>
+                                    {/*<a*/}
+                                    {/*  className="link"*/}
+                                    {/*  href="https://polygonscan.com/address/0xABC38F394CfC5b5c544fD4A38ef8A9a66aBE48B7"*/}
+                                    {/*  target="_blank"*/}
+                                    {/*>*/}
+                                    {/*  0xABC38F394CfC5b5c544fD4A38ef8A9a66aBE48B7*/}
+                                    {/*</a>*/}
+                                    -
                                   </li>
                                 </ul>
                               </td>
@@ -566,13 +573,14 @@ function BorrowerProfile() {
                               <td>
                                 <ul>
                                   <li>
-                                    <a
-                                      className="link"
-                                      href="https://polygonscan.com/address/0x428995b6b3e2ed27387ce15d224c2e669a284bc0"
-                                      target="_blank"
-                                    >
-                                      0x428995b6b3e2ed27387ce15d224c2e669a284bc0
-                                    </a>
+                                    {/*<a*/}
+                                    {/*  className="link"*/}
+                                    {/*  href="https://polygonscan.com/address/0x428995b6b3e2ed27387ce15d224c2e669a284bc0"*/}
+                                    {/*  target="_blank"*/}
+                                    {/*>*/}
+                                    {/*  0x428995b6b3e2ed27387ce15d224c2e669a284bc0*/}
+                                    {/*</a>*/}
+                                    -
                                   </li>
                                 </ul>
                               </td>

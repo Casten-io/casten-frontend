@@ -70,6 +70,7 @@ function WalletConnect() {
     // Subscribe to accounts change
     provider.on("accountsChanged", (accounts: string[]) => {
       console.log(accounts);
+      dispatch(walletConnect({ address: accounts[0] }));
     });
 
     // Subscribe to chainId change
@@ -79,13 +80,11 @@ function WalletConnect() {
         const ethersProvider = new providers.Web3Provider(provider);
         const network = await ethersProvider.getNetwork();
         const userAddress = await ethersProvider.getSigner().getAddress();
-        dispatch(
-          walletConnect({
-            provider: ethersProvider,
-            address: userAddress,
-            networkInfo: network
-          })
-        );
+        dispatch(walletConnect({
+          provider: ethersProvider,
+          address: userAddress,
+          networkInfo: network
+        }));
       } catch (e) {
         console.error('error in network info read after chain change: ', e)
       }

@@ -67,10 +67,10 @@ function FactList() {
       "15.00%",
       15,
       "Monthly",
-      "March 23",
-      "0.8",
-      "3.0",
-      "$1200"
+      "Sept 23",
+      "-",
+      "-",
+      "$6500"
     ),
     createData(
       "QC002",
@@ -80,10 +80,10 @@ function FactList() {
       "21.00%",
       21,
       "Monthly",
-      "March 23",
-      "0.8",
-      "3.0",
-      "$6500"
+      "Sept 23",
+      "-",
+      "-",
+      "$1200"
     ),
   ];
   // const rows = [
