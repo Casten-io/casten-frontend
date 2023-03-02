@@ -76,15 +76,15 @@ const SecuritizeAuthorize = () => {
     if (!query.get('code') && location.pathname !== '/securitize-kyc-doc-uploaded') {
       return navigate('/');
     }
-    // if (wallet) {
-    //   if (query.get('code') && !securitizeAT) {
-    //     authorizeCode();
-    //     return;
-    //   }
-    //   if (location.pathname === '/securitize-kyc-doc-uploaded') {
-    //     fetchKycStatus();
-    //   }
-    // }
+    if (wallet) {
+      if (query.get('code') && !securitizeAT) {
+        authorizeCode();
+        return;
+      }
+      if (location.pathname === '/securitize-kyc-doc-uploaded') {
+        fetchKycStatus();
+      }
+    }
   }, [wallet]);
 
   return <>
