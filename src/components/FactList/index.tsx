@@ -373,9 +373,9 @@ function FactList() {
               <TableCell className="head-cell">APY</TableCell>
               <TableCell className="head-cell">Frequency</TableCell>
               <TableCell className="head-cell">Maturity</TableCell>
-              <TableCell className="head-cell">LTV</TableCell>
+              {/*<TableCell className="head-cell">LTV</TableCell>*/}
               {/*<TableCell className="head-cell">Leverage</TableCell>*/}
-              {/*<TableCell className="head-cell">Current</TableCell>*/}
+              <TableCell className="head-cell">Current</TableCell>
               <TableCell className="head-cell"></TableCell>
             </TableRow>
           </TableHead>
