@@ -38,8 +38,8 @@ function TokenOfferings() {
   return (
     <div className="security-view">
       <div className="header-container">
-        <Typography className="title">Cauris Finance</Typography>
-        <Typography className="subtitle">Pool 1 - Oct 22</Typography>
+        <Typography className="title">QuickCheck</Typography>
+        <Typography className="subtitle">Pool 2 - March 23</Typography>
       </div>
       <div className="content-container">
         <div className="content-header">

@@ -366,16 +366,16 @@ function FactList() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table">
           <TableHead className="table-head">
             <TableRow className="head-row">
-              <TableCell className="head-cell">SecID</TableCell>
-              <TableCell className="head-cell">Sec Name</TableCell>
+              <TableCell className="head-cell">Token</TableCell>
+              <TableCell className="head-cell">Name</TableCell>
               <TableCell className="head-cell">Tranche</TableCell>
               <TableCell className="head-cell">Total Issuance</TableCell>
               <TableCell className="head-cell">APY</TableCell>
               <TableCell className="head-cell">Frequency</TableCell>
               <TableCell className="head-cell">Maturity</TableCell>
               <TableCell className="head-cell">LTV</TableCell>
-              <TableCell className="head-cell">Leverage</TableCell>
-              <TableCell className="head-cell">Current</TableCell>
+              {/*<TableCell className="head-cell">Leverage</TableCell>*/}
+              {/*<TableCell className="head-cell">Current</TableCell>*/}
               <TableCell className="head-cell"></TableCell>
             </TableRow>
           </TableHead>
@@ -391,8 +391,8 @@ function FactList() {
                 <TableCell>{row.apy}</TableCell>
                 <TableCell>{row.frequency}</TableCell>
                 <TableCell>{row.maturity}</TableCell>
-                <TableCell>{row.ltv}</TableCell>
-                <TableCell>{row.leverage}</TableCell>
+                {/*<TableCell>{row.ltv}</TableCell>*/}
+                {/*<TableCell>{row.leverage}</TableCell>*/}
                 <TableCell>{row.current}</TableCell>
                 <TableCell className="invest-button">
                   <button

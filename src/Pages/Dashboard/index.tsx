@@ -59,7 +59,7 @@ function Dashboard() {
     <div className="dashboard-view">
       <div className="numbers">
         <div className="dashboard-header">
-          <Typography className="title">Pools</Typography>
+          <Typography className="title">Active Deals</Typography>
         </div>
         <div className="protocol-stats">
           <Box className="stat-box">
