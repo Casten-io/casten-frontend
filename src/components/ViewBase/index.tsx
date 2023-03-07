@@ -14,7 +14,7 @@ import { makeStyles } from "@mui/styles";
 import { backendUrl, securitizeDomainId, securitizeURL } from '../../constants';
 import {
   toggleKycModal,
-  updateAssetListExecution,
+  updateAssetListExecution, updateKYCStatus,
   updateTotalOriginatedLoans,
   updateWhitelistStatus,
 } from '../../store/slices/account';
@@ -53,6 +53,7 @@ function ViewBase({ children }: IViewBaseProps) {
   const networkInfo = useSelector(
     (state: RootState) => state.account.networkInfo,
   );
+  let kycCheckInterval: any | null = null;
   const securitizeAT = useSelector((state: RootState) => state.account.securitizeAT);
   const showKycModal = useSelector((state: RootState) => state.account.showKycModal);
   const kycStatus = useSelector((state: RootState) => state.account.kycStatus) || '';
@@ -61,6 +62,27 @@ function ViewBase({ children }: IViewBaseProps) {
   const address = useSelector((state: RootState) => state.account.address);
   const contractInfo =
     ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "137"];
+
+  const fetchKycStatus = () => {
+    fetch(`${backendUrl}/investor/kyc-status/${address}`, {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        'Content-type': 'application/json',
+      },
+    })
+      .then((resp) => resp.json())
+      .then((respJson: any) => {
+        dispatch(updateKYCStatus(respJson.data));
+        if (['verified', 'manual-review'].includes(respJson.data.kycStatus)) {
+          clearInterval(kycCheckInterval)
+        }
+      })
+      .catch((error) => {
+        console.error('failed to authenticate code: ', error);
+      });
+  }
+
   const executeQuery = () => {
     fetch(`${backendUrl}/dune/execute/1629073`, {
       method: 'POST',
@@ -99,6 +121,20 @@ function ViewBase({ children }: IViewBaseProps) {
       executeQueryTOL();
     }, 10 * 60 * 1000);
   }, []);
+
+  useEffect(() => {
+    if (!['/securitize-authorize', '/securitize-kyc-doc-uploaded'].includes(location.pathname)) {
+      if (['processing', 'none', 'updates-required', 'rejected', 'expired'].includes(kycStatus)) {
+        kycCheckInterval = setInterval(() => fetchKycStatus(), 2 * 60 * 1000);
+      }
+    }
+    return () => {
+      if (kycCheckInterval) {
+        clearInterval(kycCheckInterval);
+      }
+    }
+  }, [kycStatus, location])
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
