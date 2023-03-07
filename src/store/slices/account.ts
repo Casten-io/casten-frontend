@@ -61,7 +61,7 @@ export const accountSlice = createSlice({
         },
         updateWhitelistStatus: (state, action) => {
             state.whitelistStatus = action.payload;
-            state.whitelistCheckTimestamp = Date.now() / 1000
+            state.whitelistCheckTimestamp = Math.round(Date.now() / 1000);
         },
         toggleKycModal: (state) => {
             state.showKycModal = !state.showKycModal;

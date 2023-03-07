@@ -307,15 +307,24 @@ function FactList() {
     }
   }, [address, whitelistStatus]);
 
-  const checkWhitelistAndOpenInvestPopup = (investFact: any) => async () => {
-    if (wrongNetwork) {
+  const checkWhitelistAndOpenInvestPopup = useCallback((investFact: any) => async () => {
+    if (provider && networkInfo && address && !['80001', '137'].includes(networkInfo.chainId?.toString())) {
       setSwitchNetworkOpen(true);
     }
     const timestampDiff = Date.now() / 1000 - whitelistStatusTimestamp
     if (!whitelistStatus) {
       let isMember: boolean = whitelistStatus;
-      if (timestampDiff > 240) {
+      if (timestampDiff > 60) {
         if (!contractInfo || !networkInfo?.chainId || !address || !provider) {
+          console.error(`error: something not found: contractInfo: ${
+            !contractInfo
+          } | chainId: ${
+            !networkInfo?.chainId
+          } | address: ${
+            !address
+          } | provider: ${
+            !provider
+          }`)
           return;
         }
         const memberContract = new Contract(
@@ -347,7 +356,7 @@ function FactList() {
       return;
     }
     setInvestIn(investFact);
-  }
+  }, [address, contractInfo, dispatch, networkInfo, pendingSupply, provider, whitelistStatus, whitelistStatusTimestamp])
 
   useEffect(() => {
     fetchUserOrders()
