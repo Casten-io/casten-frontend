@@ -277,7 +277,7 @@ function BorrowerProfile() {
                                     <li>
                                       <p>
                                         Submit monthly information report on the overall loan performance of the Arve SPV
-                                        Limited[Fintech company name] in the agreed upon format
+                                        Limited in the agreed upon format
                                       </p>
                                     </li>
                                   </ul>
