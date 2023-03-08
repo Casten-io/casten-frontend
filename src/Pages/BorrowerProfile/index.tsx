@@ -42,10 +42,12 @@ function TabPanel(props: TabPanelProps) {
     </div>
   );
 }
+
 const a11yProps = (index: number) => ({
   id: `simple-tab-${index}`,
   'aria-controls': `simple-tabpanel-${index}`,
 });
+
 function BorrowerProfile() {
   const [value, setValue] = useState(0);
 
@@ -89,8 +91,12 @@ function BorrowerProfile() {
                   <span>$0</span>
                 </div>
                 <div className="goal-progress" style={{ backgroundImage: `url('${BlankProgress}')` }}>
-                  <div className="red" style={{width: '1.28049%'}}><div className="full-box"/></div>
-                  <div className="gray" style={{width: '5.12195%'}}><div className="full-box"/></div>
+                  <div className="red" style={{ width: '1.28049%' }}>
+                    <div className="full-box"/>
+                  </div>
+                  <div className="gray" style={{ width: '5.12195%' }}>
+                    <div className="full-box"/>
+                  </div>
                 </div>
               </div>
               <div className="goal-value">
@@ -100,7 +106,9 @@ function BorrowerProfile() {
                 </span>
               </div>
             </div>
-            <div className="side-area"><div/></div>
+            <div className="side-area">
+              <div/>
+            </div>
             <div className="tab-area">
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" className="tab-list">
                 <Tab label="Deal Overview" className="tab-button" {...a11yProps(0)} />
@@ -120,11 +128,15 @@ function BorrowerProfile() {
                             Deal Overview
                           </a>
                         </h2>
-                        {/*<div className="text-content">*/}
-                        {/*<span>*/}
-                        {/*  Proceeds will be used to provide additional backing to African fintechs in their quest to provide access to financial services to millions of traditionally underbanked customers. Our investments will include senior secured loans with covenants for additional downside protection. All loans will be secured by all-asset debentures, including our borrowers' lending receivables.*/}
-                        {/*</span>*/}
-                        {/*</div>*/}
+                        <div className="text-content">
+                          <p>
+                            Quick Check will use proceeds from this pool to grow its customer base of Micro, Small and
+                            Medium Businesses in Nigeria. These businesses span many sectors, including manufacturing,
+                            trading and retail. Unlike the slower and more expensive capital from traditional financial
+                            institutions, Quick Checks non-dilutive short-term financing allows these businesses to grow
+                            with access to quick and affordable capital
+                          </p>
+                        </div>
                       </div>
                       {/*<div className="highlights section">*/}
                       {/*  <h2 className="title"><span>Highlights</span></h2>*/}
@@ -197,7 +209,7 @@ function BorrowerProfile() {
                               <tr className="border border-sand-200">
                                 <th scope="row">
                                   <div>
-                                    <div className="th-title">Payment Frequency </div>
+                                    <div className="th-title">Payment Frequency</div>
                                   </div>
                                 </th>
                                 <td>Monthly</td>
@@ -501,7 +513,7 @@ function BorrowerProfile() {
                           underwriting capabilities and unique credit scoring model. QuickCheck has disbursed loans of
                           over $50 million to 1.1 million users since inception out of 3.3 million applications.
                         </p>
-                        <h3 className="highlights-title" style={{marginBottom: '0.5rem'}}>
+                        <h3 className="highlights-title" style={{ marginBottom: '0.5rem' }}>
                           Team
                         </h3>
                         <p style={{ marginBottom: '2rem' }}>
@@ -555,7 +567,7 @@ function BorrowerProfile() {
                         <h2 className="title">
                           Borrower Financials
                         </h2>
-                        <div className="table" style={{overflow: 'auto'}}>
+                        <div className="table" style={{ overflow: 'auto' }}>
                           <table className="chain-data-table">
                             <tbody>
                             <tr className="border border-sand-200">
