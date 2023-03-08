@@ -237,15 +237,19 @@ function BorrowerProfile() {
                                   </div>
                                 </th>
                                 <td>
-                                  <ul>
+                                  <ul style={{ listStyle: 'initial' }}>
                                     <li>
-                                      First priority liens on Senior secured loans to micro, small and medium business
-                                      (MSMBs) and separately managed in the SPV created for the pool up to a value of
-                                      150%
+                                      <p>
+                                        First priority liens on Senior secured loans to micro, small and medium business
+                                        (MSMBs) and separately managed in the SPV created for the pool up to a value of
+                                        150%
+                                      </p>
                                     </li>
                                     <li>
-                                      Borrower to contribute 10% of the pool size in to the junior tranche as cash
-                                      security
+                                      <p>
+                                        Borrower to contribute 10% of the pool size in to the junior tranche as cash
+                                        security
+                                      </p>
                                     </li>
                                   </ul>
                                 </td>
@@ -257,18 +261,24 @@ function BorrowerProfile() {
                                   </div>
                                 </th>
                                 <td>
-                                  <ul>
+                                  <ul style={{ listStyle: 'initial' }}>
                                     <li>
-                                      Maintain the lien security at all times during the duration of the pool in the
-                                      SPV. If any of the underlying loan is delayed or defaulted, the same shall be
-                                      replaced with a good performing loan in the SPV as part of the collateral
+                                      <p>
+                                        Maintain the lien security at all times during the duration of the pool in the
+                                        SPV. If any of the underlying loan is delayed or defaulted, the same shall be
+                                        replaced with a good performing loan in the SPV as part of the collateral
+                                      </p>
                                     </li>
                                     <li>
-                                      Submit report on the collateral performance on a monthly basis
+                                      <p>
+                                        Submit report on the collateral performance on a monthly basis
+                                      </p>
                                     </li>
                                     <li>
-                                      Submit monthly information report on the overall loan performance of the Arve SPV
-                                      Limited[Fintech company name] in the agreed upon format
+                                      <p>
+                                        Submit monthly information report on the overall loan performance of the Arve SPV
+                                        Limited[Fintech company name] in the agreed upon format
+                                      </p>
                                     </li>
                                   </ul>
                                 </td>
