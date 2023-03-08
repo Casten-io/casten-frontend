@@ -22,7 +22,7 @@ import {
   Radio,
   TextField,
 } from "@mui/material";
-import { BigNumber, ethers } from "ethers";
+import { BigNumber, Contract, ethers } from "ethers";
 import { Address, ADDRESS_BY_NETWORK_ID } from '../../constants/address';
 import { backendUrl } from '../../constants';
 import { CircularProgress } from '@material-ui/core';
@@ -162,10 +162,23 @@ function PortfolioList() {
       const juniorToken = new ethers.Contract(contractInfo.JUNIOR_TOKEN.address, contractInfo.JUNIOR_TOKEN.ABI, provider?.getSigner());
       const seniorTokenBalance = await seniorToken.balanceOf(address);
       const juniorTokenBalance = await juniorToken.balanceOf(address);
-      const seniorMemberList = new ethers.Contract(contractInfo.SENIOR_MEMBER_LIST.address, contractInfo.SENIOR_MEMBER_LIST.ABI, provider?.getSigner());
-      const juniorMemberList = new ethers.Contract(contractInfo.JUNIOR_MEMBER_LIST.address, contractInfo.JUNIOR_MEMBER_LIST.ABI, provider?.getSigner());
-      const seniorMember = await seniorMemberList.hasMember(address);
-      const juniorMember = await juniorMemberList.hasMember(address);
+      const memberContract = new Contract(
+        contractInfo.JUNIOR_MEMBER_LIST.address,
+        contractInfo.JUNIOR_MEMBER_LIST.ABI,
+        provider?.getSigner(),
+      );
+
+      let isMember = await memberContract.hasMember(address);
+      if (networkInfo?.chainId === 80001) {
+        const memberContract = new Contract(
+          contractInfo.SENIOR_MEMBER_LIST.address,
+          contractInfo.SENIOR_MEMBER_LIST.ABI,
+          provider?.getSigner(),
+        );
+
+        const isSeniorMember = await memberContract.hasMember(address);
+        isMember = isMember && isSeniorMember;
+      }
       const seniorTrancheContract = new ethers.Contract(contractInfo.SENIOR_TRANCHE.address, contractInfo.SENIOR_TRANCHE.ABI, provider?.getSigner());
       const seniorDisburseDetails = await seniorTrancheContract['calcDisburse(address)'](address);
       const juniorTrancheContract = new ethers.Contract(contractInfo.JUNIOR_TRANCHE.address, contractInfo.JUNIOR_TRANCHE.ABI, provider?.getSigner());
@@ -180,8 +193,7 @@ function PortfolioList() {
         (
           juniorDisburseDetails.payoutTokenAmount.gt(BigNumber.from(0)) ||
           seniorDisburseDetails.payoutTokenAmount.gt(BigNumber.from(0))
-        ) &&
-        (seniorMember || juniorMember)
+        ) && isMember
       ) {
         setActionBtns(true);
       }

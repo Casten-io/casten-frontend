@@ -160,116 +160,153 @@ function BorrowerProfile() {
                           <div className="table">
                             <table className="chain-data-table">
                               <tbody>
-                              {/*<tr>
+                              <tr className="border border-sand-200">
                                 <th scope="row">
                                   <div>
-                                    <div className="th-title">Interest Rate</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
+                                    <div className="th-title">Initial pool size</div>
                                   </div>
                                 </th>
-                                <td>10.00%</td>
+                                <td>USD 200,000</td>
                               </tr>
-                              <tr>
+                              <tr className="border border-sand-200">
                                 <th scope="row">
                                   <div>
-                                    <div className="th-title">Drawdown cap</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
+                                    <div className="th-title">Pool purpose</div>
                                   </div>
                                 </th>
-                                <td>$10,000,000.00</td>
+                                <td>
+                                  To lend to micro, small and medium business (MSMBs) in Nigeria
+                                </td>
                               </tr>
-                              <tr>
+                              <tr className="border border-sand-200">
                                 <th scope="row">
                                   <div>
-                                    <div className="th-title">Payment frequency</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
+                                    <div className="th-title">Term</div>
                                   </div>
                                 </th>
-                                <td>30 days</td>
+                                <td>180 days - bullet payment</td>
                               </tr>
-                              <tr>
+                              <tr className="border border-sand-200">
                                 <th scope="row">
                                   <div>
-                                    <div className="th-title">Payment term</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
+                                    <div className="th-title">Coupon financing rate</div>
                                   </div>
                                 </th>
-                                <td>1095 days</td>
+                                <td>18%</td>
                               </tr>
-                              <tr>
+                              <tr className="border border-sand-200">
                                 <th scope="row">
                                   <div>
-                                    <div className="th-title">Default interest rate</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
+                                    <div className="th-title">Payment Frequency </div>
                                   </div>
                                 </th>
-                                <td>0.00%</td>
+                                <td>Monthly</td>
                               </tr>
-                              <tr>
+                              <tr className="border border-sand-200">
                                 <th scope="row">
                                   <div>
                                     <div className="th-title">Deal type</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
                                   </div>
                                 </th>
-                                <td>Multitranche</td>
+                                <td>Multiple tranches</td>
                               </tr>
-                              <tr>
-                                <th scope="row">
-                                  <div>
-                                    <div className="th-title">Current leverage ratio</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
-                                  </div>
-                                </th>
-                                <td>4x</td>
-                              </tr>
-                              <tr>
+                              <tr className="border border-sand-200">
                                 <th scope="row">
                                   <div>
                                     <div className="th-title">Opening date</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
                                   </div>
                                 </th>
-                                <td>May 3, 2022</td>
+                                <td>13 March 2023</td>
                               </tr>
-                              <tr>
+                              <tr className="border border-sand-200">
                                 <th scope="row">
                                   <div>
-                                    <div className="th-title">Contract address</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
+                                    <div className="th-title">Security</div>
                                   </div>
                                 </th>
-                                <td>0xd43a4f3041069c6178b99d55295b00d0db955bb5</td>
+                                <td>
+                                  <ul>
+                                    <li>
+                                      First priority liens on Senior secured loans to micro, small and medium business
+                                      (MSMBs) and separately managed in the SPV created for the pool up to a value of
+                                      150%
+                                    </li>
+                                    <li>
+                                      Borrower to contribute 10% of the pool size in to the junior tranche as cash
+                                      security
+                                    </li>
+                                  </ul>
+                                </td>
                               </tr>
-                              <tr>
+                              <tr className="border border-sand-200">
                                 <th scope="row">
                                   <div>
-                                    <div className="th-title">Borrower address</div>
-                                    <div className="th-info">
-                                      <img src={InfoIcon} alt="info-icon"/>
-                                    </div>
+                                    <div className="th-title">Other important covenants</div>
                                   </div>
                                 </th>
-                                <td>0xd750033cd9ab91ead99074f671bbcbce0ffd91a8</td>
-                              </tr>*/}
+                                <td>
+                                  <ul>
+                                    <li>
+                                      Maintain the lien security at all times during the duration of the pool in the
+                                      SPV. If any of the underlying loan is delayed or defaulted, the same shall be
+                                      replaced with a good performing loan in the SPV as part of the collateral
+                                    </li>
+                                    <li>
+                                      Submit report on the collateral performance on a monthly basis
+                                    </li>
+                                    <li>
+                                      Submit monthly information report on the overall loan performance of the Arve SPV
+                                      Limited[Fintech company name] in the agreed upon format
+                                    </li>
+                                  </ul>
+                                </td>
+                              </tr>
+                              <tr className="border border-sand-200">
+                                <th scope="row">
+                                  <div>
+                                    <div className="th-title">Contract Address</div>
+                                  </div>
+                                </th>
+                                <td>
+                                  <ul>
+                                    <li>
+                                      <a
+                                        className="link"
+                                        href="https://polygonscan.com/address/0xDb178D0cd0D28470a354921E257B9b0988Ff7e38"
+                                        target="_blank"
+                                        style={{ display: 'none' }}
+                                      >
+                                        0xDb178D0cd0D28470a354921E257B9b0988Ff7e38
+                                      </a>
+                                      -
+                                    </li>
+                                  </ul>
+                                </td>
+                              </tr>
+                              <tr className="border border-sand-200">
+                                <th scope="row">
+                                  <div>
+                                    <div className="th-title">Borrower Address</div>
+                                  </div>
+                                </th>
+                                <td>
+                                  <ul>
+                                    <li>
+                                      <a
+                                        className="link"
+                                        href="https://polygonscan.com/address/0x428995b6b3e2ed27387ce15d224c2e669a284bc0"
+                                        target="_blank"
+                                        style={{ display: 'none' }}
+                                      >
+                                        0x428995b6b3e2ed27387ce15d224c2e669a284bc0
+                                      </a>
+                                      -
+                                    </li>
+                                  </ul>
+                                </td>
+                              </tr>
+                              </tbody>
+                              <tbody style={{ display: 'none' }}>
                               <tr className="border border-sand-200">
                                 <th scope="row">
                                   <div>
@@ -303,13 +340,14 @@ function BorrowerProfile() {
                                 <td>
                                   <ul>
                                     <li>
-                                      {/*<a*/}
-                                      {/*  className="link"*/}
-                                      {/*  href="https://polygonscan.com/address/0xDb178D0cd0D28470a354921E257B9b0988Ff7e38"*/}
-                                      {/*  target="_blank"*/}
-                                      {/*>*/}
-                                      {/*  0xDb178D0cd0D28470a354921E257B9b0988Ff7e38*/}
-                                      {/*</a>*/}
+                                      <a
+                                        className="link"
+                                        href="https://polygonscan.com/address/0xDb178D0cd0D28470a354921E257B9b0988Ff7e38"
+                                        target="_blank"
+                                        style={{ display: 'none' }}
+                                      >
+                                        0xDb178D0cd0D28470a354921E257B9b0988Ff7e38
+                                      </a>
                                       -
                                     </li>
                                   </ul>
@@ -324,13 +362,14 @@ function BorrowerProfile() {
                                 <td>
                                   <ul>
                                     <li>
-                                      {/*<a*/}
-                                      {/*  className="link"*/}
-                                      {/*  href="https://polygonscan.com/address/0x428995b6b3e2ed27387ce15d224c2e669a284bc0"*/}
-                                      {/*  target="_blank"*/}
-                                      {/*>*/}
-                                      {/*  0x428995b6b3e2ed27387ce15d224c2e669a284bc0*/}
-                                      {/*</a>*/}
+                                      <a
+                                        className="link"
+                                        href="https://polygonscan.com/address/0x428995b6b3e2ed27387ce15d224c2e669a284bc0"
+                                        target="_blank"
+                                        style={{ display: 'none' }}
+                                      >
+                                        0x428995b6b3e2ed27387ce15d224c2e669a284bc0
+                                      </a>
                                       -
                                     </li>
                                   </ul>
@@ -341,57 +380,57 @@ function BorrowerProfile() {
                           </div>
                         </div>
                       </div>
-                      {/*<div className="section recent-activity">*/}
-                      {/*  <h2 className="title">Recent Activity</h2>*/}
-                      {/*  <div className="table-area">*/}
-                      {/*    <div className="table-sub-area">*/}
-                      {/*      <table>*/}
-                      {/*        <thead>*/}
-                      {/*        <tr>*/}
-                      {/*          <th>User</th>*/}
-                      {/*          <th>Category</th>*/}
-                      {/*          <th>Amount</th>*/}
-                      {/*          <th>Date</th>*/}
-                      {/*          <th>Link</th>*/}
-                      {/*        </tr>*/}
-                      {/*        </thead>*/}
-                      {/*        <tbody>*/}
-                      {/*        /!*<tr>*!/*/}
-                      {/*        /!*  <td>*!/*/}
-                      {/*        /!*    <div>*!/*/}
-                      {/*        /!*      <button className="address-btn">*!/*/}
-                      {/*        /!*        <span>0x1e10...13db</span>*!/*/}
-                      {/*        /!*      </button>*!/*/}
-                      {/*        /!*    </div>*!/*/}
-                      {/*        /!*  </td>*!/*/}
-                      {/*        /!*  <td>*!/*/}
-                      {/*        /!*    <div className="text-left">Withdrawal</div>*!/*/}
-                      {/*        /!*  </td>*!/*/}
-                      {/*        /!*  <td>*!/*/}
-                      {/*        /!*    <div>-$500.00 USDC</div>*!/*/}
-                      {/*        /!*  </td>*!/*/}
-                      {/*        /!*  <td>*!/*/}
-                      {/*        /!*    <div>Nov 24, 2022</div>*!/*/}
-                      {/*        /!*  </td>*!/*/}
-                      {/*        /!*  <td>*!/*/}
-                      {/*        /!*    <a*!/*/}
-                      {/*        /!*      className="link"*!/*/}
-                      {/*        /!*      target="_blank"*!/*/}
-                      {/*        /!*      rel="noopener noreferrer"*!/*/}
-                      {/*        /!*      href="https://etherscan.io/tx/0x42f481bd81071f96fb95f5832a78cffa7ef8c12ec8a60c6b0b3c5cd5e8a113e8"*!/*/}
-                      {/*        /!*    >*!/*/}
-                      {/*        /!*      Tx*!/*/}
-                      {/*        /!*      <ArrowNorthEast*!/*/}
-                      {/*        /!*        size="20"*!/*/}
-                      {/*        /!*        fill="rgb(168 162 158/1)"*!/*/}
-                      {/*        /!*      />*!/*/}
-                      {/*        /!*    </a></td>*!/*/}
-                      {/*        /!*</tr>*!/*/}
-                      {/*        </tbody>*/}
-                      {/*      </table>*/}
-                      {/*    </div>*/}
-                      {/*  </div>*/}
-                      {/*</div>*/}
+                      <div className="section recent-activity" style={{ display: 'none' }}>
+                        <h2 className="title">Recent Activity</h2>
+                        <div className="table-area">
+                          <div className="table-sub-area">
+                            <table>
+                              <thead>
+                              <tr>
+                                <th>User</th>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Link</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              {/*<tr>*/}
+                              {/*  <td>*/}
+                              {/*    <div>*/}
+                              {/*      <button className="address-btn">*/}
+                              {/*        <span>0x1e10...13db</span>*/}
+                              {/*      </button>*/}
+                              {/*    </div>*/}
+                              {/*  </td>*/}
+                              {/*  <td>*/}
+                              {/*    <div className="text-left">Withdrawal</div>*/}
+                              {/*  </td>*/}
+                              {/*  <td>*/}
+                              {/*    <div>-$500.00 USDC</div>*/}
+                              {/*  </td>*/}
+                              {/*  <td>*/}
+                              {/*    <div>Nov 24, 2022</div>*/}
+                              {/*  </td>*/}
+                              {/*  <td>*/}
+                              {/*    <a*/}
+                              {/*      className="link"*/}
+                              {/*      target="_blank"*/}
+                              {/*      rel="noopener noreferrer"*/}
+                              {/*      href="https://etherscan.io/tx/0x42f481bd81071f96fb95f5832a78cffa7ef8c12ec8a60c6b0b3c5cd5e8a113e8"*/}
+                              {/*    >*/}
+                              {/*      Tx*/}
+                              {/*      <ArrowNorthEast*/}
+                              {/*        size="20"*/}
+                              {/*        fill="rgb(168 162 158/1)"*/}
+                              {/*      />*/}
+                              {/*    </a></td>*/}
+                              {/*</tr>*/}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -443,9 +482,9 @@ function BorrowerProfile() {
                               </div>
                             </div>
                           </div>
-                          {/*<div className="sub-title">*/}
-                          {/*  Africa fintech credit fund*/}
-                          {/*</div>*/}
+                          <div className="sub-title" style={{ display: 'none' }}>
+                            Africa fintech credit fund
+                          </div>
                         </div>
                       </div>
                       <div className="profile-content profile-section">
@@ -512,7 +551,7 @@ function BorrowerProfile() {
                           based on the input from data and disburse loans to users with higher repayment probability.
                         </p>
                       </div>
-                      <div className="profile-section borrower-finance">
+                      <div className="profile-section borrower-finance" style={{ display: 'none' }}>
                         <h2 className="title">
                           Borrower Financials
                         </h2>

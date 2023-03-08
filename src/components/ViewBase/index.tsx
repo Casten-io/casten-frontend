@@ -46,6 +46,7 @@ const style = {
 function ViewBase({ children }: IViewBaseProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [memberListChecking, setMemberListChecking] = useState(false);
+  const [kycVerifiedMessage, setKycVerifiedMessage] = useState(false);
 
   const isSmallerScreen = useMediaQuery("(max-width: 960px)");
   const location = useLocation();
@@ -74,7 +75,11 @@ function ViewBase({ children }: IViewBaseProps) {
       .then((resp) => resp.json())
       .then((respJson: any) => {
         dispatch(updateKYCStatus(respJson.data));
-        if (['verified', 'manual-review'].includes(respJson.data.kycStatus)) {
+        if (
+          ['verified', 'manual-review'].includes(respJson.data.kycStatus) &&
+          ['processing', 'none', 'updates-required', 'expired'].includes(kycStatus)
+        ) {
+          setKycVerifiedMessage(true)
           clearInterval(kycCheckInterval)
         }
       })
@@ -123,8 +128,9 @@ function ViewBase({ children }: IViewBaseProps) {
   }, []);
 
   useEffect(() => {
-    if (!['/securitize-authorize', '/securitize-kyc-doc-uploaded'].includes(location.pathname)) {
+    if (address && !['/securitize-authorize', '/securitize-kyc-doc-uploaded'].includes(location.pathname)) {
       if (['processing', 'none', 'updates-required', 'rejected', 'expired'].includes(kycStatus)) {
+        fetchKycStatus()
         kycCheckInterval = setInterval(() => fetchKycStatus(), 2 * 60 * 1000);
       }
     }
@@ -201,6 +207,35 @@ function ViewBase({ children }: IViewBaseProps) {
         </div>
       )}
       <Modal
+        open={kycVerifiedMessage}
+        onClose={() => setKycVerifiedMessage(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box className="invest-modal">
+          <img src={Close} alt="close" className="close" onClick={() => dispatch(toggleKycModal())} />
+          <Box className="header-img">
+            <img src={Casten} alt="Casten Logo" className="casten-logo" />
+          </Box>
+          <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" mb={2}>
+            <Typography id="loader-text" variant="caption" component="span">
+              Congratulations Your KYC Documents are verified!!
+            </Typography>
+          </Box>
+          <Box className="form-btns">
+            <button onClick={() => setKycVerifiedMessage(false)}>Close</button>
+          </Box>
+          <Box className="modal-footer">
+            <Typography id="power-by-text" variant="caption" component="span">
+              powered by
+            </Typography>
+            <a href="https://securitize.io/securitize-id" target="_blank" rel="noreferrer noopener">
+              <img src={SecuritizeLogo} className="logo" alt="securitize-logo"/>
+            </a>
+          </Box>
+        </Box>
+      </Modal>
+      <Modal
         open={Boolean(
           address &&
           (
@@ -253,7 +288,7 @@ function ViewBase({ children }: IViewBaseProps) {
                   `${securitizeURL}/#/authorize?issuerId=${securitizeDomainId}&scope=info%20details%20verification&redirecturl=${window.location.origin}/securitize-authorize`
               }
             >
-              {['none', 'updates-required', 'expired'].includes(kycStatus) ? 'Upload KYC Documents' : 'Complete KYC'}
+              {['none', 'updates-required', 'expired'].includes(kycStatus) ? 'Upload KYC Documents' : 'Connect Securitize iD'}
             </a>}
           </Box>
           <Box className="modal-footer">
