@@ -87,7 +87,7 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
           <WalletConnect />
         </div>
       </Toolbar>
-      {location.pathname !== '/securitize-authorize' && kycStatus && ['processing', 'none', 'updates-required', 'rejected', 'expired'].includes(kycStatus) && <Box sx={{
+      {location.pathname !== '/securitize-authorize' && kycStatus && ['processing', 'manual-review', 'none', 'updates-required', 'rejected', 'expired'].includes(kycStatus) && <Box sx={{
         width: '100%',
         display: 'flex',
         justifyContent: 'center',
@@ -100,9 +100,9 @@ function Header({ handleDrawerToggle, drawe }: IHeader) {
         {['none', 'updates-required', 'expired'].includes(kycStatus) && <a
           href={`${securitizeURL}/#/profile/verification/type?issuerId=${securitizeDomainId}&scope=info%20details%20verification&redirecturl=${window.location.origin}/securitize-kyc-doc-uploaded`}
         >
-          Upload your KYC Documents{kycStatus && ['updates-required', 'rejected', 'expired'].includes(kycStatus) && ' again'}
+          Upload your KYC Documents{kycStatus && ['manual-review', 'updates-required', 'rejected', 'expired'].includes(kycStatus) && ' again'}
         </a>}
-        {kycStatus === 'processing' && <span>KYC verification is in <b>Progress</b></span>}
+        {['processing', 'manual-review'].includes(kycStatus) && <span>KYC verification is in <b>Progress</b></span>}
         {kycStatus === 'rejected' && <>
           Sorry! You are not approved to deposit at this time, please try again later.&nbsp;
           If you think this is a mistake, please reach us on&nbsp;

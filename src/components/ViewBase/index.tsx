@@ -76,8 +76,8 @@ function ViewBase({ children }: IViewBaseProps) {
       .then((respJson: any) => {
         dispatch(updateKYCStatus(respJson.data));
         if (
-          ['verified', 'manual-review'].includes(respJson.data.kycStatus) &&
-          ['processing', 'none', 'updates-required', 'expired'].includes(kycStatus)
+          respJson.data.kycStatus === 'verified' &&
+          ['manual-review', 'processing', 'none', 'updates-required', 'expired'].includes(kycStatus)
         ) {
           setKycVerifiedMessage(true)
           clearInterval(kycCheckInterval)
@@ -239,7 +239,7 @@ function ViewBase({ children }: IViewBaseProps) {
         open={Boolean(
           address &&
           (
-            ['processing', 'none', 'updates-required', 'rejected', 'expired'].includes(kycStatus) ||
+            ['processing', 'manual-review', 'none', 'updates-required', 'rejected', 'expired'].includes(kycStatus) ||
             (!isMember && !securitizeAT)
           ) &&
           showKycModal
@@ -254,30 +254,35 @@ function ViewBase({ children }: IViewBaseProps) {
             <img src={Casten} alt="Casten Logo" className="casten-logo" />
           </Box>
           <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" mb={2}>
-            <Typography id="loader-text" variant="caption" component="span">
-              {!securitizeAT || ['none', 'updates-required', 'expired'].includes(kycStatus) ?
-                <>
-                  It appears you have not been approved to deposit on this Casten pool. To get approved,&nbsp;
-                  you need to Submit you <a href={KYCDoc} target="_blank" rel="noopener noreferrer">KYC Documents</a>.
-                  Once the information you provide is validated, you will be approved to deposit.
-                </>
+            {!securitizeAT || ['none', 'updates-required', 'expired'].includes(kycStatus) ?
+              <Typography id="loader-text" variant="caption" component="span">
+                It appears you have not been approved to deposit on this Casten pool. To get approved,&nbsp;
+                you need to Submit you <a href={KYCDoc} target="_blank" rel="noopener noreferrer">KYC Documents</a>.
+                Once the information you provide is validated, you will be approved to deposit.
+              </Typography>
+              :
+              kycStatus === 'rejected' ?
+                <Typography id="loader-text" variant="caption" component="span">
+                  Sorry! You are not approved to deposit at this time, please try again later.&nbsp;
+                  If you think this is a mistake, please reach us on&nbsp;
+                  <a
+                    href="https://discord.gg/gRUMG7R7"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    discord
+                  </a>
+                </Typography>
                 :
-                kycStatus === 'rejected' ?
-                  <>
-                    Sorry! You are not approved to deposit at this time, please try again later.&nbsp;
-                    If you think this is a mistake, please reach us on&nbsp;
-                    <a
-                      href="https://discord.gg/gRUMG7R7"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                      discord
-                    </a>
-                  </>
-                  :
-                  kycStatus === 'processing' && <span>KYC verification is in <b>Progress</b></span>
-              }
-            </Typography>
+                ['processing', 'manual-review'].includes(kycStatus) && <Box sx={{ display: 'block' }}>
+                  <Typography id="processing-title" variant="subtitle1" sx={{ textAlign: 'center', mb: 3 }}>KYC verification is in <b>Progress</b></Typography>
+                  <Typography id="loader-text" variant="caption" component="span">
+                    There were some issues with your application. One of our agents is reviewing it personally so the
+                    verification process may take longer than usual. We will contact you as soon as it is done so you
+                    can proceed to the investor dashboard
+                  </Typography>
+                </Box>
+            }
           </Box>
           <Box className="form-btns">
             {(!securitizeAT || ['none', 'updates-required', 'expired'].includes(kycStatus)) && <a

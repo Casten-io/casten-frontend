@@ -278,15 +278,6 @@ function FactList() {
     }
   }, [investIn, investAmount]);
 
-  useEffect(() => {
-    if (address && whitelistStatus) {
-      checkPendingSupplyOrders()
-        .catch((e) => {
-          console.error('failed to calculate withdrawal amount', e);
-        });
-    }
-  }, [address, whitelistStatus]);
-
   const checkPendingSupplyOrders = useCallback(async () => {
     try {
       if (!address || !whitelistStatus) {
@@ -305,7 +296,14 @@ function FactList() {
     } catch (e) {
       console.error('failed to check pending supply orders: ', e);
     }
-  }, [address, whitelistStatus]);
+  }, [address, contractInfo.JUNIOR_TRANCHE.ABI, contractInfo.JUNIOR_TRANCHE.address, contractInfo.SENIOR_TRANCHE.ABI, contractInfo.SENIOR_TRANCHE.address, provider, whitelistStatus]);
+
+  useEffect(() => {
+    checkPendingSupplyOrders()
+      .catch((e) => {
+        console.error('failed to calculate withdrawal amount', e);
+      });
+  }, [checkPendingSupplyOrders]);
 
   const checkWhitelistAndOpenInvestPopup = useCallback((investFact: any) => async () => {
     if (provider && networkInfo && address && !['80001', '137'].includes(networkInfo.chainId?.toString())) {
