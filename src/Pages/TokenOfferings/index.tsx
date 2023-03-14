@@ -7,8 +7,8 @@ function TokenOfferings() {
   return (
     <div className="security-view">
       <div className="header-container">
-        <Typography className="title">QuickCheck</Typography>
-        <Typography className="subtitle">Total Issuance - $200,000 and Maturity 270 days</Typography>
+        <Typography className="title">Cauris</Typography>
+        <Typography className="subtitle">Total Issuance - $5,000,000</Typography>
       </div>
       <div className="content-container">
         <div className="content-header">
