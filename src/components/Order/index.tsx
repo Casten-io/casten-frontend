@@ -23,11 +23,11 @@ function Order() {
             <Grid item xs={5} className="item">
               <div className="unit">
                 <Typography>Available for financing</Typography>
-                <Typography>0.00 DAI</Typography>
+                <Typography>0.00 USDC</Typography>
               </div>
               <div className="unit">
                 <Typography>Outstanding</Typography>
-                <Typography>2,713,654.34 DAI</Typography>
+                <Typography>2,713,654.34 USDC</Typography>
               </div>
               <div className="unit">
                 <Typography>Maturity Date</Typography>
@@ -49,7 +49,7 @@ function Order() {
               </div>
               <div className="unit">
                 <Typography>Total repaid</Typography>
-                <Typography>0.00 DAI</Typography>
+                <Typography>0.00 USDC</Typography>
               </div>
               <div className="unit">
                 <Typography>Financing Fee</Typography>
@@ -65,7 +65,7 @@ function Order() {
         </CardContent>
       </Card>
       <Card
-        sx={{ minWidth: "300px", maxWidth: "900px", marginTop: "30px" }}
+        sx={{ minWidth: "300px", maxWidth: "900px", marginTop: "30px", display: 'none' }}
         className="order-container"
       >
         <CardContent className="order-content">
