@@ -5,11 +5,11 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { updateExecution, walletConnect, disconnect } from "../../../store/slices/account";
+import { walletConnect, disconnect } from "../../../store/slices/account";
 import { RootState } from "../../../store";
 import LogoutIcon from '../../../assets/icons/logout.svg'
 import "./style.scss";
-import { backendUrl, infuraId } from '../../../constants';
+import { infuraId } from '../../../constants';
 import SwitchNetworkModal from './SwitchNetworkModal';
 
 function WalletConnect() {
@@ -48,23 +48,6 @@ function WalletConnect() {
       setWrongNetwork(false);
     }
   }, [stateNetworkInfo, address, stateProvider]);
-
-  const executeQuery = (User: string) => {
-    fetch(`${backendUrl}/dune/execute/1620692`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ User })
-    })
-      .then((resp) => resp.json())
-      .then((respJson) => dispatch(updateExecution({
-        executionId: respJson.data.execution_id,
-      })))
-      .catch((error) => {
-        console.error('query execution failed: ', error)
-      });
-  }
 
   function subscribeProvider(provider: any) {
     // Subscribe to accounts change
@@ -118,7 +101,6 @@ function WalletConnect() {
         networkInfo: network
       })
     );
-    executeQuery(userAddress);
   }
 
   useEffect(() => {

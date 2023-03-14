@@ -14,8 +14,7 @@ import { makeStyles } from "@mui/styles";
 import { backendUrl, securitizeDomainId, securitizeURL } from '../../constants';
 import {
   toggleKycModal,
-  updateAssetListExecution, updateKYCStatus,
-  updateTotalOriginatedLoans,
+  updateKYCStatus,
   updateWhitelistStatus,
 } from '../../store/slices/account';
 import { RootState } from '../../store';
@@ -87,45 +86,6 @@ function ViewBase({ children }: IViewBaseProps) {
         console.error('failed to authenticate code: ', error);
       });
   }
-
-  const executeQuery = () => {
-    fetch(`${backendUrl}/dune/execute/1629073`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-      .then((resp) => resp.json())
-      .then((respJson) => dispatch(updateAssetListExecution({
-        assetListExecution: respJson.data.execution_id,
-      })))
-      .catch((error) => {
-        console.error('query execution failed: ', error);
-      });
-  };
-  const executeQueryTOL = () => {
-    fetch(`${backendUrl}/dune/execute/1681617`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-      .then((resp) => resp.json())
-      .then((respJson) => dispatch(updateTotalOriginatedLoans({
-        totalOriginatedLoans: respJson.data.execution_id,
-      })))
-      .catch((error) => {
-        console.error('query execution failed: ', error);
-      });
-  };
-  useEffect(() => {
-    executeQuery();
-    executeQueryTOL();
-    setInterval(() => {
-      executeQuery();
-      executeQueryTOL();
-    }, 10 * 60 * 1000);
-  }, []);
 
   useEffect(() => {
     if (address && !['/securitize-authorize', '/securitize-kyc-doc-uploaded'].includes(location.pathname)) {

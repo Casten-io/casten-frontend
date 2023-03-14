@@ -13,10 +13,11 @@ import { useSelector } from 'react-redux';
 import { CircularProgress } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 
-import { backendUrl } from '../../constants';
+import { backendUrl, subgraphUrl } from '../../constants';
 import { RootState } from '../../store';
 
 import './style.scss';
+import { createClient } from 'urql';
 
 export interface IAssetsheet {
   secId: string;
@@ -76,29 +77,35 @@ function OrderList() {
     ),
   ];
   const navigate = useNavigate();
-  const executionId = useSelector((state: RootState) => state.account.assetListExecution);
   const [apiCallStatus, setApiCallStatus] = useState<boolean>(false);
   const [assetList, setAssetList] = useState<any[]>([]);
 
-  const fetchAssetList = useCallback(async () => {
-    if (!executionId) {
-      return;
-    }
+  const fetchAssetList = async () => {
     setApiCallStatus(true);
-    const resp = await fetch(`${backendUrl}/dune/execute-and-serve/1620692/${executionId}`, {
-      method: 'POST',
+    const client = createClient({
+      url: subgraphUrl,
     });
-    const respJson = await resp.json();
+    const resp = await client.query(
+      `query {
+          loans {
+            id
+            borrower
+            nftId
+            nftRegistry
+            maturityDate
+            status
+          }
+        }`,
+      {},
+    ).toPromise();
     setApiCallStatus(false);
-    setAssetList(respJson.data.rows);
-  }, [executionId]);
+    setAssetList(resp.data.loans);
+  };
 
   useEffect(() => {
-    if (executionId) {
-      fetchAssetList()
-        .catch((error) => console.error('error while fetching asset list: ', error));
-    }
-  }, [executionId]);
+    fetchAssetList()
+      .catch((error) => console.error('error while fetching asset list: ', error));
+  }, []);
 
   const navigateToAsset = () => {
     navigate("/asset");
@@ -131,12 +138,12 @@ function OrderList() {
               className="body-row"
               onClick={navigateToAsset}
             >
-              <TableCell>{row.loanID}</TableCell>
+              <TableCell>{row.loanID || row.id}</TableCell>
               <TableCell>{row.Name || '-'}</TableCell>
               <TableCell>{row.Description || '-'}</TableCell>
               <TableCell>{row.value || '-'}</TableCell>
               <TableCell>{row.finance_date ? new Date(row.finance_date).toDateString() : '-'}</TableCell>
-              <TableCell>{row.maturityDate_ ? new Date(row.maturityDate_ * 1000).toDateString() : '-'}</TableCell>
+              <TableCell>{row.maturityDate ? new Date(row.maturityDate * 1000).toDateString() : '-'}</TableCell>
               <TableCell>{row.status}</TableCell>
             </TableRow>
           ))}

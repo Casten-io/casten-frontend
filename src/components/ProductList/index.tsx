@@ -51,8 +51,8 @@ function ProductList() {
     createData(
       "FTECHSR420",
       "A Fintech SR 11% 2023",
-      "15%",
-      "21%",
+      "14% - 16%",
+      "21% - 23%",
       "Monthly",
       "Dec 23",
       "QuickCheck",

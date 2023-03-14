@@ -39,7 +39,7 @@ function TokenOfferings() {
     <div className="security-view">
       <div className="header-container">
         <Typography className="title">QuickCheck</Typography>
-        <Typography className="subtitle">Pool 2 - March 23</Typography>
+        <Typography className="subtitle">Total Issuance - $200,000 and Maturity 270 days</Typography>
       </div>
       <div className="content-container">
         <div className="content-header">

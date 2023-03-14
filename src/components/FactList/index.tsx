@@ -376,10 +376,10 @@ function FactList() {
               <TableCell className="head-cell">Token</TableCell>
               <TableCell className="head-cell">Name</TableCell>
               <TableCell className="head-cell">Tranche</TableCell>
-              <TableCell className="head-cell">Total Issuance</TableCell>
+              {/*<TableCell className="head-cell">Total Issuance</TableCell>*/}
               <TableCell className="head-cell">APY</TableCell>
               <TableCell className="head-cell">Frequency</TableCell>
-              <TableCell className="head-cell">Maturity</TableCell>
+              {/*<TableCell className="head-cell">Maturity</TableCell>*/}
               {/*<TableCell className="head-cell">LTV</TableCell>*/}
               {/*<TableCell className="head-cell">Leverage</TableCell>*/}
               <TableCell className="head-cell">Current</TableCell>
@@ -397,7 +397,7 @@ function FactList() {
                 <TableCell>{row.totalIssuance}</TableCell>
                 <TableCell>{row.apy}</TableCell>
                 <TableCell>{row.frequency}</TableCell>
-                <TableCell>{row.maturity}</TableCell>
+                {/*<TableCell>{row.maturity}</TableCell>*/}
                 {/*<TableCell>{row.ltv}</TableCell>*/}
                 {/*<TableCell>{row.leverage}</TableCell>*/}
                 <TableCell>{row.current}</TableCell>

@@ -121,7 +121,7 @@ function BorrowerProfile() {
                       <div className="deal-overview section" style={{ marginBottom: '0.5rem' }}>
                         <h2 className="title">
                           <a
-                            href="https://docsend.com/view/s/hr387j9ft6kut5wg"
+                            href="https://docsend.com/view/s/7eagcpd59sim4dpu"
                             target="_blank"
                             rel="noopener noreferrer"
                           >
@@ -196,7 +196,7 @@ function BorrowerProfile() {
                                     <div className="th-title">Term</div>
                                   </div>
                                 </th>
-                                <td>180 days - bullet payment</td>
+                                <td>270 days - bullet payment</td>
                               </tr>
                               <tr className="border border-sand-200">
                                 <th scope="row">
@@ -279,6 +279,28 @@ function BorrowerProfile() {
                                         Submit monthly information report on the overall loan performance of the Arve SPV
                                         Limited in the agreed upon format
                                       </p>
+                                    </li>
+                                  </ul>
+                                </td>
+                              </tr>
+                              <tr className="border border-sand-200">
+                                <th scope="row">
+                                  <div>
+                                    <div className="th-title">Dataroom Link</div>
+                                  </div>
+                                </th>
+                                <td>
+                                  <ul>
+                                    <li>
+                                      <a
+                                        className="borrower-contract-link"
+                                        href="https://docsend.com/view/s/7eagcpd59sim4dpu"
+                                        target="_blank"
+                                        style={{ display: 'none' }}
+                                      >
+                                        view
+                                      </a>
+                                      -
                                     </li>
                                   </ul>
                                 </td>

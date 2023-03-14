@@ -24,8 +24,9 @@ import {
 } from "@mui/material";
 import { BigNumber, Contract, ethers } from "ethers";
 import { Address, ADDRESS_BY_NETWORK_ID } from '../../constants/address';
-import { backendUrl } from '../../constants';
+import { backendUrl, subgraphUrl } from '../../constants';
 import { CircularProgress } from '@material-ui/core';
+import { createClient } from 'urql';
 
 export interface IPortfoliosheet {
   select: string;
@@ -97,24 +98,47 @@ function PortfolioList() {
   const securityRedirect = useCallback(() => navigate("/security"), [navigate]);
 
   const fetchUserOrders = useCallback(async () => {
-    if (!executionId) {
+    if (!address) {
       return;
     }
     setApiCallStatus(true);
-    const resp = await fetch(`${backendUrl}/dune/execute-and-serve/1620692/${executionId}`, {
-      method: 'POST',
+    // const resp = await fetch(`${backendUrl}/dune/execute-and-serve/1620692/${executionId}`, {
+    //   method: 'POST',
+    // });
+    // const respJson = await resp.json();
+    const client = createClient({
+      url: subgraphUrl,
     });
-    const respJson = await resp.json();
+    const resp = await client.query(
+      `query Deposits($userAddress: String!) {
+          deposits(where: { userAddress: $userAddress }) {
+            id
+            epoch
+            pool
+            tranche
+            amount
+            operatorAddress
+            userAddress
+            seniorTokenPrice
+            juniorTokenPrice
+            timestamp
+          }
+        }`,
+      {
+        userAddress: address,
+      },
+    ).toPromise();
     setApiCallStatus(false);
-    setOrderList(respJson.data.rows);
-  }, [executionId, address]);
+    setOrderList(resp.data.deposits.map((deposit: any) => ({
+      ...deposit,
+      tranche: deposit.tranche === 'JUN' ? 'Junior' : 'Senior',
+    })));
+  }, [address]);
 
   useEffect(() => {
-    if (address) {
-      fetchUserOrders()
-        .catch((error) => console.error('error while fetching user\'s orders: ', error));
-    }
-  }, [address, executionId]);
+    fetchUserOrders()
+      .catch((error) => console.error('error while fetching user\'s orders: ', error));
+  }, [fetchUserOrders]);
 
   const rows = [
     createData(
@@ -200,7 +224,23 @@ function PortfolioList() {
     } catch (e) {
       console.error('withdrawal amount calculation failed: ', e);
     }
-  }, [address])
+  }, [
+    address,
+    contractInfo.JUNIOR_MEMBER_LIST.ABI,
+    contractInfo.JUNIOR_MEMBER_LIST.address,
+    contractInfo.JUNIOR_TOKEN.ABI,
+    contractInfo.JUNIOR_TOKEN.address,
+    contractInfo.JUNIOR_TRANCHE.ABI,
+    contractInfo.JUNIOR_TRANCHE.address,
+    contractInfo.SENIOR_MEMBER_LIST.ABI,
+    contractInfo.SENIOR_MEMBER_LIST.address,
+    contractInfo.SENIOR_TOKEN.ABI,
+    contractInfo.SENIOR_TOKEN.address,
+    contractInfo.SENIOR_TRANCHE.ABI,
+    contractInfo.SENIOR_TRANCHE.address,
+    networkInfo?.chainId,
+    provider,
+  ])
 
   const withdraw = useCallback(async () => {
     if (!address) {
@@ -232,7 +272,23 @@ function PortfolioList() {
     await withdrawTX.wait();
 
     setOpenWithdraw(false);
-  }, [inputWithdrawal, selectedTranche, withdrawalAmount]);
+  }, [
+    address,
+    contractInfo.JUNIOR_OPERATOR.ABI,
+    contractInfo.JUNIOR_OPERATOR.address,
+    contractInfo.JUNIOR_TOKEN.ABI,
+    contractInfo.JUNIOR_TOKEN.address,
+    contractInfo.JUNIOR_TRANCHE.address,
+    contractInfo.SENIOR_OPERATOR.ABI,
+    contractInfo.SENIOR_OPERATOR.address,
+    contractInfo.SENIOR_TOKEN.ABI,
+    contractInfo.SENIOR_TOKEN.address,
+    contractInfo.SENIOR_TRANCHE.address,
+    inputWithdrawal,
+    provider,
+    selectedTranche,
+    withdrawalAmount,
+  ]);
 
   const claim = useCallback(async () => {
     if (!address || !provider) {
@@ -261,16 +317,23 @@ function PortfolioList() {
     //   ...withdrawalAmount,
     //   [selectedTranche === 'Senior' ? 'seniorToken' : 'juniorToken']: withdrawalAmts
     // })
-  }, [withdrawalAmount, selectedTranche]);
+  }, [
+    address,
+    provider,
+    selectedTranche,
+    calculateDisburseAndEnableAction,
+    contractInfo.SENIOR_OPERATOR.address,
+    contractInfo.SENIOR_OPERATOR.ABI,
+    contractInfo.JUNIOR_OPERATOR.address,
+    contractInfo.JUNIOR_OPERATOR.ABI,
+  ]);
 
   useEffect(() => {
-    if (address) {
-      calculateDisburseAndEnableAction()
-        .catch((e) => {
-          console.error('failed to calculate withdrawal amount', e);
-        });
-    }
-  }, [address]);
+    calculateDisburseAndEnableAction()
+      .catch((e) => {
+        console.error('failed to calculate withdrawal amount', e);
+      });
+  }, [calculateDisburseAndEnableAction]);
   return (
     <>
       <Modal
@@ -341,17 +404,17 @@ function PortfolioList() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table">
           <TableHead className="table-head">
             <TableRow className="head-row">
-              <TableCell className="head-cell">Select</TableCell>
-              <TableCell className="head-cell">Symbol</TableCell>
-              <TableCell className="head-cell">Sec Name</TableCell>
+              {/*<TableCell className="head-cell">Select</TableCell>*/}
+              <TableCell className="head-cell">Token</TableCell>
+              <TableCell className="head-cell">Name</TableCell>
               <TableCell className="head-cell">Issuer</TableCell>
               <TableCell className="head-cell">APY</TableCell>
               <TableCell className="head-cell">Tranche</TableCell>
-              <TableCell className="head-cell">Price</TableCell>
-              <TableCell className="head-cell">P/L</TableCell>
+              {/*<TableCell className="head-cell">Price</TableCell>*/}
+              {/*<TableCell className="head-cell">P/L</TableCell>*/}
               <TableCell className="head-cell">Invested On</TableCell>
               <TableCell className="head-cell">Amt. Invested</TableCell>
-              <TableCell className="head-cell">Exposure</TableCell>
+              {/*<TableCell className="head-cell">Exposure</TableCell>*/}
               <TableCell className="head-cell">Claim Interest</TableCell>
               <TableCell className="head-cell">Claim/Withdraw</TableCell>
             </TableRow>
@@ -369,19 +432,19 @@ function PortfolioList() {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 className="body-row"
               >
-                <TableCell component="th" scope="row">
-                  {row.select}
-                </TableCell>
+                {/*<TableCell component="th" scope="row">*/}
+                {/*  {row.select}*/}
+                {/*</TableCell>*/}
                 <TableCell>{row.symbol || '-'}</TableCell>
-                <TableCell>{row.Pool_name || '-'}</TableCell>
+                <TableCell>{row.pool || '-'}</TableCell>
                 <TableCell>{row.issuer || '-'}</TableCell>
                 <TableCell>{row.APY || '-'}</TableCell>
-                <TableCell>{row.Tranche || '-'}</TableCell>
-                <TableCell>{row.price || '-'}</TableCell>
-                <TableCell>{row.profitloss || '-'}</TableCell>
-                <TableCell>{row.evt_block_time ? new Date(row.evt_block_time).toLocaleString() : '-'}</TableCell>
-                <TableCell>{row.amount_invested || '-'}</TableCell>
-                <TableCell>{row.exposure || '-'}</TableCell>
+                <TableCell>{row.tranche || '-'}</TableCell>
+                {/*<TableCell>{row.price || '-'}</TableCell>*/}
+                {/*<TableCell>{row.profitloss || '-'}</TableCell>*/}
+                <TableCell>{row.timestamp ? new Date(Number(row.timestamp) * 1000).toLocaleString() : '-'}</TableCell>
+                <TableCell>{(row.amount && Number(row.amount) / (10 ** (contractInfo?.DAI_TOKEN?.TOKEN_DECIMALS || 18))) || '-'}</TableCell>
+                {/*<TableCell>{row.exposure || '-'}</TableCell>*/}
                 <TableCell>
                   <button
                     style={{ marginRight: '2rem' }}
@@ -394,7 +457,7 @@ function PortfolioList() {
                 </TableCell>
                 <TableCell>
                   {actionBtns && <Box display="flex" width="100%" paddingY="10px" justifyContent="flex-end">
-                    {withdrawalAmount[`remaining${row.Tranche}Token`].gt(BigNumber.from(0)) && <button
+                    {withdrawalAmount[`remaining${row.tranche}Token`].gt(BigNumber.from(0)) && <button
                       onClick={() => {
                         setSelectedTranche(row.Tranche)
                         setOpenWithdraw(true)
@@ -405,9 +468,9 @@ function PortfolioList() {
                     >
                       Withdraw
                     </button>}
-                    {withdrawalAmount[`${row.Tranche.toLowerCase()}Token`].gt(BigNumber.from(0)) && <button
+                    {withdrawalAmount[`${`${row.tranche}`.toLowerCase()}Token`].gt(BigNumber.from(0)) && <button
                       onClick={() => {
-                        setSelectedTranche(row.Tranche)
+                        setSelectedTranche(row.tranche)
                         setOpenClaim(true)
                       }}
                       type="button"

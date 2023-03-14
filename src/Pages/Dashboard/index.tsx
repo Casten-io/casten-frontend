@@ -19,8 +19,9 @@ import "./dashboard.scss";
 import { Skeleton } from "@material-ui/lab";
 import classnames from "classnames";
 import ProductList from "../../components/ProductList";
-import { backendUrl } from '../../constants';
+import { backendUrl, subgraphUrl } from '../../constants';
 import { RootState } from '../../store';
+import { createClient } from 'urql';
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -30,21 +31,32 @@ function Dashboard() {
   const tolExecutionId = useSelector((state: RootState) => state.account.totalOriginatedLoans);
   const [tol, setTOL] = useState(0);
 
-  const fetchUserOrders = useCallback(async () => {
-    if (!tolExecutionId) {
-      return;
-    }
-    const resp = await fetch(`${backendUrl}/dune/execute-and-serve/1681617/${tolExecutionId}`, {
-      method: 'POST',
+  const fetchTOL = async () => {
+    // if (!tolExecutionId) {
+    //   return;
+    // }
+    const client = createClient({
+      url: subgraphUrl,
     });
-    const respJson = await resp.json();
-    setTOL(respJson.data.rows[0].total_loans_usd);
-  }, [tolExecutionId]);
+    const resp = await client.query(
+      `query {
+          borrows {
+            id
+            currencyAmount
+          }
+        }`,
+      {},
+    ).toPromise();
+    const amount = resp.data.borrows.reduce((r: number, v: any) => {
+      return r + (Number(v.currencyAmount) / (10 ** 6))
+    }, 0);
+    setTOL(amount);
+  };
 
   useEffect(() => {
-    fetchUserOrders()
-      .catch((error) => console.error('error while fetching user\'s orders: ', error));
-  }, [tolExecutionId]);
+    fetchTOL()
+      .catch((error) => console.error('error while fetching tol: ', error));
+  }, []);
 
   const card = (text: string, value: number = 10000.00, sym: string = '$') => (
     <CardContent>
