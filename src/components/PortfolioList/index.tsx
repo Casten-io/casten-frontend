@@ -415,7 +415,7 @@ function PortfolioList() {
               <TableCell className="head-cell">Invested On</TableCell>
               <TableCell className="head-cell">Amt. Invested</TableCell>
               {/*<TableCell className="head-cell">Exposure</TableCell>*/}
-              <TableCell className="head-cell">Claim Interest</TableCell>
+              {/*<TableCell className="head-cell">Claim Interest</TableCell>*/}
               <TableCell className="head-cell">Claim/Withdraw</TableCell>
             </TableRow>
           </TableHead>
@@ -445,16 +445,16 @@ function PortfolioList() {
                 <TableCell>{row.timestamp ? new Date(Number(row.timestamp) * 1000).toLocaleString() : '-'}</TableCell>
                 <TableCell>{(row.amount && Number(row.amount) / (10 ** (contractInfo?.DAI_TOKEN?.TOKEN_DECIMALS || 18))) || '-'}</TableCell>
                 {/*<TableCell>{row.exposure || '-'}</TableCell>*/}
-                <TableCell>
-                  <button
-                    style={{ marginRight: '2rem' }}
-                    type="button"
-                    className="action-btn outlined"
-                    disabled={i % 3 === 0}
-                  >
-                    Claim Interest
-                  </button>
-                </TableCell>
+                {/*<TableCell>*/}
+                {/*  <button*/}
+                {/*    style={{ marginRight: '2rem' }}*/}
+                {/*    type="button"*/}
+                {/*    className="action-btn outlined"*/}
+                {/*    disabled={i % 3 === 0}*/}
+                {/*  >*/}
+                {/*    Claim Interest*/}
+                {/*  </button>*/}
+                {/*</TableCell>*/}
                 <TableCell>
                   {actionBtns && <Box display="flex" width="100%" paddingY="10px" justifyContent="flex-end">
                     {withdrawalAmount[`remaining${row.tranche}Token`].gt(BigNumber.from(0)) && <button

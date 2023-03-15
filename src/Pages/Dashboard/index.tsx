@@ -75,10 +75,26 @@ function Dashboard() {
         </div>
         <div className="protocol-stats">
           <Box className="stat-box">
-            <Card variant="outlined">{card("Total Value Locked")}</Card>
+            <Card
+              variant="outlined"
+              sx={{
+                borderRadius: 3,
+                boxShadow: '0px 2px 10px 2px rgb(29 41 57 / 10%), 0px 1px 3px rgb(29 41 57 / 6%) !important',
+              }}
+            >
+              {card("Total Value Locked")}
+            </Card>
           </Box>
           <Box className="stat-box">
-            <Card variant="outlined">{card("Loan Originated", tol, '$')}</Card>
+            <Card
+              variant="outlined"
+              sx={{
+                borderRadius: 3,
+                boxShadow: '0px 2px 10px 2px rgb(29 41 57 / 10%), 0px 1px 3px rgb(29 41 57 / 6%) !important',
+              }}
+            >
+              {card("Loan Originated", tol, '$')}
+            </Card>
           </Box>
         </div>
         {/* <div className="personal-stats">
