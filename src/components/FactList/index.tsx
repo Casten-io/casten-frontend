@@ -296,7 +296,15 @@ function FactList() {
     } catch (e) {
       console.error('failed to check pending supply orders: ', e);
     }
-  }, [address, contractInfo.JUNIOR_TRANCHE.ABI, contractInfo.JUNIOR_TRANCHE.address, contractInfo.SENIOR_TRANCHE.ABI, contractInfo.SENIOR_TRANCHE.address, provider, whitelistStatus]);
+  }, [
+    address,
+    contractInfo?.JUNIOR_TRANCHE?.ABI,
+    contractInfo?.JUNIOR_TRANCHE?.address,
+    contractInfo?.SENIOR_TRANCHE?.ABI,
+    contractInfo?.SENIOR_TRANCHE?.address,
+    provider,
+    whitelistStatus,
+  ]);
 
   useEffect(() => {
     checkPendingSupplyOrders()
