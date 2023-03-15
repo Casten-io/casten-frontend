@@ -414,7 +414,7 @@ function PortfolioList() {
               {/*<TableCell className="head-cell">Exposure</TableCell>*/}
               <TableCell className="head-cell">Transaction</TableCell>
               <TableCell className="head-cell">Status</TableCell>
-              {/*<TableCell className="head-cell">Claim Interest</TableCell>*/}
+              <TableCell className="head-cell">Claim Interest</TableCell>
               <TableCell className="head-cell">Claim/Withdraw</TableCell>
             </TableRow>
           </TableHead>
@@ -456,16 +456,16 @@ function PortfolioList() {
                 <TableCell>
                   {!currentEpoch ? 'checking...' : currentEpoch <= Number(row.epoch) ? 'Processing' : 'Earning Interest'}
                 </TableCell>
-                {/*<TableCell>*/}
-                {/*  <button*/}
-                {/*    style={{ marginRight: '2rem' }}*/}
-                {/*    type="button"*/}
-                {/*    className="action-btn outlined"*/}
-                {/*    disabled={i % 3 === 0}*/}
-                {/*  >*/}
-                {/*    Claim Interest*/}
-                {/*  </button>*/}
-                {/*</TableCell>*/}
+                <TableCell>
+                  <button
+                    style={{ marginRight: '2rem' }}
+                    type="button"
+                    className="action-btn outlined"
+                    disabled={i % 3 === 0}
+                  >
+                    Claim Interest
+                  </button>
+                </TableCell>
                 <TableCell>
                   {!(Number(currentEpoch) <= Number(row.epoch)) && actionBtns && <Box display="flex" width="100%" paddingY="10px" justifyContent="flex-end">
                     {(
