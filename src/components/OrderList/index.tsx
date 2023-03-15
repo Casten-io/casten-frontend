@@ -131,9 +131,9 @@ function OrderList() {
                   <CircularProgress />
                 </Box>
               </TableCell>
-          </TableRow> : assetList.map((row) => (
+          </TableRow> : assetList.map((row, i) => (
             <TableRow
-              key={row.loanID}
+              key={i}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               className="body-row"
               onClick={navigateToAsset}

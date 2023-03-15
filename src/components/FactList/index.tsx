@@ -313,7 +313,8 @@ function FactList() {
       });
   }, [checkPendingSupplyOrders]);
 
-  const checkWhitelistAndOpenInvestPopup = useCallback((investFact: any) => async () => {
+  const checkWhitelistAndOpenInvestPopup = useCallback(async (investFact: any) => {
+  // const checkWhitelistAndOpenInvestPopup = async (investFact: any) => {
     if (provider && networkInfo && address && !['80001', '137'].includes(networkInfo.chainId?.toString())) {
       setSwitchNetworkOpen(true);
     }
@@ -323,13 +324,13 @@ function FactList() {
       if (timestampDiff > 60) {
         if (!contractInfo || !networkInfo?.chainId || !address || !provider) {
           console.error(`error: something not found: contractInfo: ${
-            !contractInfo
+            contractInfo
           } | chainId: ${
-            !networkInfo?.chainId
+            networkInfo?.chainId
           } | address: ${
-            !address
+            address
           } | provider: ${
-            !provider
+            provider
           }`)
           return;
         }
@@ -362,6 +363,7 @@ function FactList() {
       return;
     }
     setInvestIn(investFact);
+  // };
   }, [address, contractInfo, dispatch, networkInfo, pendingSupply, provider, whitelistStatus, whitelistStatusTimestamp])
 
   useEffect(() => {
@@ -384,8 +386,8 @@ function FactList() {
               <TableCell className="head-cell">Token</TableCell>
               <TableCell className="head-cell">Name</TableCell>
               <TableCell className="head-cell">Tranche</TableCell>
-              {/*<TableCell className="head-cell">Total Issuance</TableCell>*/}
-              <TableCell className="head-cell">APY</TableCell>
+              <TableCell className="head-cell">Total Issuance</TableCell>
+              {/*<TableCell className="head-cell">APY</TableCell>*/}
               <TableCell className="head-cell">Frequency</TableCell>
               {/*<TableCell className="head-cell">Maturity</TableCell>*/}
               {/*<TableCell className="head-cell">LTV</TableCell>*/}
@@ -412,7 +414,7 @@ function FactList() {
                 <TableCell className="invest-button">
                   <button
                     className="invest"
-                    onClick={checkWhitelistAndOpenInvestPopup(row)}
+                    onClick={() => checkWhitelistAndOpenInvestPopup(row)}
                     disabled={!address || checkingPendingOrders}
                     title={checkingPendingOrders ? 'checking for pending supply orders' : !address ? 'Please connect your wallet to enable invest' : ''}
                   >

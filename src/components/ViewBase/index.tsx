@@ -128,7 +128,7 @@ function ViewBase({ children }: IViewBaseProps) {
     }
     dispatch(updateWhitelistStatus(isMember))
     setMemberListChecking(false);
-  }, [address, networkInfo, contractInfo, provider]);
+  }, [contractInfo, networkInfo?.chainId, address, provider, dispatch]);
 
   useEffect(() => {
     setMemberListChecking(true);
