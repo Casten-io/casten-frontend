@@ -52,8 +52,8 @@ function Dashboard() {
     let tol = 0;
     let tvl = 0;
     resp.data.stats.forEach((v: any) => {
-      tol += v.TotalLoansOriginated;
-      tvl += v.TVL;
+      tol += Number(v.TotalLoansOriginated);
+      tvl += Number(v.TVL);
     });
     setTOL(tol);
     setTVL(tvl);
