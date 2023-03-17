@@ -418,7 +418,7 @@ function PortfolioList() {
               <TableCell className="head-cell">Amt. Invested</TableCell>
               {/*<TableCell className="head-cell">Exposure</TableCell>*/}
               <TableCell className="head-cell">Transaction</TableCell>
-              <TableCell className="head-cell">Claim Interest</TableCell>
+              {/*<TableCell className="head-cell">Claim Interest</TableCell>*/}
               <TableCell className="head-cell">Claim/Withdraw</TableCell>
             </TableRow>
           </TableHead>
@@ -457,16 +457,16 @@ function PortfolioList() {
                     {shortenHex(row.transactionHash)}
                   </a>
                 </TableCell>
-                <TableCell>
-                  <button
-                    style={{ marginRight: '2rem' }}
-                    type="button"
-                    className="action-btn outlined"
-                    disabled={i % 3 === 0}
-                  >
-                    Claim Interest
-                  </button>
-                </TableCell>
+                {/*<TableCell>*/}
+                {/*  <button*/}
+                {/*    style={{ marginRight: '2rem' }}*/}
+                {/*    type="button"*/}
+                {/*    className="action-btn outlined"*/}
+                {/*    disabled={i % 3 === 0}*/}
+                {/*  >*/}
+                {/*    Claim Interest*/}
+                {/*  </button>*/}
+                {/*</TableCell>*/}
                 <TableCell>
                   {actionBtns && <Box display="flex" width="100%" paddingY="10px" justifyContent="flex-end">
                     {withdrawalAmount[`remaining${row.tranche}Token`].gt(BigNumber.from(0)) && <button
