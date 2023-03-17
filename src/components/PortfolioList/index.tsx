@@ -446,7 +446,7 @@ function PortfolioList() {
                 {/*<TableCell>{row.price || '-'}</TableCell>*/}
                 {/*<TableCell>{row.profitloss || '-'}</TableCell>*/}
                 <TableCell>{row.timestamp ? new Date(Number(row.timestamp) * 1000).toLocaleString() : '-'}</TableCell>
-                <TableCell>{(row.amount && (Number(row.amount) / (10 ** 6))) || '-'}</TableCell>
+                <TableCell>{(row.amount && `${Number(row.amount) / (10 ** 6)} USDC`) || '-'}</TableCell>
                 {/*<TableCell>{row.exposure || '-'}</TableCell>*/}
                 <TableCell>
                   <a

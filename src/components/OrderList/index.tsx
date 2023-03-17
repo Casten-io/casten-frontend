@@ -96,9 +96,11 @@ function OrderList() {
             borrower
             nftId
             nftRegistry
+            dateIssued
             maturityDate
-            status
             principal
+            repaidAmount
+            status
           }
         }`,
       {},
@@ -147,7 +149,7 @@ function OrderList() {
               {/*<TableCell>{row.Name || '-'}</TableCell>*/}
               <TableCell>{(row.finance_fee && `${Number(row.finance_fee) / (10 ** 6)} USDC`) || '-'}</TableCell>
               <TableCell>{(row.principal && `${Number(row.principal) / (10 ** 6)} USDC`) || '-'}</TableCell>
-              <TableCell>{row.finance_date ? new Date(row.finance_date).toDateString() : '-'}</TableCell>
+              <TableCell>{row.finance_date ? new Date(row.dateIssued).toDateString() : '-'}</TableCell>
               <TableCell>{row.maturityDate ? new Date(row.maturityDate * 1000).toDateString() : '-'}</TableCell>
               <TableCell>{row.status}</TableCell>
             </TableRow>

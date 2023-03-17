@@ -30,6 +30,7 @@ function Dashboard() {
 
   const tolExecutionId = useSelector((state: RootState) => state.account.totalOriginatedLoans);
   const [tol, setTOL] = useState(0);
+  const [tvl, setTVL] = useState(0);
 
   const fetchTOL = async () => {
     // if (!tolExecutionId) {
@@ -40,17 +41,22 @@ function Dashboard() {
     });
     const resp = await client.query(
       `query {
-          borrows {
+          stats {
             id
-            currencyAmount
+            TVL
+            TotalLoansOriginated
           }
         }`,
       {},
     ).toPromise();
-    const amount = resp.data.borrows.reduce((r: number, v: any) => {
-      return r + (Number(v.currencyAmount) / (10 ** 6))
-    }, 0);
-    setTOL(amount);
+    let tol = 0;
+    let tvl = 0;
+    resp.data.stats.forEach((v: any) => {
+      tol += v.TotalLoansOriginated;
+      tvl += v.TVL;
+    });
+    setTOL(tol);
+    setTVL(tvl);
   };
 
   useEffect(() => {
@@ -62,7 +68,7 @@ function Dashboard() {
     <CardContent>
       <Typography style={{ color: "#4B584D", fontFamily: "OpenSans" }}>{text}</Typography>
       <Typography variant="h5" component="div">
-        {sym}{Number(value.toFixed(2)).toLocaleString()}
+        {Number(value.toFixed(2)).toLocaleString()} {sym}
       </Typography>
     </CardContent>
   );
@@ -82,7 +88,7 @@ function Dashboard() {
                 boxShadow: '0px 2px 10px 2px rgb(29 41 57 / 10%), 0px 1px 3px rgb(29 41 57 / 6%) !important',
               }}
             >
-              {card("Total Value Locked")}
+              {card("Total Value Locked", Number(tvl) / (10 ** 6), 'USDC')}
             </Card>
           </Box>
           <Box className="stat-box">
@@ -93,7 +99,7 @@ function Dashboard() {
                 boxShadow: '0px 2px 10px 2px rgb(29 41 57 / 10%), 0px 1px 3px rgb(29 41 57 / 6%) !important',
               }}
             >
-              {card("Loan Originated", tol, '$')}
+              {card("Loan Originated", tol, 'USDC')}
             </Card>
           </Box>
         </div>
