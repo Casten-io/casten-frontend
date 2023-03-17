@@ -85,6 +85,10 @@ function OrderList() {
     const client = createClient({
       url: subgraphUrl,
     });
+
+    // description -> financing fee
+    // remove name
+    //
     const resp = await client.query(
       `query {
           loans {
@@ -94,6 +98,7 @@ function OrderList() {
             nftRegistry
             maturityDate
             status
+            principal
           }
         }`,
       {},
@@ -116,8 +121,8 @@ function OrderList() {
         <TableHead className="table-head">
           <TableRow className="head-row">
             <TableCell className="head-cell">ID</TableCell>
-            <TableCell className="head-cell">Name</TableCell>
-            <TableCell className="head-cell">Description</TableCell>
+            {/*<TableCell className="head-cell">Name</TableCell>*/}
+            <TableCell className="head-cell">Finance Fee</TableCell>
             <TableCell className="head-cell">Value</TableCell>
             <TableCell className="head-cell">Finance Date</TableCell>
             <TableCell className="head-cell">Maturity</TableCell>
@@ -139,9 +144,9 @@ function OrderList() {
               onClick={navigateToAsset}
             >
               <TableCell>{row.loanID || row.id}</TableCell>
-              <TableCell>{row.Name || '-'}</TableCell>
-              <TableCell>{row.Description || '-'}</TableCell>
-              <TableCell>{row.value || '-'}</TableCell>
+              {/*<TableCell>{row.Name || '-'}</TableCell>*/}
+              <TableCell>{(row.finance_fee && `${Number(row.finance_fee) / (10 ** 6)} USDC`) || '-'}</TableCell>
+              <TableCell>{(row.principal && `${Number(row.principal) / (10 ** 6)} USDC`) || '-'}</TableCell>
               <TableCell>{row.finance_date ? new Date(row.finance_date).toDateString() : '-'}</TableCell>
               <TableCell>{row.maturityDate ? new Date(row.maturityDate * 1000).toDateString() : '-'}</TableCell>
               <TableCell>{row.status}</TableCell>

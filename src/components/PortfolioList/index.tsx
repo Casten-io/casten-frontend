@@ -27,6 +27,7 @@ import { Address, ADDRESS_BY_NETWORK_ID } from '../../constants/address';
 import { backendUrl, subgraphUrl } from '../../constants';
 import { CircularProgress } from '@material-ui/core';
 import { createClient } from 'urql';
+import { shortenHex } from '../../helpers/utils';
 
 export interface IPortfoliosheet {
   select: string;
@@ -111,7 +112,7 @@ function PortfolioList() {
     });
     const resp = await client.query(
       `query Deposits($userAddress: String!) {
-          deposits(where: { userAddress: $userAddress }) {
+          deposits(where: { userAddress: $userAddress }, orderBy: timestamp) {
             id
             epoch
             pool
@@ -122,6 +123,7 @@ function PortfolioList() {
             seniorTokenPrice
             juniorTokenPrice
             timestamp
+            transactionHash
           }
         }`,
       {
@@ -415,7 +417,8 @@ function PortfolioList() {
               <TableCell className="head-cell">Invested On</TableCell>
               <TableCell className="head-cell">Amt. Invested</TableCell>
               {/*<TableCell className="head-cell">Exposure</TableCell>*/}
-              {/*<TableCell className="head-cell">Claim Interest</TableCell>*/}
+              <TableCell className="head-cell">Transaction</TableCell>
+              <TableCell className="head-cell">Claim Interest</TableCell>
               <TableCell className="head-cell">Claim/Withdraw</TableCell>
             </TableRow>
           </TableHead>
@@ -443,18 +446,27 @@ function PortfolioList() {
                 {/*<TableCell>{row.price || '-'}</TableCell>*/}
                 {/*<TableCell>{row.profitloss || '-'}</TableCell>*/}
                 <TableCell>{row.timestamp ? new Date(Number(row.timestamp) * 1000).toLocaleString() : '-'}</TableCell>
-                <TableCell>{(row.amount && Number(row.amount) / (10 ** (contractInfo?.DAI_TOKEN?.TOKEN_DECIMALS || 18))) || '-'}</TableCell>
+                <TableCell>{(row.amount && (Number(row.amount) / (10 ** 6))) || '-'}</TableCell>
                 {/*<TableCell>{row.exposure || '-'}</TableCell>*/}
-                {/*<TableCell>*/}
-                {/*  <button*/}
-                {/*    style={{ marginRight: '2rem' }}*/}
-                {/*    type="button"*/}
-                {/*    className="action-btn outlined"*/}
-                {/*    disabled={i % 3 === 0}*/}
-                {/*  >*/}
-                {/*    Claim Interest*/}
-                {/*  </button>*/}
-                {/*</TableCell>*/}
+                <TableCell>
+                  <a
+                    href={`https://polygonscan.com/tx/${row.transactionHash}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {shortenHex(row.transactionHash)}
+                  </a>
+                </TableCell>
+                <TableCell>
+                  <button
+                    style={{ marginRight: '2rem' }}
+                    type="button"
+                    className="action-btn outlined"
+                    disabled={i % 3 === 0}
+                  >
+                    Claim Interest
+                  </button>
+                </TableCell>
                 <TableCell>
                   {actionBtns && <Box display="flex" width="100%" paddingY="10px" justifyContent="flex-end">
                     {withdrawalAmount[`remaining${row.tranche}Token`].gt(BigNumber.from(0)) && <button
