@@ -172,7 +172,7 @@ function Order() {
           </Grid>
         </CardContent>
       </Card>
-      <TableContainer component={Paper} className="table-container">
+      <TableContainer component={Paper} className="table-container" style={{ marginTop: '20px' }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table">
           <TableHead className="table-head">
             <TableRow className="head-row">
@@ -186,6 +186,14 @@ function Order() {
               <TableCell colSpan={3}>
                 <Box display="flex" justifyContent="center" alignItems="center">
                   <CircularProgress />
+                </Box>
+              </TableCell>
+            </TableRow> : !repays.length ? <TableRow className="body-row">
+              <TableCell colSpan={3}>
+                <Box display="flex" justifyContent="center" alignItems="center">
+                  <Typography component="span" sx={{ fontSize: 'medium' }}>
+                    No repayments received yet...
+                  </Typography>
                 </Box>
               </TableCell>
             </TableRow> : repays.map((row, i) => (
