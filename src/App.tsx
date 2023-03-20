@@ -16,7 +16,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/token" element={<TokenOfferings />} />
-              <Route path="/asset" element={<Order />} />
+              <Route path="/asset/:id" element={<Order />} />
               <Route path="/borrower" element={<BorrowerProfile />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/securitize-authorize" element={<SecuritizeAuthorize />} />

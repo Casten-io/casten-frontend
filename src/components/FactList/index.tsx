@@ -8,14 +8,16 @@ import { Paper, Table, TableBody, TableHead, TableRow, TableCell, TableContainer
 import { RootState } from '../../store';
 import { Address, ADDRESS_BY_NETWORK_ID } from '../../constants/address';
 import ArrowNE from '../../assets/icons/Arrow-NorthEast.svg';
-import { parseBalance, scanTxLink } from '../../utils';
-import { backendUrl } from '../../constants';
+import { numberToString, parseBalance, scanTxLink } from '../../utils';
+import { subgraphUrl } from '../../constants';
 import SwitchNetworkModal from '../Commons/WalletConnect/SwitchNetworkModal';
 import Casten from '../../assets/icons/Casten.png';
 import useTokenBalance from '../../hooks/useTokenBalance';
 
 import './style.scss';
 import { toggleKycModal, updateWhitelistStatus } from '../../store/slices/account';
+import { createClient } from 'urql';
+import { CircularProgress } from '@material-ui/core';
 
 export interface IFactsheet {
   secId: string;
@@ -58,63 +60,6 @@ function createData(
 }
 
 function FactList() {
-  const rows = [
-    createData(
-      "QC001",
-      "Sr. QuickCheck 15% 2023",
-      "Senior",
-      "$200K",
-      "15.00%",
-      15,
-      "Monthly",
-      "Sept 23",
-      "-",
-      "-",
-      "$6500"
-    ),
-    createData(
-      "QC002",
-      "Jr. QuickCheck 21% 2023",
-      "Junior",
-      "$200K",
-      "21.00%",
-      21,
-      "Monthly",
-      "Sept 23",
-      "-",
-      "-",
-      "$1200"
-    ),
-  ];
-  // const rows = [
-  //   createData(
-  //     "AFT001",
-  //     "Sr. A Fintech 11% 2023",
-  //     "Senior",
-  //     "$5MM",
-  //     "11.00%",
-  //     11,
-  //     "Monthly",
-  //     "Dec 23",
-  //     "0.8",
-  //     "3.0",
-  //     "$1200"
-  //   ),
-  //   createData(
-  //     "AFT002",
-  //     "Jr. A Fintech 11% 2023",
-  //     "Junior",
-  //     "$2MM",
-  //     "15.00%",
-  //     15,
-  //     "Monthly",
-  //     "Dec 23",
-  //     "0.8",
-  //     "3.0",
-  //     "$6500"
-  //   ),
-  // ];
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const networkInfo = useSelector((state: RootState) => state.account.networkInfo);
@@ -122,7 +67,8 @@ function FactList() {
   const address = useSelector((state: RootState) => state.account.address);
   const whitelistStatus = useSelector((state: RootState) => state.account.whitelistStatus);
   const whitelistStatusTimestamp = useSelector((state: RootState) => state.account.whitelistCheckTimestamp) || 0;
-  const executionId = useSelector((state: RootState) => state.account.executionId);
+  const [factList, setFactList] = useState<any[]>([]);
+  const [apiCallStatus, setApiCallStatus] = useState<boolean>(true);
   const [switchNetworkOpen, setSwitchNetworkOpen] = useState(false);
   const [investIn, setInvestIn] = useState<any | null>(null);
   const [investAmount, setInvestAmount] = useState<number | null>(null);
@@ -136,11 +82,10 @@ function FactList() {
   const [supplied, setSupplied] = useState<boolean>(false);
   const [approvalTxHash, setApprovalTxHash] = useState<string>();
   const [supplyTxHash, setSupplyTxHash] = useState<string>();
-  const [currentInvestment, setCurrentInvestment] = useState<any>({});
   const [pendingSupply, setPendingSupply] = useState<any>({});
 
   const contractInfo = ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "80001"];
-  const { data: tokenBalance } = useTokenBalance(address, contractInfo?.DAI_TOKEN?.address)
+  const { data: tokenBalance } = useTokenBalance(address, contractInfo?.DAI_TOKEN?.address);
 
   // const openModal = (invest: string) => {
   //   return (
@@ -158,22 +103,87 @@ function FactList() {
   //   );
   // };
 
-  const fetchUserOrders = useCallback(() => {
-    if (!executionId) {
-      return;
-    }
-    fetch(`${backendUrl}/dune/execute-and-serve/1620692/${executionId}`, {
-      method: 'POST',
-    })
-      .then((resp) => resp.json())
-      .then((respJson) => {
-        setCurrentInvestment(
-          Object.fromEntries(respJson.data.rows.map((row: any) => [row.Tranche, row.amount_invested])),
-        );
-      });
-  }, [executionId, address]);
+  const fetchPoolDetails = async () => {
+    const client = createClient({
+      url: subgraphUrl,
+    });
 
-  const getContracts = (tranche: string) => {
+    const resp = await client.query(
+      `query {
+        pools {
+          id
+          data {
+            name
+            shelfAddress
+            coordinatorAddress
+            memberlistAddress
+            seniorTrancheAddress
+            seniorTrancheAddress
+            juniorTrancheAddress
+            seniorOperatorAddress
+            juniorOperatorAddress
+            reserveAddress
+          }
+          seniorTVL
+          juniorTVL
+          expectedSeniorAPY
+          expectedJuniorAPY
+          totalIssuance
+          currentIssuance
+          seniorTranche {
+            id
+            tokenName
+            tokenSymbol
+            name
+            tokenPrice
+          }
+          juniorTranche {
+            id
+            tokenName
+            tokenSymbol
+            name
+            tokenPrice
+          }
+          repaymentFrequency
+        }
+      }`,
+      {},
+    ).toPromise();
+
+    const pool = resp.data.pools[0] || {}
+
+    setFactList([
+      createData(
+        pool.seniorTranche?.tokenSymbol || 'QC001',
+        pool.seniorTranche?.tokenName || 'Sr. QuickCheck 15% 2023',
+        pool.seniorTranche?.name || 'Senior',
+        numberToString(Number(BigInt(pool.totalIssuance || '0') / BigInt((10 ** 6)))),
+        `${Number(pool.expectedSeniorAPY).toFixed(2)}%`,
+        Number(pool.expectedSeniorAPY),
+        pool.repaymentFrequency,
+        "Sept 23",
+        "-",
+        "-",
+        `${numberToString(Number(BigInt(pool.seniorTVL) / BigInt(10 ** 6)))} USDC`
+      ),
+      createData(
+        pool.juniorTranche?.tokenSymbol || 'QC001',
+        pool.juniorTranche?.tokenName || 'Sr. QuickCheck 15% 2023',
+        pool.juniorTranche?.name || 'Junior',
+        numberToString(Number(BigInt(pool.totalIssuance || '0') / BigInt((10 ** 6)))),
+        `${Number(pool.expectedJuniorAPY).toFixed(2)}%`,
+        Number(pool.expectedJuniorAPY),
+        pool.repaymentFrequency,
+        "Sept 23",
+        "-",
+        "-",
+        `${numberToString(Number(BigInt(pool.juniorTVL) / BigInt(10 ** 6)))} USDC`
+      ),
+    ]);
+    setApiCallStatus(false);
+  };
+
+  const getContracts = useCallback((tranche: string) => {
     const token = new ethers.Contract(
       contractInfo.DAI_TOKEN.address,
       contractInfo.DAI_TOKEN.ABI,
@@ -199,7 +209,17 @@ function FactList() {
       trancheAddress: contractInfo.JUNIOR_TRANCHE.address,
       token,
     };
-  };
+  }, [
+    contractInfo?.DAI_TOKEN?.ABI,
+    contractInfo?.DAI_TOKEN?.address,
+    contractInfo?.JUNIOR_OPERATOR?.ABI,
+    contractInfo?.JUNIOR_OPERATOR?.address,
+    contractInfo?.JUNIOR_TRANCHE?.address,
+    contractInfo?.SENIOR_OPERATOR?.ABI,
+    contractInfo?.SENIOR_OPERATOR?.address,
+    contractInfo?.SENIOR_TRANCHE?.address,
+    provider,
+  ]);
 
   const debouncedAllowanceCheck = debounce(() => {
     setCheckingAllowance(true);
@@ -242,7 +262,12 @@ function FactList() {
     } finally {
       setSupplying(false);
     }
-  }, [investIn, investAmount]);
+  }, [
+    investIn,
+    getContracts,
+    investAmount,
+    contractInfo?.DAI_TOKEN?.TOKEN_DECIMALS,
+  ]);
 
   const clearAmounts = () => {
     setInvestAmount(null);
@@ -266,7 +291,12 @@ function FactList() {
     } finally {
       setApproving(false);
     }
-  }, [investIn, investAmount]);
+  }, [
+    investIn,
+    getContracts,
+    investAmount,
+    contractInfo?.DAI_TOKEN?.TOKEN_DECIMALS,
+  ]);
 
   useEffect(() => {
     if (!investIn || !Number(investAmount)) {
@@ -367,8 +397,12 @@ function FactList() {
   }, [address, contractInfo, dispatch, networkInfo, pendingSupply, provider, whitelistStatus, whitelistStatusTimestamp])
 
   useEffect(() => {
-    fetchUserOrders()
-  }, [fetchUserOrders])
+    fetchPoolDetails()
+      .catch((error) => {
+        console.error('error while fetching pools: ', error);
+        setApiCallStatus(false);
+      });
+  }, []);
 
   const wrongNetwork = provider && networkInfo && address && !['80001', '137'].includes(networkInfo.chainId?.toString())
 
@@ -397,7 +431,13 @@ function FactList() {
             </TableRow>
           </TableHead>
           <TableBody className="table-body">
-            {rows.map((row) => (
+            {apiCallStatus ? <TableRow className="body-row">
+              <TableCell colSpan={7}>
+                <Box display="flex" justifyContent="center" alignItems="center">
+                  <CircularProgress />
+                </Box>
+              </TableCell>
+            </TableRow> : factList.map((row) => (
               <TableRow key={row.secId} sx={{ "&:last-child td, &:last-child th": { border: 0 } }} className="body-row">
                 <TableCell component="th" scope="row">
                   {row.secId}
@@ -560,7 +600,7 @@ function FactList() {
                 className="tx-link"
                 href={scanTxLink(networkInfo?.chainId as number, approvalTxHash)}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
               >
                 Tx <img src={ArrowNE} alt="arrow-north-east"/>
               </a>
@@ -573,7 +613,7 @@ function FactList() {
                 className="tx-link"
                 href={scanTxLink(networkInfo?.chainId as number, supplyTxHash)}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
               >
                 Tx <img src={ArrowNE} alt="arrow-north-east"/>
               </a>

@@ -1,4 +1,4 @@
-import { useState, SyntheticEvent } from "react";
+import { useState, SyntheticEvent, useEffect } from "react";
 import "./borrower.scss";
 import {
   InputAdornment,
@@ -20,6 +20,10 @@ import LinkedIn from "../../assets/icons/linkedin.svg";
 import WebsiteIcon from "../../assets/icons/website.svg";
 import BlankProgress from '../../assets/images/blank-progress.png'
 import { ArrowNorthEast } from '../../components/Drawer/drawer-content/icons';
+import { useNavigate } from 'react-router-dom';
+import { createClient } from 'urql';
+import { subgraphUrl } from '../../constants';
+import { numberToString } from '../../utils';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -50,6 +54,78 @@ const a11yProps = (index: number) => ({
 
 function BorrowerProfile() {
   const [value, setValue] = useState(0);
+  const [currentPercentage, setCurrentPercentage] = useState<number>(0);
+  const [poolDetails, setPoolDetails] = useState<any>({
+    currentIssuance: '0',
+    totalIssuance: '0',
+  })
+  const navigate = useNavigate();
+
+  const navigateToTokenOfferings = (row: any) => () => {
+    if (row.disabled) {
+      return;
+    }
+    navigate("/token");
+  };
+
+  const fetchPoolDetails = async () => {
+    const client = createClient({
+      url: subgraphUrl,
+    });
+
+    const resp = await client.query(
+      `query {
+        pools {
+          id
+          data {
+            name
+            shelfAddress
+            coordinatorAddress
+            memberlistAddress
+            seniorTrancheAddress
+            seniorTrancheAddress
+            juniorTrancheAddress
+            seniorOperatorAddress
+            juniorOperatorAddress
+            reserveAddress
+          }
+          seniorTVL
+          juniorTVL
+          expectedSeniorAPY
+          expectedJuniorAPY
+          totalIssuance
+          currentIssuance
+          seniorTranche {
+            id
+            tokenName
+            tokenSymbol
+            name
+            tokenPrice
+          }
+          juniorTranche {
+            id
+            tokenName
+            tokenSymbol
+            name
+            tokenPrice
+          }
+          repaymentFrequency
+        }
+      }`,
+      {},
+    ).toPromise();
+
+    const pool = resp.data.pools[0];
+    setCurrentPercentage(Number(BigInt(pool.currentIssuance) / BigInt(10 ** 6)) * 100 / Number(BigInt(pool.totalIssuance) / BigInt(10 ** 6)));
+    setPoolDetails(pool);
+  };
+
+  useEffect(() => {
+    fetchPoolDetails()
+      .catch((error) => {
+        console.error('error while fetching pools: ', error);
+      });
+  }, []);
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -86,15 +162,15 @@ function BorrowerProfile() {
                 QuickCheck Pool #1
               </div>
               <div>
-                <div className="sub-title" style={{ width: '6.40244%' }}>
+                <div className="sub-title" style={{ marginLeft: `${currentPercentage}%` }}>
                   Supplied
-                  <span>$0</span>
+                  <span>{Number(BigInt(poolDetails.currentIssuance) / BigInt(10 ** 6)).toFixed(2)}</span>
                 </div>
                 <div className="goal-progress" style={{ backgroundImage: `url('${BlankProgress}')` }}>
-                  <div className="red" style={{ width: '1.28049%' }}>
-                    <div className="full-box"/>
-                  </div>
-                  <div className="gray" style={{ width: '5.12195%' }}>
+                  {/*<div className="red" style={{ width: '1.28049%' }}>*/}
+                  {/*  <div className="full-box"/>*/}
+                  {/*</div>*/}
+                  <div className="gray" style={{ width: `${currentPercentage}%` }}>
                     <div className="full-box"/>
                   </div>
                 </div>
@@ -102,7 +178,7 @@ function BorrowerProfile() {
               <div className="goal-value">
                 Goal
                 <span>
-                  $200,000.00
+                  {Number(BigInt(poolDetails.totalIssuance) / BigInt(10 ** 6)).toFixed(2)} USDC
                 </span>
               </div>
             </div>

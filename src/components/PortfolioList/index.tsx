@@ -27,7 +27,7 @@ import { Address, ADDRESS_BY_NETWORK_ID } from '../../constants/address';
 import { backendUrl, subgraphUrl } from '../../constants';
 import { CircularProgress } from '@material-ui/core';
 import { createClient } from 'urql';
-import { shortenHex } from '../../helpers/utils';
+import { shortenHex } from '../../utils';
 
 export interface IPortfoliosheet {
   select: string;

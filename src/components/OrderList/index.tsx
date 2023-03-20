@@ -114,8 +114,8 @@ function OrderList() {
       .catch((error) => console.error('error while fetching asset list: ', error));
   }, []);
 
-  const navigateToAsset = () => {
-    navigate("/asset");
+  const navigateToAsset = (loanId: string) => {
+    navigate(`/asset/${loanId}`);
   };
   return (
     <TableContainer component={Paper} className="table-container">
@@ -143,13 +143,13 @@ function OrderList() {
               key={i}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               className="body-row"
-              onClick={navigateToAsset}
+              onClick={() => navigateToAsset(row.id)}
             >
               <TableCell>{row.loanID || row.id}</TableCell>
               {/*<TableCell>{row.Name || '-'}</TableCell>*/}
-              <TableCell>{(row.finance_fee && `${Number(row.finance_fee) / (10 ** 6)} USDC`) || '-'}</TableCell>
+              <TableCell>{(row.financeFee && `${Number(row.financeFee).toFixed(2)} %`) || '-'}</TableCell>
               <TableCell>{(row.principal && `${Number(row.principal) / (10 ** 6)} USDC`) || '-'}</TableCell>
-              <TableCell>{row.finance_date ? new Date(row.dateIssued).toDateString() : '-'}</TableCell>
+              <TableCell>{row.dateIssued ? new Date(Number(row.dateIssued) * 1000).toDateString() : '-'}</TableCell>
               <TableCell>{row.maturityDate ? new Date(row.maturityDate * 1000).toDateString() : '-'}</TableCell>
               <TableCell>{row.status}</TableCell>
             </TableRow>

@@ -1,7 +1,23 @@
-import { Grid, Button, Paper, Table, TableBody, TableHead, TableRow, TableCell, TableContainer } from "@mui/material";
+import {
+  Grid,
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableContainer,
+  Box,
+} from "@mui/material";
 import "./style.scss";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createClient } from 'urql';
+import { subgraphUrl } from '../../constants';
+import { numberToString } from '../../utils';
+import { CircularProgress } from '@material-ui/core';
+import { BigNumber } from 'ethers';
 
 function createData(
   secId: string,
@@ -38,6 +54,8 @@ function createData(
 }
 
 function ProductList() {
+  const [pools, setPools] = useState<any[]>([]);
+  const [apiCallStatus, setApiCallStatus] = useState<boolean>(true);
   const navigate = useNavigate();
 
   const navigateToTokenOfferings = (row: any) => () => {
@@ -47,55 +65,84 @@ function ProductList() {
     navigate("/token");
   };
 
-  const rows = [
-    createData(
-      "FTECHSR420",
-      "A Fintech SR 11% 2023",
-      "14% - 16%",
-      "21% - 23%",
-      "Monthly",
-      "Dec 23",
-      "QuickCheck",
-      "$200K",
-      "$200K",
-      "SME Loans",
-      "0.8",
-      "3.0",
-      "Details"
-    ),
-    createData(
-      "FTECHSR420",
-      "A Fintech SR 11% 2023",
-      "11.21%",
-      "18.79%",
-      "Monthly",
-      "Dec 23",
-      "Cauris Finance",
-      "$5MM",
-      "$1.2MM",
-      "Revenue based/Invoice Discounting",
-      "0.8",
-      "3.0",
-      "Details",
-      true
-    ),
-    createData(
-      "FTECHSR69",
-      "B Fintech SR 13% 2023",
-      "13.61%",
-      "15.32%",
-      "Monthly",
-      "Jan 24",
-      "Lazy Pay",
-      "$8.3MM",
-      "$2.9MM",
-      "Invoice Discounting",
-      "0.8",
-      "3.0",
-      "Details",
-      true
-    ),
-  ];
+  const fetchPoolDetails = async () => {
+    const client = createClient({
+      url: subgraphUrl,
+    });
+
+    const resp = await client.query(
+      `query {
+        pools {
+          id
+          data {
+            name
+            shelfAddress
+            coordinatorAddress
+            memberlistAddress
+            seniorTrancheAddress
+            seniorTrancheAddress
+            juniorTrancheAddress
+            seniorOperatorAddress
+            juniorOperatorAddress
+            reserveAddress
+          }
+          seniorTVL
+          juniorTVL
+          expectedSeniorAPY
+          expectedJuniorAPY
+          totalIssuance
+          currentIssuance
+          seniorTranche {
+            id
+            tokenName
+            tokenSymbol
+            name
+            tokenPrice
+          }
+          juniorTranche {
+            id
+            tokenName
+            tokenSymbol
+            name
+            tokenPrice
+          }
+          repaymentFrequency
+        }
+      }`,
+      {},
+    ).toPromise();
+
+    setPools([
+      ...resp.data.pools.map((pool: any) => createData(
+        pool.id as string,
+        pool.data.name as string,
+        `${Number(pool.expectedSeniorAPY).toFixed(2)}%`,
+        `${Number(pool.expectedJuniorAPY).toFixed(2)}%`,
+        pool.repaymentFrequency,
+        'Dec 23',
+        pool.data.name as string,
+        `${numberToString(Number(BigInt(pool.totalIssuance || '0') / BigInt((10 ** 6))))} USDC`,
+        `${numberToString(
+          Number(BigInt(pool.totalIssuance || '0') / BigInt((10 ** 6))) -
+          Number(BigInt(pool.currentIssuance || '0') / BigInt((10 ** 6)))
+        )} USDC`,
+        "SME Loans",
+        "0.8",
+        "3.0",
+        "Details"
+      ))
+    ]);
+    setApiCallStatus(false);
+  };
+
+  useEffect(() => {
+    fetchPoolDetails()
+      .catch((error) => {
+        console.error('error while fetching pools: ', error);
+        setApiCallStatus(false);
+      });
+  }, []);
+
   return (
     <TableContainer component={Paper} className="table-container">
       <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table">
@@ -119,7 +166,13 @@ function ProductList() {
           </TableRow>
         </TableHead>
         <TableBody className="table-body">
-          {rows.map((row) => (
+          {apiCallStatus ? <TableRow className="body-row">
+            <TableCell colSpan={7}>
+              <Box display="flex" justifyContent="center" alignItems="center">
+                <CircularProgress />
+              </Box>
+            </TableCell>
+          </TableRow> : pools.map((row) => (
             <TableRow
               key={row.secId}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

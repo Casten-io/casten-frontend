@@ -99,7 +99,7 @@ function Dashboard() {
                 boxShadow: '0px 2px 10px 2px rgb(29 41 57 / 10%), 0px 1px 3px rgb(29 41 57 / 6%) !important',
               }}
             >
-              {card("Loan Originated", tol, 'USDC')}
+              {card("Loans Originated", tol, 'USDC')}
             </Card>
           </Box>
         </div>

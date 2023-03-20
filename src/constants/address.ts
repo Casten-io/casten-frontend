@@ -8,12 +8,13 @@ import SENIOR_TRANCHE from "../abis/seniorTranche.json";
 import JUNIOR_TRANCHE from "../abis/juniorTranche.json";
 import JUNIOR_MEMBER_LIST from "../abis/jrMemberList.json";
 import SENIOR_MEMBER_LIST from "../abis/srMemberList.json";
+import PILE from '../abis/pile.json';
 import {ethers} from "ethers";
 
 
 export type Address = "80001" | "137"
 
-export type Contracts = "SHELF" | "JUNIOR_OPERATOR" | "JUNIOR_TOKEN" | "SENIOR_TOKEN" | "SENIOR_OPERATOR" | "DAI_TOKEN" | "SENIOR_TRANCHE" | "JUNIOR_TRANCHE" | "JUNIOR_MEMBER_LIST" | "SENIOR_MEMBER_LIST"
+export type Contracts = "SHELF" | "JUNIOR_OPERATOR" | "JUNIOR_TOKEN" | "SENIOR_TOKEN" | "SENIOR_OPERATOR" | "DAI_TOKEN" | "SENIOR_TRANCHE" | "JUNIOR_TRANCHE" | "JUNIOR_MEMBER_LIST" | "SENIOR_MEMBER_LIST" | "PILE"
 
 type ContractRecord =  Record<Contracts, {
     address: string,
@@ -64,6 +65,10 @@ export const ADDRESS_BY_NETWORK_ID: Record<Address, ContractRecord> = {
             address: "0x60f526A1B37aa71726a18E66843450f0A635d481",
             ABI: SENIOR_MEMBER_LIST
         },
+        PILE: {
+            address: "0x4A313ef25cB4c2D5f93eB6120ab1379053E67AB1",
+            ABI: PILE
+        },
     },
     "137": {
         DAI_TOKEN: {
@@ -107,6 +112,10 @@ export const ADDRESS_BY_NETWORK_ID: Record<Address, ContractRecord> = {
             address: "0x99F43a29ffE37DA242a33EB5DFF5A0f63385CF33",
             ABI: SENIOR_MEMBER_LIST
         },
+        PILE: {
+            address: "0xf1dDC889fdFdDa738F0216E7e545a9cC31a02b45",
+            ABI: PILE
+        },
     }
     // "137": {
     //     DAI_TOKEN: {
@@ -149,6 +158,10 @@ export const ADDRESS_BY_NETWORK_ID: Record<Address, ContractRecord> = {
     //     SENIOR_MEMBER_LIST: {
     //         address: "0x224643917128d8353fd60b4D90935705CAD58C83",
     //         ABI: SENIOR_MEMBER_LIST
+    //     },
+    //     PILE: {
+    //         address: "0x7D3E923d87405F9E5f2E0EC7D316A8751A357637",
+    //         ABI: PILE
     //     },
     // }
 }
