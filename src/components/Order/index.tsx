@@ -105,7 +105,7 @@ function Order() {
     if (params.id && provider) {
       fetchOutstandingAmount()
     }
-  }, [contractInfo.PILE.address, params.id, provider]);
+  }, [contractInfo?.PILE?.address, params.id, provider]);
 
   useEffect(() => {
     if (params.id) {
