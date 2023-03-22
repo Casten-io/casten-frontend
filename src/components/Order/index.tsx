@@ -17,13 +17,14 @@ import { Address, ADDRESS_BY_NETWORK_ID } from '../../constants/address';
 import { Pile } from '../../abis/types';
 import { numberToString } from '../../utils';
 import { createClient } from 'urql';
-import { subgraphUrl } from '../../constants';
+import { subgraphUrl, infuraId } from '../../constants';
 import { CircularProgress } from '@material-ui/core';
 
 function Order() {
   const params = useParams()
   const networkInfo = useSelector((state: RootState) => state.account.networkInfo);
   const provider = useSelector((state: RootState) => state.account.provider);
+  const publicProvider = ethers.getDefaultProvider(`https://polygon-mainnet.infura.io/v3/${infuraId}`)
   const [outstandingAmount, setOutstandingAmount] = useState<string>('0');
   const [apiCallStatus, setApiCallStatus] = useState<boolean>(false);
   const [assetDetails, setAssetDetails] = useState<any>({});
@@ -89,7 +90,7 @@ function Order() {
       const contract = new ethers.Contract(
         contractInfo.PILE.address,
         contractInfo.PILE.ABI,
-        provider?.getSigner(),
+        provider?.getSigner() || publicProvider,
       ) as Pile
       contract.debt(BigNumber.from(params.id).toString())
         .then((data) => {
@@ -102,10 +103,10 @@ function Order() {
   }
 
   useEffect(() => {
-    if (params.id && provider) {
+    if (params.id) {
       fetchOutstandingAmount()
     }
-  }, [contractInfo?.PILE?.address, params.id, provider]);
+  }, [contractInfo?.PILE?.address, fetchOutstandingAmount, params.id, provider]);
 
   useEffect(() => {
     if (params.id) {
