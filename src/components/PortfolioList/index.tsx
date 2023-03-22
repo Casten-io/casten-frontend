@@ -1,5 +1,5 @@
 import "./style.scss";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
@@ -176,8 +176,10 @@ function PortfolioList() {
   );
   const provider = useSelector((state: RootState) => state.account.provider);
 
-  const contractInfo =
-    ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "80001"];
+  const chainId = networkInfo?.chainId || 137
+  const contractInfo = useMemo(() => {
+    return ADDRESS_BY_NETWORK_ID[chainId.toString() as Address]
+  }, [chainId]);
 
   const calculateDisburseAndEnableAction = useCallback(async () => {
     try {

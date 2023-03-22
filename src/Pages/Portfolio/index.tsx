@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import "./portfolio.scss";
 import {
   Grid,
@@ -26,8 +26,10 @@ function Portfolio() {
   );
   const provider = useSelector((state: RootState) => state.account.provider);
   const address = useSelector((state: RootState) => state.account.address);
-  const contractInfo =
-    ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "80001"];
+  const chainId = networkInfo?.chainId || 137
+  const contractInfo = useMemo(() => {
+    return ADDRESS_BY_NETWORK_ID[chainId.toString() as Address]
+  }, [chainId]);
   let juniorTokenContract: ethers.Contract | null;
   let seniorTokenContract: ethers.Contract | null;
   const { data: tokenBalance } = useTokenBalance(address, contractInfo?.DAI_TOKEN?.address)

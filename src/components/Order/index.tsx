@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { BigNumber, ethers } from 'ethers';
 import {
@@ -24,13 +24,15 @@ function Order() {
   const params = useParams()
   const networkInfo = useSelector((state: RootState) => state.account.networkInfo);
   const provider = useSelector((state: RootState) => state.account.provider);
-  const publicProvider = ethers.getDefaultProvider(`https://polygon-mainnet.infura.io/v3/${infuraId}`)
   const [outstandingAmount, setOutstandingAmount] = useState<string>('0');
   const [apiCallStatus, setApiCallStatus] = useState<boolean>(false);
   const [assetDetails, setAssetDetails] = useState<any>({});
   const [repays, setRepays] = useState<any[]>([]);
 
-  const contractInfo = ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "137"];
+  const chainId = networkInfo?.chainId || 137
+  const contractInfo = useMemo(() => {
+    return ADDRESS_BY_NETWORK_ID[chainId.toString() as Address]
+  }, [chainId]);
 
   const fetchRepayments = async () => {
     setApiCallStatus(true);
@@ -85,8 +87,12 @@ function Order() {
     setAssetDetails(resp.data.loan);
   };
 
-  const fetchOutstandingAmount = () => {
+  const fetchOutstandingAmount = useCallback(() => {
+    if (!params.id) {
+      return
+    }
     if (contractInfo?.PILE?.address) {
+      const publicProvider = ethers.getDefaultProvider(`https://polygon-mainnet.infura.io/v3/${infuraId}`)
       const contract = new ethers.Contract(
         contractInfo.PILE.address,
         contractInfo.PILE.ABI,
@@ -100,13 +106,11 @@ function Order() {
           console.error('error while fetching outstanding amount: ', error)
         })
     }
-  }
+  }, [params.id, contractInfo.PILE.address, contractInfo.PILE.ABI, provider])
 
   useEffect(() => {
-    if (params.id) {
-      fetchOutstandingAmount()
-    }
-  }, [contractInfo?.PILE?.address, fetchOutstandingAmount, params.id, provider]);
+    fetchOutstandingAmount()
+  }, [fetchOutstandingAmount]);
 
   useEffect(() => {
     if (params.id) {
@@ -120,9 +124,9 @@ function Order() {
   return (
     <div className="main-container">
       <div className="assetlist-container">
-        <Typography className="assetlist">Asset List</Typography>
+        <Typography className="assetlist">Loan Details</Typography>
         <Card
-          sx={{ minWidth: "300px", maxWidth: "900px" }}
+          sx={{ minWidth: "300px", maxWidth: "900px", mt: '10px' }}
           className="order-container"
         >
           <CardContent className="order-content">
@@ -176,9 +180,9 @@ function Order() {
           </CardContent>
         </Card>
       </div>
-      <div className="assetlist-container">
-        <Typography className="assetlist">Asset List</Typography>
-        <TableContainer component={Paper} className="table-container" style={{ marginTop: '20px' }}>
+      <div className="assetlist-container" style={{ marginTop: '20px' }}>
+        <Typography className="assetlist">Repayments</Typography>
+        <TableContainer component={Paper} className="table-container" sx={{mt: '10px'}}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table">
             <TableHead className="table-head">
               <TableRow className="head-row">

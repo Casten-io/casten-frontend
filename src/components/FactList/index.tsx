@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ethers, BigNumber, Contract } from 'ethers';
@@ -84,7 +84,10 @@ function FactList() {
   const [supplyTxHash, setSupplyTxHash] = useState<string>();
   const [pendingSupply, setPendingSupply] = useState<any>({});
 
-  const contractInfo = ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "80001"];
+  const chainId = networkInfo?.chainId || 137
+  const contractInfo = useMemo(() => {
+    return ADDRESS_BY_NETWORK_ID[chainId.toString() as Address]
+  }, [chainId]);
   const { data: tokenBalance } = useTokenBalance(address, contractInfo?.DAI_TOKEN?.address);
 
   // const openModal = (invest: string) => {

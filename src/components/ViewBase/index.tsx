@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import "./view-base.scss";
 import Header from "../Header";
 import { BigNumber, Contract } from "ethers";
@@ -60,8 +60,10 @@ function ViewBase({ children }: IViewBaseProps) {
   const isMember = useSelector((state: RootState) => state.account.whitelistStatus);
   const provider = useSelector((state: RootState) => state.account.provider);
   const address = useSelector((state: RootState) => state.account.address);
-  const contractInfo =
-    ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "137"];
+  const chainId = networkInfo?.chainId || 137
+  const contractInfo = useMemo(() => {
+    return ADDRESS_BY_NETWORK_ID[chainId.toString() as Address]
+  }, [chainId]);
 
   const fetchKycStatus = () => {
     fetch(`${backendUrl}/investor/kyc-status/${address}`, {

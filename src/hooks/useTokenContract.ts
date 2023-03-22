@@ -12,8 +12,10 @@ const useTokenContact = <T extends Contract = Contract>(tokenAddress: string): T
   );
   const provider = useSelector((state: RootState) => state.account.provider);
   const address = useSelector((state: RootState) => state.account.address);
-  const contractInfo =
-    ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "137"];
+  const chainId = networkInfo?.chainId || 137
+  const contractInfo = useMemo(() => {
+    return ADDRESS_BY_NETWORK_ID[chainId.toString() as Address]
+  }, [chainId]);
   return useMemo(() => {
     if (!address || !provider || !networkInfo) {
       return null
@@ -26,7 +28,7 @@ const useTokenContact = <T extends Contract = Contract>(tokenAddress: string): T
 
       return null
     }
-  }, [address, provider, contractInfo, address, networkInfo, provider]) as T
+  }, [address, provider, networkInfo, tokenAddress, contractInfo.DAI_TOKEN.ABI]) as T
 }
 
 export default useTokenContact
