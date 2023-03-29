@@ -6,24 +6,27 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { Dashboard, TokenOfferings, BorrowerProfile, Portfolio, SecuritizeAuthorize } from "./Pages";
 
 import Order from "./components/Order";
+import { WalletProvider } from './contexts/WalletContext';
 
 function App() {
   return (
     <Router>
       <Provider store={store}>
-        <div className="App">
-          <ViewBase>
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/token" element={<TokenOfferings />} />
-              <Route path="/asset/:id" element={<Order />} />
-              <Route path="/borrower" element={<BorrowerProfile />} />
-              <Route path="/portfolio" element={<Portfolio />} />
-              <Route path="/securitize-authorize" element={<SecuritizeAuthorize />} />
-              <Route path="/securitize-kyc-doc-uploaded" element={<SecuritizeAuthorize />} />
-            </Routes>
-          </ViewBase>
-        </div>
+        <WalletProvider>
+          <div className="App">
+            <ViewBase>
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/token" element={<TokenOfferings />} />
+                <Route path="/asset/:id" element={<Order />} />
+                <Route path="/borrower" element={<BorrowerProfile />} />
+                <Route path="/portfolio" element={<Portfolio />} />
+                <Route path="/securitize-authorize" element={<SecuritizeAuthorize />} />
+                <Route path="/securitize-kyc-doc-uploaded" element={<SecuritizeAuthorize />} />
+              </Routes>
+            </ViewBase>
+          </div>
+        </WalletProvider>
       </Provider>
     </Router>
   );

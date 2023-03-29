@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
-  Grid,
   Paper,
   Table,
   TableBody,
@@ -9,73 +8,55 @@ import {
   TableCell,
   TableContainer, Box,
 } from '@mui/material';
-import { useSelector } from 'react-redux';
 import { CircularProgress } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 
-import { backendUrl, subgraphUrl } from '../../constants';
-import { RootState } from '../../store';
+import { subgraphUrl } from '../../constants';
 
 import './style.scss';
 import { createClient } from 'urql';
 
-export interface IAssetsheet {
-  secId: string;
-  secName: string;
-  description: string;
-  value: string;
-  financedate: string;
-  maturity: string;
-  status: string;
-}
-export interface IProductIcon {
-  [key: string]: string;
-}
-export interface IAssetIcons {
-  [key: string]: string[];
-}
-
-function createData(
-  secId: string,
-  secName: string,
-  description: string,
-  value: string,
-  financedate: string,
-  maturity: string,
-  status: string
-) {
-  return {
-    secId,
-    secName,
-    description,
-    value,
-    financedate,
-    maturity,
-    status,
-  };
-}
+// function createData(
+//   secId: string,
+//   secName: string,
+//   description: string,
+//   value: string,
+//   financedate: string,
+//   maturity: string,
+//   status: string
+// ) {
+//   return {
+//     secId,
+//     secName,
+//     description,
+//     value,
+//     financedate,
+//     maturity,
+//     status,
+//   };
+// }
 
 function OrderList() {
-  const rows = [
-    createData(
-      "AFT001",
-      "USDC DAI",
-      "Real Time Asset Description",
-      "$5MM",
-      "Dec 23",
-      "Dec 23",
-      "Active"
-    ),
-    createData(
-      "AFT002",
-      "USDC DAI",
-      "Real Time Asset Description",
-      "$2MM",
-      "Nov 23",
-      "Dec 23",
-      "Active"
-    ),
-  ];
+  // const rows = [
+  //   createData(
+  //     "AFT001",
+  //     "USDC DAI",
+  //     "Real Time Asset Description",
+  //     "$5MM",
+  //     "Dec 23",
+  //     "Dec 23",
+  //     "Active"
+  //   ),
+  //   createData(
+  //     "AFT002",
+  //     "USDC DAI",
+  //     "Real Time Asset Description",
+  //     "$2MM",
+  //     "Nov 23",
+  //     "Dec 23",
+  //     "Active"
+  //   ),
+  // ];
   const navigate = useNavigate();
   const [apiCallStatus, setApiCallStatus] = useState<boolean>(false);
   const [assetList, setAssetList] = useState<any[]>([]);

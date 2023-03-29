@@ -15,9 +15,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createClient } from 'urql';
 import { subgraphUrl } from '../../constants';
-import { numberToString } from '../../utils';
 import { CircularProgress } from '@material-ui/core';
-import { BigNumber } from 'ethers';
 
 function createData(
   secId: string,
@@ -121,11 +119,11 @@ function ProductList() {
         pool.repaymentFrequency,
         'Dec 23',
         pool.data.name as string,
-        `${numberToString(Number(BigInt(pool.totalIssuance || '0') / BigInt((10 ** 6))))} USDC`,
-        `${numberToString(
+        `${Number(BigInt(pool.totalIssuance || '0') / BigInt((10 ** 6))).toLocaleString()} USDC`,
+        `${(
           Number(BigInt(pool.totalIssuance || '0') / BigInt((10 ** 6))) -
           Number(BigInt(pool.currentIssuance || '0') / BigInt((10 ** 6)))
-        )} USDC`,
+        ).toLocaleString()} USDC`,
         "SME Loans",
         "0.8",
         "3.0",

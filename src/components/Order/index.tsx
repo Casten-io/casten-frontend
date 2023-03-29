@@ -3,28 +3,26 @@ import { useParams } from 'react-router-dom';
 import { BigNumber, ethers } from 'ethers';
 import {
   Card,
-  CardActions,
   CardContent,
   Typography,
   Grid, Paper, Table, TableHead, TableRow, TableCell, TableBody, Box, TableContainer,
 } from "@mui/material";
 
-import { maxWidth } from "@mui/system";
 import "./order.scss";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { Address, ADDRESS_BY_NETWORK_ID } from '../../constants/address';
 import { Pile } from '../../abis/types';
-import { numberToString } from '../../utils';
 import { createClient } from 'urql';
-import { subgraphUrl, infuraId } from '../../constants';
+import { subgraphUrl } from '../../constants';
 import { CircularProgress } from '@material-ui/core';
+import { useWallet } from '../../contexts/WalletContext';
 
 function Order() {
   const params = useParams()
+  const { provider } = useWallet()
   const networkInfo = useSelector((state: RootState) => state.account.networkInfo);
-  const provider = useSelector((state: RootState) => state.account.provider);
-  const [outstandingAmount, setOutstandingAmount] = useState<string>('0');
+  const [outstandingAmount, setOutstandingAmount] = useState<number>(0);
   const [apiCallStatus, setApiCallStatus] = useState<boolean>(false);
   const [assetDetails, setAssetDetails] = useState<any>({});
   const [repays, setRepays] = useState<any[]>([]);
@@ -92,15 +90,14 @@ function Order() {
       return
     }
     if (contractInfo?.PILE?.address) {
-      const publicProvider = ethers.getDefaultProvider(`https://polygon-mainnet.infura.io/v3/${infuraId}`)
       const contract = new ethers.Contract(
         contractInfo.PILE.address,
         contractInfo.PILE.ABI,
-        provider?.getSigner() || publicProvider,
+        provider,
       ) as Pile
       contract.debt(BigNumber.from(params.id).toString())
         .then((data) => {
-          setOutstandingAmount(numberToString(Number(BigInt(data.toString()) / BigInt(10 ** 6))));
+          setOutstandingAmount(Number(BigInt(data.toString()) / BigInt(10 ** 6)));
         })
         .catch((error) => {
           console.error('error while fetching outstanding amount: ', error)
@@ -142,7 +139,7 @@ function Order() {
                 {/*</div>*/}
                 <div className="unit">
                   <Typography>Outstanding</Typography>
-                  <Typography>{outstandingAmount} USDC</Typography>
+                  <Typography>{outstandingAmount.toLocaleString()} USDC</Typography>
                 </div>
                 <div className="unit">
                   <Typography>Maturity Date</Typography>

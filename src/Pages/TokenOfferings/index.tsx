@@ -1,40 +1,9 @@
-import { useState, useEffect } from "react";
 import "./security.scss";
-import {
-  Grid,
-  InputAdornment,
-  OutlinedInput,
-  Backdrop,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Box,
-  Typography,
-} from "@mui/material";
+import { Typography } from "@mui/material";
 import FactList from "../../components/FactList";
 import OrderList from "../../components/OrderList";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { Address, ADDRESS_BY_NETWORK_ID } from "../../constants/address";
 
 function TokenOfferings() {
-  const networkInfo = useSelector(
-    (state: RootState) => state.account.networkInfo
-  );
-  const provider = useSelector((state: RootState) => state.account.provider);
-
-  const [action, setAction] = useState("Buy");
-
-  const contractInfo =
-    ADDRESS_BY_NETWORK_ID[networkInfo?.chainId.toString() as Address | "80001"];
-
-  const handleChange = (event: any) => {
-    // let target = event.target as HTMLInputElement;
-    setAction(event.target.value);
-  };
-
   return (
     <div className="security-view">
       <div className="header-container">

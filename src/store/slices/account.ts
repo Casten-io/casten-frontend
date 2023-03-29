@@ -8,7 +8,6 @@ interface NetworkInfo {
 
 export interface AccountState {
     address: string;
-    provider: null | ethers.providers.Web3Provider;
     networkInfo: null | NetworkInfo;
     isWalletConnected: boolean;
     executionId?: string;
@@ -25,7 +24,6 @@ export interface AccountState {
 
 const initialState: AccountState = {
     address: "",
-    provider: null,
     networkInfo: null,
     isWalletConnected: Boolean(Number(localStorage?.getItem('isWalletConnected'))),
     securitizeAT: localStorage?.getItem('sAT') || undefined,
@@ -41,7 +39,6 @@ export const accountSlice = createSlice({
     reducers: {
         walletConnect: (state, action) => {
             state.address = action.payload.address || state.address;
-            state.provider = action.payload.provider || state.provider;
             state.networkInfo = action.payload.networkInfo || state.networkInfo;
             state.isWalletConnected = true;
             localStorage?.setItem('isWalletConnected', '1');
@@ -76,7 +73,6 @@ export const accountSlice = createSlice({
         },
         disconnect: (state) => {
             state.address = '';
-            state.provider = null;
             state.networkInfo = null;
             state.isWalletConnected = false;
             state.securitizeAT = undefined;

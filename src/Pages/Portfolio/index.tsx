@@ -1,13 +1,6 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import "./portfolio.scss";
 import {
-  Grid,
-  InputAdornment,
-  OutlinedInput,
-  Backdrop,
-  Slider,
-  Fade,
-  Box,
   Typography,
 } from "@mui/material";
 // import FactList from "../../components/FactList";
@@ -15,48 +8,19 @@ import PortfolioList from "../../components/PortfolioList";
 import { ADDRESS_BY_NETWORK_ID, Address } from "../../constants/address";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { ethers } from "ethers";
 import useTokenBalance from '../../hooks/useTokenBalance';
 import { parseBalance } from '../../utils';
-import { backendUrl } from '../../constants';
 
 function Portfolio() {
   const networkInfo = useSelector(
     (state: RootState) => state.account.networkInfo
   );
-  const provider = useSelector((state: RootState) => state.account.provider);
   const address = useSelector((state: RootState) => state.account.address);
   const chainId = networkInfo?.chainId || 137
   const contractInfo = useMemo(() => {
     return ADDRESS_BY_NETWORK_ID[chainId.toString() as Address]
   }, [chainId]);
-  let juniorTokenContract: ethers.Contract | null;
-  let seniorTokenContract: ethers.Contract | null;
   const { data: tokenBalance } = useTokenBalance(address, contractInfo?.DAI_TOKEN?.address)
-
-  const getBalancesFromContract = async (
-    selfC: ethers.Contract,
-    juniorOperatorC: ethers.Contract
-  ) => {
-    const juniorTokenBalance = await selfC.balanceOf(address);
-    const seniorTokenBalance = await juniorOperatorC.balanceOf(address);
-  };
-
-  useEffect(() => {
-    if (contractInfo) {
-      juniorTokenContract = new ethers.Contract(
-        contractInfo.JUNIOR_TOKEN.address,
-        contractInfo.JUNIOR_TOKEN.ABI,
-        provider?.getSigner()
-      );
-      seniorTokenContract = new ethers.Contract(
-        contractInfo.SENIOR_TOKEN.address,
-        contractInfo.SENIOR_TOKEN.ABI,
-        provider?.getSigner()
-      );
-      getBalancesFromContract(juniorTokenContract, seniorTokenContract);
-    }
-  }, [contractInfo]);
 
   return (
     <div className="portfolio-view">

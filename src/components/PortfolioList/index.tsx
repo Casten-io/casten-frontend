@@ -1,12 +1,9 @@
 import "./style.scss";
 import { useEffect, useCallback, useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
 import {
   Button,
-  FormControlLabel,
-  Grid,
   Paper,
   Table,
   TableBody,
@@ -17,33 +14,15 @@ import {
   Modal,
   Box,
   Typography,
-  FormControl,
-  RadioGroup,
-  Radio,
   TextField,
 } from "@mui/material";
 import { BigNumber, Contract, ethers } from "ethers";
 import { Address, ADDRESS_BY_NETWORK_ID } from '../../constants/address';
-import { backendUrl, subgraphUrl } from '../../constants';
+import { subgraphUrl } from '../../constants';
 import { CircularProgress } from '@material-ui/core';
 import { createClient } from 'urql';
 import { shortenHex } from '../../utils';
-
-export interface IPortfoliosheet {
-  select: string;
-  symbol: string;
-  sec_name: string;
-  issuer: string;
-  apy: string;
-  maturity: string;
-  tranche: string;
-  frequency: string;
-  price: string;
-  profitloss: string;
-  invested: string;
-  exposure: string;
-  percent_exp: string;
-}
+import { useWallet } from '../../contexts/WalletContext';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -57,46 +36,79 @@ const style = {
   borderRadius: 2
 };
 
-function createData(
-  select: string,
-  symbol: string,
-  sec_name: string,
-  issuer: string,
-  apy: string,
-  maturity: string,
-  tranche: string,
-  frequency: string,
-  price: string,
-  profitloss: string,
-  invested: string,
-  exposure: string,
-  percent_exp: string,
-) {
-  return {
-    select,
-    symbol,
-    sec_name,
-    issuer,
-    apy,
-    maturity,
-    tranche,
-    frequency,
-    price,
-    profitloss,
-    invested,
-    exposure,
-    percent_exp,
-  };
-}
+// function createData(
+//   select: string,
+//   symbol: string,
+//   sec_name: string,
+//   issuer: string,
+//   apy: string,
+//   maturity: string,
+//   tranche: string,
+//   frequency: string,
+//   price: string,
+//   profitloss: string,
+//   invested: string,
+//   exposure: string,
+//   percent_exp: string,
+// ) {
+//   return {
+//     select,
+//     symbol,
+//     sec_name,
+//     issuer,
+//     apy,
+//     maturity,
+//     tranche,
+//     frequency,
+//     price,
+//     profitloss,
+//     invested,
+//     exposure,
+//     percent_exp,
+//   };
+// }
 
 function PortfolioList() {
-  const navigate = useNavigate();
+  const { provider } = useWallet();
   const address = useSelector((state: RootState) => state.account.address);
-  const executionId = useSelector((state: RootState) => state.account.executionId);
   const [apiCallStatus, setApiCallStatus] = useState<boolean>(false);
   const [orderList, setOrderList] = useState<any[]>([]);
+  const [withdrawalAmount, setWithdrawalAmounts] = useState<any>({
+    juniorToken: BigNumber.from('0'),
+    seniorToken: BigNumber.from('0'),
+    remainingJuniorToken: BigNumber.from('0'),
+    remainingSeniorToken: BigNumber.from('0'),
+  });
+  const [inputWithdrawal, setInputWithdrawal] = useState<number>(0);
+  const [openWithdraw, setOpenWithdraw] = useState<boolean>(false);
+  const [openClaim, setOpenClaim] = useState<boolean>(false);
+  const [selectedTranche, setSelectedTranche] = useState<string>('Senior');
+  const [actionBtns, setActionBtns] = useState<boolean>(true);
+  const [currentEpoch, setCurrentEpoch] = useState<number>();
 
-  const securityRedirect = useCallback(() => navigate("/security"), [navigate]);
+  const networkInfo = useSelector(
+    (state: RootState) => state.account.networkInfo,
+  );
+
+  const chainId = networkInfo?.chainId || 137
+  const contractInfo = useMemo(() => {
+    return ADDRESS_BY_NETWORK_ID[chainId.toString() as Address]
+  }, [chainId]);
+
+  const fetchCurrentEpoch = useCallback(() => {
+    const coordinator = new ethers.Contract(contractInfo.COORDINATOR.address, contractInfo.COORDINATOR.ABI, provider)
+    coordinator.currentEpoch()
+      .then((currentEpochTimestamp: BigNumber) => {
+        setCurrentEpoch(Number(currentEpochTimestamp.toString()));
+      })
+      .catch((error: any) => {
+        console.error('error while fetching current epoch timestamp: ', error);
+      })
+  }, [
+    contractInfo?.COORDINATOR?.address,
+    contractInfo?.COORDINATOR?.ABI,
+    provider
+  ])
 
   const fetchUserOrders = useCallback(async () => {
     if (!address) {
@@ -141,59 +153,41 @@ function PortfolioList() {
     fetchUserOrders()
       .catch((error) => console.error('error while fetching user\'s orders: ', error));
   }, [fetchUserOrders]);
+  useEffect(() => {
+    fetchCurrentEpoch();
+  }, [fetchCurrentEpoch]);
 
-  const rows = [
-    createData(
-      "",
-      "FTech SNR",
-      "Sr. A Fintech 11%",
-      "A Fintech",
-      "10.5%",
-      "Dec 2023",
-      "Senior",
-      "Monthly",
-      "1.0",
-      "10,000",
-      "500,000",
-      "510,000",
-      "51%",
-    ),
-  ];
-  const [withdrawalAmount, setWithdrawalAmounts] = useState<any>({
-    juniorToken: BigNumber.from('0'),
-    seniorToken: BigNumber.from('0'),
-    remainingJuniorToken: BigNumber.from('0'),
-    remainingSeniorToken: BigNumber.from('0'),
-  });
-  const [inputWithdrawal, setInputWithdrawal] = useState<number>(0);
-  const [openWithdraw, setOpenWithdraw] = useState<boolean>(false);
-  const [openClaim, setOpenClaim] = useState<boolean>(false);
-  const [selectedTranche, setSelectedTranche] = useState<string>('Senior');
-  const [actionBtns, setActionBtns] = useState<boolean>(true);
-
-  const networkInfo = useSelector(
-    (state: RootState) => state.account.networkInfo,
-  );
-  const provider = useSelector((state: RootState) => state.account.provider);
-
-  const chainId = networkInfo?.chainId || 137
-  const contractInfo = useMemo(() => {
-    return ADDRESS_BY_NETWORK_ID[chainId.toString() as Address]
-  }, [chainId]);
+  // const rows = [
+  //   createData(
+  //     "",
+  //     "FTech SNR",
+  //     "Sr. A Fintech 11%",
+  //     "A Fintech",
+  //     "10.5%",
+  //     "Dec 2023",
+  //     "Senior",
+  //     "Monthly",
+  //     "1.0",
+  //     "10,000",
+  //     "500,000",
+  //     "510,000",
+  //     "51%",
+  //   ),
+  // ];
 
   const calculateDisburseAndEnableAction = useCallback(async () => {
     try {
       if (!address) {
         return;
       }
-      const seniorToken = new ethers.Contract(contractInfo.SENIOR_TOKEN.address, contractInfo.SENIOR_TOKEN.ABI, provider?.getSigner());
-      const juniorToken = new ethers.Contract(contractInfo.JUNIOR_TOKEN.address, contractInfo.JUNIOR_TOKEN.ABI, provider?.getSigner());
+      const seniorToken = new ethers.Contract(contractInfo.SENIOR_TOKEN.address, contractInfo.SENIOR_TOKEN.ABI, provider);
+      const juniorToken = new ethers.Contract(contractInfo.JUNIOR_TOKEN.address, contractInfo.JUNIOR_TOKEN.ABI, provider);
       const seniorTokenBalance = await seniorToken.balanceOf(address);
       const juniorTokenBalance = await juniorToken.balanceOf(address);
       const memberContract = new Contract(
         contractInfo.JUNIOR_MEMBER_LIST.address,
         contractInfo.JUNIOR_MEMBER_LIST.ABI,
-        provider?.getSigner(),
+        provider,
       );
 
       let isMember = await memberContract.hasMember(address);
@@ -201,15 +195,15 @@ function PortfolioList() {
         const memberContract = new Contract(
           contractInfo.SENIOR_MEMBER_LIST.address,
           contractInfo.SENIOR_MEMBER_LIST.ABI,
-          provider?.getSigner(),
+          provider,
         );
 
         const isSeniorMember = await memberContract.hasMember(address);
         isMember = isMember && isSeniorMember;
       }
-      const seniorTrancheContract = new ethers.Contract(contractInfo.SENIOR_TRANCHE.address, contractInfo.SENIOR_TRANCHE.ABI, provider?.getSigner());
+      const seniorTrancheContract = new ethers.Contract(contractInfo.SENIOR_TRANCHE.address, contractInfo.SENIOR_TRANCHE.ABI, provider);
       const seniorDisburseDetails = await seniorTrancheContract['calcDisburse(address)'](address);
-      const juniorTrancheContract = new ethers.Contract(contractInfo.JUNIOR_TRANCHE.address, contractInfo.JUNIOR_TRANCHE.ABI, provider?.getSigner());
+      const juniorTrancheContract = new ethers.Contract(contractInfo.JUNIOR_TRANCHE.address, contractInfo.JUNIOR_TRANCHE.ABI, provider);
       const juniorDisburseDetails = await juniorTrancheContract['calcDisburse(address)'](address);
       setWithdrawalAmounts({
         juniorToken: juniorDisburseDetails.payoutTokenAmount,
@@ -253,14 +247,15 @@ function PortfolioList() {
     let contract;
     let token;
     let operatorAddress;
+    const signer = (provider as ethers.providers.Web3Provider).getSigner()
     if (selectedTranche === 'Senior') {
       operatorAddress = contractInfo.SENIOR_TRANCHE.address;
-      token = new ethers.Contract(contractInfo.SENIOR_TOKEN.address, contractInfo.SENIOR_TOKEN.ABI, provider?.getSigner());
-      contract = new ethers.Contract(contractInfo.SENIOR_OPERATOR.address, contractInfo.SENIOR_OPERATOR.ABI, provider?.getSigner());
+      token = new ethers.Contract(contractInfo.SENIOR_TOKEN.address, contractInfo.SENIOR_TOKEN.ABI, signer);
+      contract = new ethers.Contract(contractInfo.SENIOR_OPERATOR.address, contractInfo.SENIOR_OPERATOR.ABI, signer);
     } else {
       operatorAddress = contractInfo.JUNIOR_TRANCHE.address;
-      token = new ethers.Contract(contractInfo.JUNIOR_TOKEN.address, contractInfo.JUNIOR_TOKEN.ABI, provider?.getSigner());
-      contract = new ethers.Contract(contractInfo.JUNIOR_OPERATOR.address, contractInfo.JUNIOR_OPERATOR.ABI, provider?.getSigner());
+      token = new ethers.Contract(contractInfo.JUNIOR_TOKEN.address, contractInfo.JUNIOR_TOKEN.ABI, signer);
+      contract = new ethers.Contract(contractInfo.JUNIOR_OPERATOR.address, contractInfo.JUNIOR_OPERATOR.ABI, signer);
     }
 
     const amountBN = BigNumber.from(
@@ -299,10 +294,11 @@ function PortfolioList() {
       return;
     }
     let contract;
+    const signer = (provider as ethers.providers.Web3Provider).getSigner()
     if (selectedTranche === 'Senior') {
-      contract = new ethers.Contract(contractInfo.SENIOR_OPERATOR.address, contractInfo.SENIOR_OPERATOR.ABI, provider?.getSigner());
+      contract = new ethers.Contract(contractInfo.SENIOR_OPERATOR.address, contractInfo.SENIOR_OPERATOR.ABI, signer);
     } else {
-      contract = new ethers.Contract(contractInfo.JUNIOR_OPERATOR.address, contractInfo.JUNIOR_OPERATOR.ABI, provider?.getSigner());
+      contract = new ethers.Contract(contractInfo.JUNIOR_OPERATOR.address, contractInfo.JUNIOR_OPERATOR.ABI, signer);
     }
 
     const disburseTx = await contract['disburse()']();
@@ -420,6 +416,7 @@ function PortfolioList() {
               <TableCell className="head-cell">Amt. Invested</TableCell>
               {/*<TableCell className="head-cell">Exposure</TableCell>*/}
               <TableCell className="head-cell">Transaction</TableCell>
+              <TableCell className="head-cell">Status</TableCell>
               {/*<TableCell className="head-cell">Claim Interest</TableCell>*/}
               <TableCell className="head-cell">Claim/Withdraw</TableCell>
             </TableRow>
@@ -458,6 +455,9 @@ function PortfolioList() {
                   >
                     {shortenHex(row.transactionHash)}
                   </a>
+                </TableCell>
+                <TableCell>
+                  {!currentEpoch ? 'checking...' : currentEpoch < Number(row.epoch) ? 'processing...' : 'supplied!'}
                 </TableCell>
                 {/*<TableCell>*/}
                 {/*  <button*/}

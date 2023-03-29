@@ -25,6 +25,7 @@ import SecuritizeLogo from '../../assets/images/securitize-logo.svg';
 import Close from '../../assets/icons/close.svg';
 import { parseBalance, scanTxLink } from '../../utils';
 import ArrowNE from '../../assets/icons/Arrow-NorthEast.svg';
+import { useWallet } from '../../contexts/WalletContext';
 
 interface IViewBaseProps {
   children: React.ReactNode;
@@ -58,7 +59,7 @@ function ViewBase({ children }: IViewBaseProps) {
   const showKycModal = useSelector((state: RootState) => state.account.showKycModal);
   const kycStatus = useSelector((state: RootState) => state.account.kycStatus) || '';
   const isMember = useSelector((state: RootState) => state.account.whitelistStatus);
-  const provider = useSelector((state: RootState) => state.account.provider);
+  const { provider } = useWallet()
   const address = useSelector((state: RootState) => state.account.address);
   const chainId = networkInfo?.chainId || 137
   const contractInfo = useMemo(() => {
@@ -114,7 +115,7 @@ function ViewBase({ children }: IViewBaseProps) {
     const memberContract = new Contract(
       contractInfo.JUNIOR_MEMBER_LIST.address,
       contractInfo.JUNIOR_MEMBER_LIST.ABI,
-      provider.getSigner(),
+      provider
     );
 
     let isMember = await memberContract.hasMember(address);
@@ -122,7 +123,7 @@ function ViewBase({ children }: IViewBaseProps) {
       const memberContract = new Contract(
         contractInfo.SENIOR_MEMBER_LIST.address,
         contractInfo.SENIOR_MEMBER_LIST.ABI,
-        provider.getSigner(),
+        provider
       );
 
       const isSeniorMember = await memberContract.hasMember(address);

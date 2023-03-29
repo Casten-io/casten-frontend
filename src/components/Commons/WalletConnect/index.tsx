@@ -11,15 +11,17 @@ import LogoutIcon from '../../../assets/icons/logout.svg'
 import "./style.scss";
 import { infuraId } from '../../../constants';
 import SwitchNetworkModal from './SwitchNetworkModal';
+import { useWallet } from '../../../contexts/WalletContext';
 
 function WalletConnect() {
   const [web3Modal, setWeb3Modal] = useState<null | Web3Modal>(null);
   const [wrongNetwork, setWrongNetwork] = useState<boolean>(false)
   const [showSwitchNetworkModal, setShowSwitchNetworkModal] = useState<boolean>(false)
   const dispatch = useDispatch();
+  const { provider: stateProvider, setProvider } = useWallet();
   const isWalletConnected = useSelector((state: RootState) => state.account.isWalletConnected);
   const address = useSelector((state: RootState) => state.account.address);
-  const stateProvider = useSelector((state: RootState) => state.account.provider);
+  // const stateProvider = useSelector((state: RootState) => state.account.provider);
   const stateNetworkInfo = useSelector((state: RootState) => state.account.networkInfo);
 
   useEffect(() => {
@@ -63,8 +65,8 @@ function WalletConnect() {
         const ethersProvider = new providers.Web3Provider(provider);
         const network = await ethersProvider.getNetwork();
         const userAddress = await ethersProvider.getSigner().getAddress();
+        setProvider(ethersProvider);
         dispatch(walletConnect({
-          provider: ethersProvider,
           address: userAddress,
           networkInfo: network
         }));
@@ -94,9 +96,9 @@ function WalletConnect() {
     const network = await ethersProvider.getNetwork();
     const userAddress = await ethersProvider.getSigner().getAddress();
     subscribeProvider(provider);
+    setProvider(ethersProvider);
     dispatch(
       walletConnect({
-        provider: ethersProvider,
         address: userAddress,
         networkInfo: network
       })

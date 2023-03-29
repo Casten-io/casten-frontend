@@ -7,6 +7,8 @@ import QuestionMarkCircleSolidIcon from '../../Drawer/drawer-content/icons/Quest
 import { AngleRightCircleIcon } from '../../Drawer/drawer-content/icons';
 import { toHexTrimZero } from '../../../helpers/switch-network';
 import { RootState } from '../../../store';
+import { useWallet } from '../../../contexts/WalletContext';
+import { ethers } from 'ethers';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -26,13 +28,14 @@ const SwitchNetworkModal: FC<{
 }> = (props) => {
   const { close, open } = props;
   const address = useSelector((state: RootState) => state.account.address);
-  const stateProvider = useSelector((state: RootState) => state.account.provider);
+  const { provider } = useWallet()
   const stateNetworkInfo = useSelector((state: RootState) => state.account.networkInfo);
 
   const switchNetwork = async () => {
     try {
-      if (stateProvider && stateNetworkInfo && address && !Object.values(Networks).includes(stateNetworkInfo.chainId?.toString())) {
-        await stateProvider.send('wallet_switchEthereumChain', [
+      if (provider && stateNetworkInfo && address && !Object.values(Networks).includes(stateNetworkInfo.chainId?.toString())) {
+        const signer = (provider as ethers.providers.Web3Provider)
+        await signer.send('wallet_switchEthereumChain', [
           { chainId: toHexTrimZero(Networks.PolyMain) },
         ]);
         close();

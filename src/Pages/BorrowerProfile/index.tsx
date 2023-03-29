@@ -1,17 +1,10 @@
 import { useState, SyntheticEvent, useEffect } from "react";
 import "./borrower.scss";
 import {
-  InputAdornment,
-  OutlinedInput,
-  Backdrop,
-  Slider,
-  Fade,
   Box,
   Tab,
   Tabs,
-  Typography,
 } from "@mui/material";
-import Office from "../../assets/icons/office.png";
 import QuickCheck from "../../assets/icons/quick-check.jpg";
 import ArrowNE from "../../assets/icons/Arrow-NorthEast.svg";
 import InfoIcon from "../../assets/icons/info.svg";
@@ -19,11 +12,8 @@ import Twitter from "../../assets/icons/twitter.svg";
 import LinkedIn from "../../assets/icons/linkedin.svg";
 import WebsiteIcon from "../../assets/icons/website.svg";
 import BlankProgress from '../../assets/images/blank-progress.png'
-import { ArrowNorthEast } from '../../components/Drawer/drawer-content/icons';
-import { useNavigate } from 'react-router-dom';
 import { createClient } from 'urql';
 import { subgraphUrl } from '../../constants';
-import { numberToString } from '../../utils';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -59,15 +49,6 @@ function BorrowerProfile() {
     currentIssuance: '0',
     totalIssuance: '0',
   })
-  const navigate = useNavigate();
-
-  const navigateToTokenOfferings = (row: any) => () => {
-    if (row.disabled) {
-      return;
-    }
-    navigate("/token");
-  };
-
   const fetchPoolDetails = async () => {
     const client = createClient({
       url: subgraphUrl,

@@ -8,7 +8,7 @@ import { Paper, Table, TableBody, TableHead, TableRow, TableCell, TableContainer
 import { RootState } from '../../store';
 import { Address, ADDRESS_BY_NETWORK_ID } from '../../constants/address';
 import ArrowNE from '../../assets/icons/Arrow-NorthEast.svg';
-import { numberToString, parseBalance, scanTxLink } from '../../utils';
+import { parseBalance, scanTxLink } from '../../utils';
 import { subgraphUrl } from '../../constants';
 import SwitchNetworkModal from '../Commons/WalletConnect/SwitchNetworkModal';
 import Casten from '../../assets/icons/Casten.png';
@@ -18,6 +18,7 @@ import './style.scss';
 import { toggleKycModal, updateWhitelistStatus } from '../../store/slices/account';
 import { createClient } from 'urql';
 import { CircularProgress } from '@material-ui/core';
+import { useWallet } from '../../contexts/WalletContext';
 
 export interface IFactsheet {
   secId: string;
@@ -63,7 +64,7 @@ function FactList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const networkInfo = useSelector((state: RootState) => state.account.networkInfo);
-  const provider = useSelector((state: RootState) => state.account.provider);
+  const { provider } = useWallet();
   const address = useSelector((state: RootState) => state.account.address);
   const whitelistStatus = useSelector((state: RootState) => state.account.whitelistStatus);
   const whitelistStatusTimestamp = useSelector((state: RootState) => state.account.whitelistCheckTimestamp) || 0;
@@ -160,44 +161,48 @@ function FactList() {
         pool.seniorTranche?.tokenSymbol || 'QC001',
         pool.seniorTranche?.tokenName || 'Sr. QuickCheck 15% 2023',
         pool.seniorTranche?.name || 'Senior',
-        numberToString(Number(BigInt(pool.totalIssuance || '0') / BigInt((10 ** 6)))),
+        Number(BigInt(pool.totalIssuance || '0') / BigInt((10 ** 6))).toLocaleString(),
         `${Number(pool.expectedSeniorAPY).toFixed(2)}%`,
         Number(pool.expectedSeniorAPY),
         pool.repaymentFrequency,
         "Sept 23",
         "-",
         "-",
-        `${numberToString(Number(BigInt(pool.seniorTVL) / BigInt(10 ** 6)))} USDC`
+        `${Number(BigInt(pool.seniorTVL) / BigInt(10 ** 6)).toLocaleString()} USDC`
       ),
       createData(
         pool.juniorTranche?.tokenSymbol || 'QC001',
         pool.juniorTranche?.tokenName || 'Sr. QuickCheck 15% 2023',
         pool.juniorTranche?.name || 'Junior',
-        numberToString(Number(BigInt(pool.totalIssuance || '0') / BigInt((10 ** 6)))),
+        Number(BigInt(pool.totalIssuance || '0') / BigInt((10 ** 6))).toLocaleString(),
         `${Number(pool.expectedJuniorAPY).toFixed(2)}%`,
         Number(pool.expectedJuniorAPY),
         pool.repaymentFrequency,
         "Sept 23",
         "-",
         "-",
-        `${numberToString(Number(BigInt(pool.juniorTVL) / BigInt(10 ** 6)))} USDC`
+        `${Number(BigInt(pool.juniorTVL) / BigInt(10 ** 6)).toLocaleString()} USDC`
       ),
     ]);
     setApiCallStatus(false);
   };
 
   const getContracts = useCallback((tranche: string) => {
+    let signer: ethers.providers.Web3Provider | ethers.providers.BaseProvider | ethers.providers.JsonRpcSigner = provider
+    if (address) {
+      signer = (provider as ethers.providers.Web3Provider).getSigner()
+    }
     const token = new ethers.Contract(
       contractInfo.DAI_TOKEN.address,
       contractInfo.DAI_TOKEN.ABI,
-      provider?.getSigner()
+      signer
     );
     if (tranche === 'Senior') {
       return {
         operator: new ethers.Contract(
           contractInfo.SENIOR_OPERATOR.address,
           contractInfo.SENIOR_OPERATOR.ABI,
-          provider?.getSigner()
+          signer
         ),
         trancheAddress: contractInfo.SENIOR_TRANCHE.address,
         token,
@@ -207,12 +212,13 @@ function FactList() {
       operator: new ethers.Contract(
         contractInfo.JUNIOR_OPERATOR.address,
         contractInfo.JUNIOR_OPERATOR.ABI,
-        provider?.getSigner()
+        signer
       ),
       trancheAddress: contractInfo.JUNIOR_TRANCHE.address,
       token,
     };
   }, [
+    address,
     contractInfo?.DAI_TOKEN?.ABI,
     contractInfo?.DAI_TOKEN?.address,
     contractInfo?.JUNIOR_OPERATOR?.ABI,
@@ -317,9 +323,9 @@ function FactList() {
         return;
       }
       setCheckingPendingOrders(true);
-      const seniorTrancheContract = new ethers.Contract(contractInfo.SENIOR_TRANCHE.address, contractInfo.SENIOR_TRANCHE.ABI, provider?.getSigner());
+      const seniorTrancheContract = new ethers.Contract(contractInfo.SENIOR_TRANCHE.address, contractInfo.SENIOR_TRANCHE.ABI, provider);
       const seniorDisburseDetails = await seniorTrancheContract['calcDisburse(address)'](address);
-      const juniorTrancheContract = new ethers.Contract(contractInfo.JUNIOR_TRANCHE.address, contractInfo.JUNIOR_TRANCHE.ABI, provider?.getSigner());
+      const juniorTrancheContract = new ethers.Contract(contractInfo.JUNIOR_TRANCHE.address, contractInfo.JUNIOR_TRANCHE.ABI, provider);
       const juniorDisburseDetails = await juniorTrancheContract['calcDisburse(address)'](address);
       setPendingSupply({
         Junior: juniorDisburseDetails.payoutTokenAmount,
@@ -370,7 +376,7 @@ function FactList() {
         const memberContract = new Contract(
           contractInfo.JUNIOR_MEMBER_LIST.address,
           contractInfo.JUNIOR_MEMBER_LIST.ABI,
-          provider.getSigner(),
+          provider
         );
 
         isMember = await memberContract.hasMember(address);
@@ -378,7 +384,7 @@ function FactList() {
           const memberContract = new Contract(
             contractInfo.SENIOR_MEMBER_LIST.address,
             contractInfo.SENIOR_MEMBER_LIST.ABI,
-            provider.getSigner(),
+            provider
           );
 
           const isSeniorMember = await memberContract.hasMember(address);

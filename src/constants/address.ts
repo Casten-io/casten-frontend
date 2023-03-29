@@ -8,13 +8,14 @@ import SENIOR_TRANCHE from "../abis/seniorTranche.json";
 import JUNIOR_TRANCHE from "../abis/juniorTranche.json";
 import JUNIOR_MEMBER_LIST from "../abis/jrMemberList.json";
 import SENIOR_MEMBER_LIST from "../abis/srMemberList.json";
+import COORDINATOR from '../abis/coordinator.json';
 import PILE from '../abis/pile.json';
 import {ethers} from "ethers";
 
 
 export type Address = "80001" | "137"
 
-export type Contracts = "SHELF" | "JUNIOR_OPERATOR" | "JUNIOR_TOKEN" | "SENIOR_TOKEN" | "SENIOR_OPERATOR" | "DAI_TOKEN" | "SENIOR_TRANCHE" | "JUNIOR_TRANCHE" | "JUNIOR_MEMBER_LIST" | "SENIOR_MEMBER_LIST" | "PILE"
+export type Contracts = "SHELF" | "JUNIOR_OPERATOR" | "JUNIOR_TOKEN" | "SENIOR_TOKEN" | "SENIOR_OPERATOR" | "DAI_TOKEN" | "SENIOR_TRANCHE" | "JUNIOR_TRANCHE" | "JUNIOR_MEMBER_LIST" | "SENIOR_MEMBER_LIST" | "PILE" | "COORDINATOR"
 
 type ContractRecord =  Record<Contracts, {
     address: string,
@@ -69,6 +70,10 @@ export const ADDRESS_BY_NETWORK_ID: Record<Address, ContractRecord> = {
             address: "0x4A313ef25cB4c2D5f93eB6120ab1379053E67AB1",
             ABI: PILE
         },
+        COORDINATOR: {
+          address: " 0xBC1029021B42Ca785Ae39F0cCF17E6293af5b6FE",
+          ABI: COORDINATOR
+        }
     },
     "137": {
         DAI_TOKEN: {
@@ -116,6 +121,10 @@ export const ADDRESS_BY_NETWORK_ID: Record<Address, ContractRecord> = {
             address: "0x30079820d7352DA64a71d4837A98A640c07B6908",
             ABI: PILE
         },
+        COORDINATOR: {
+          address: "0x16b56D03f75849a2A52A8de9fF103cc32c1DB39B",
+          ABI: COORDINATOR
+        }
     }
     // quickcheck old
     // "137": {
@@ -164,6 +173,10 @@ export const ADDRESS_BY_NETWORK_ID: Record<Address, ContractRecord> = {
     //         address: "0xf1dDC889fdFdDa738F0216E7e545a9cC31a02b45",
     //         ABI: PILE
     //     },
+    //     COORDINATOR: {
+    //         address: "0x94c24bCb5444481C3Ca8Fe33980846fe6401760D",
+    //         ABI: COORDINATOR
+    //     },
     // }
     // cauris
     // "137": {
@@ -211,6 +224,10 @@ export const ADDRESS_BY_NETWORK_ID: Record<Address, ContractRecord> = {
     //     PILE: {
     //         address: "0x7D3E923d87405F9E5f2E0EC7D316A8751A357637",
     //         ABI: PILE
+    //     },
+    //     COORDINATOR: {
+    //         address: "0xF1a44Dc601786FD8766C355d8385Ca62dDFeB9F7",
+    //         ABI: COORDINATOR
     //     },
     // }
 }

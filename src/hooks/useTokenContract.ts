@@ -1,16 +1,17 @@
 import { useMemo } from "react";
-import { Contract } from "ethers";
+import { Contract, ethers } from "ethers";
 import { useSelector } from "react-redux";
 
 import { Address } from "../constants/address";
 import { ADDRESS_BY_NETWORK_ID } from "../constants/address";
 import { RootState } from "../store";
+import { useWallet } from '../contexts/WalletContext';
 
 const useTokenContact = <T extends Contract = Contract>(tokenAddress: string): T | null => {
   const networkInfo = useSelector(
     (state: RootState) => state.account.networkInfo,
   );
-  const provider = useSelector((state: RootState) => state.account.provider);
+  const { provider } = useWallet();
   const address = useSelector((state: RootState) => state.account.address);
   const chainId = networkInfo?.chainId || 137
   const contractInfo = useMemo(() => {
@@ -22,7 +23,7 @@ const useTokenContact = <T extends Contract = Contract>(tokenAddress: string): T
     }
 
     try {
-      return new Contract(tokenAddress, contractInfo.DAI_TOKEN.ABI, provider.getSigner(address || 0))
+      return new Contract(tokenAddress, contractInfo.DAI_TOKEN.ABI, provider)
     } catch (error) {
       console.error('Failed To Get Contract', error)
 
