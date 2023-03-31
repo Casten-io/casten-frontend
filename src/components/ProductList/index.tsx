@@ -72,6 +72,7 @@ function ProductList() {
       `query {
         pools {
           id
+          borrowerName
           data {
             name
             shelfAddress
@@ -113,7 +114,7 @@ function ProductList() {
     setPools([
       ...resp.data.pools.map((pool: any) => createData(
         pool.id as string,
-        pool.data.name as string,
+        pool.borrowerName as string,
         `${Number(pool.expectedSeniorAPY).toFixed(2)}%`,
         `${Number(pool.expectedJuniorAPY).toFixed(2)}%`,
         pool.repaymentFrequency,

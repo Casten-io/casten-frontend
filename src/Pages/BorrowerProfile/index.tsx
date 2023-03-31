@@ -178,7 +178,7 @@ function BorrowerProfile() {
                       <div className="deal-overview section" style={{ marginBottom: '0.5rem' }}>
                         <h2 className="title">
                           <a
-                            href="https://docsend.com/view/s/7eagcpd59sim4dpu"
+                            href="https://docsend.com/view/s/rd7p9syq4j2rfkmx"
                             target="_blank"
                             rel="noopener noreferrer"
                           >
@@ -351,7 +351,7 @@ function BorrowerProfile() {
                                     <li>
                                       <a
                                         className="borrower-contract-link"
-                                        href="https://docsend.com/view/s/7eagcpd59sim4dpu"
+                                        href="https://docsend.com/view/s/rd7p9syq4j2rfkmx"
                                         target="_blank"
                                         style={{ display: 'none' }}
                                       >

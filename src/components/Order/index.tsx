@@ -120,8 +120,8 @@ function Order() {
 
   return (
     <div className="main-container">
-      <div className="assetlist-container">
-        <Typography className="assetlist">Loan Details</Typography>
+      <div>
+        <Typography className="order-title">Loan Details</Typography>
         <Card
           sx={{ minWidth: "300px", maxWidth: "900px", mt: '10px' }}
           className="order-container"
@@ -177,8 +177,8 @@ function Order() {
           </CardContent>
         </Card>
       </div>
-      <div className="assetlist-container" style={{ marginTop: '20px' }}>
-        <Typography className="assetlist">Repayments</Typography>
+      <div style={{ marginTop: '40px' }}>
+        <Typography className="order-title">Repayments</Typography>
         <TableContainer component={Paper} className="table-container" sx={{mt: '10px'}}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table">
             <TableHead className="table-head">
