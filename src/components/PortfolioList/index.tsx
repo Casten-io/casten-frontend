@@ -457,7 +457,7 @@ function PortfolioList() {
                   </a>
                 </TableCell>
                 <TableCell>
-                  {!currentEpoch ? 'checking...' : currentEpoch < Number(row.epoch) ? 'Processing' : 'Earning Interest'}
+                  {!currentEpoch ? 'checking...' : currentEpoch <= Number(row.epoch) ? 'Processing' : 'Earning Interest'}
                 </TableCell>
                 {/*<TableCell>*/}
                 {/*  <button*/}
@@ -470,7 +470,7 @@ function PortfolioList() {
                 {/*  </button>*/}
                 {/*</TableCell>*/}
                 <TableCell>
-                  {actionBtns && <Box display="flex" width="100%" paddingY="10px" justifyContent="flex-end">
+                  {!(Number(currentEpoch) <= Number(row.epoch)) && actionBtns && <Box display="flex" width="100%" paddingY="10px" justifyContent="flex-end">
                     {(
                       withdrawalAmount[`remaining${row.tranche}Token`].gt(BigNumber.from(0)) &&
                       !withdrawalAmount[`${`${row.tranche}`.toLowerCase()}Token`].gt(BigNumber.from(0))
