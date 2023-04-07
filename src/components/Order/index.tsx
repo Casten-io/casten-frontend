@@ -97,7 +97,7 @@ function Order() {
       ) as Pile
       contract.debt(BigNumber.from(params.id).toString())
         .then((data) => {
-          setOutstandingAmount(Number(data.div(BigNumber.from((10 ** 6).toString())).toString()));
+          setOutstandingAmount(Number(data.toNumber() / (10 ** 6)));
         })
         .catch((error) => {
           console.error('error while fetching outstanding amount: ', error)
