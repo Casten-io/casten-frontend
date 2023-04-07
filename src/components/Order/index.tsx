@@ -145,6 +145,10 @@ function Order() {
                   <Typography>Maturity Date</Typography>
                   <Typography>{assetDetails.maturityDate ? new Date(assetDetails.maturityDate * 1000).toDateString() : '-'}</Typography>
                 </div>
+                <div className="unit">
+                  <Typography>Date Issued</Typography>
+                  <Typography>{assetDetails.dateIssued ? new Date(assetDetails.dateIssued * 1000).toDateString() : '-'}</Typography>
+                </div>
                 {/*<div className="unit">*/}
                 {/*  <Typography>Financed By</Typography>*/}
                 {/*  <Typography>0x435838979209..</Typography>*/}

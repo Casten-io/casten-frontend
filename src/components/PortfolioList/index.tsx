@@ -81,7 +81,7 @@ function PortfolioList() {
   });
   const [inputWithdrawal, setInputWithdrawal] = useState<number>(0);
   const [openWithdraw, setOpenWithdraw] = useState<boolean>(false);
-  const [openClaim, setOpenClaim] = useState<boolean>(false);
+  // const [openClaim, setOpenClaim] = useState<boolean>(false);
   const [selectedTranche, setSelectedTranche] = useState<string>('Senior');
   const [actionBtns, setActionBtns] = useState<boolean>(true);
   const [currentEpoch, setCurrentEpoch] = useState<number>();
@@ -289,13 +289,13 @@ function PortfolioList() {
     withdrawalAmount,
   ]);
 
-  const claim = useCallback(async () => {
+  const claim = useCallback(async (tranche: any) => {
     if (!address || !provider) {
       return;
     }
     let contract;
     const signer = (provider as ethers.providers.Web3Provider).getSigner()
-    if (selectedTranche === 'Senior') {
+    if (tranche === 'Senior') {
       contract = new ethers.Contract(contractInfo.SENIOR_OPERATOR.address, contractInfo.SENIOR_OPERATOR.ABI, signer);
     } else {
       contract = new ethers.Contract(contractInfo.JUNIOR_OPERATOR.address, contractInfo.JUNIOR_OPERATOR.ABI, signer);
@@ -309,9 +309,6 @@ function PortfolioList() {
     calculateDisburseAndEnableAction()
       .catch((e) => {
         console.error('failed to calculate withdrawal amount', e);
-      })
-      .finally(() => {
-        setOpenClaim(false);
       })
     // setWithdrawalAmounts({
     //   ...withdrawalAmount,
@@ -336,26 +333,26 @@ function PortfolioList() {
   }, [calculateDisburseAndEnableAction]);
   return (
     <>
-      <Modal
-        open={openClaim}
-        onClose={() => setOpenClaim(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Please select from which pool you want to claim.
-          </Typography>
-          <Box display="flex" justifyContent="space-between">
-            <Button onClick={() => setOpenClaim(false)} variant="outlined" color="warning">
-              Cancel
-            </Button>
-            <Button onClick={claim} variant="outlined" color="success">
-              Claim
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
+      {/*<Modal*/}
+      {/*  open={openClaim}*/}
+      {/*  onClose={() => setOpenClaim(false)}*/}
+      {/*  aria-labelledby="modal-modal-title"*/}
+      {/*  aria-describedby="modal-modal-description"*/}
+      {/*>*/}
+      {/*  <Box sx={style}>*/}
+      {/*    <Typography id="modal-modal-title" variant="h6" component="h2">*/}
+      {/*      Please select from which pool you want to claim.*/}
+      {/*    </Typography>*/}
+      {/*    <Box display="flex" justifyContent="space-between">*/}
+      {/*      <Button onClick={() => setOpenClaim(false)} variant="outlined" color="warning">*/}
+      {/*        Cancel*/}
+      {/*      </Button>*/}
+      {/*      <Button onClick={claim} variant="outlined" color="success">*/}
+      {/*        Claim*/}
+      {/*      </Button>*/}
+      {/*    </Box>*/}
+      {/*  </Box>*/}
+      {/*</Modal>*/}
       <Modal
         open={openWithdraw}
         onClose={() => setOpenWithdraw(false)}
@@ -486,10 +483,7 @@ function PortfolioList() {
                       Withdraw
                     </button>}
                     {withdrawalAmount[`${`${row.tranche}`.toLowerCase()}Token`].gt(BigNumber.from(0)) && <button
-                      onClick={() => {
-                        setSelectedTranche(row.tranche)
-                        setOpenClaim(true)
-                      }}
+                      onClick={() => claim(row.tranche)}
                       type="button"
                       className="action-btn"
                     >
