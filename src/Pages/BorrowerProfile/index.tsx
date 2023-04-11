@@ -393,10 +393,10 @@ function BorrowerProfile() {
                                     <li>
                                       <a
                                         className="link"
-                                        href="https://polygonscan.com/address/0x862405370dc1cF4DE7b6aAE5F0520C6C35c060d0"
+                                        href="https://polygonscan.com/address/0x687CA67f165306241d9ea8426EDC148E2964ffFe"
                                         target="_blank"
                                       >
-                                        0x862405370dc1cF4DE7b6aAE5F0520C6C35c060d0
+                                        0x687CA67f165306241d9ea8426EDC148E2964ffFe
                                       </a>
                                     </li>
                                   </ul>
