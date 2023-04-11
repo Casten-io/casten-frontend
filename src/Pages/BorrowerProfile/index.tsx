@@ -285,7 +285,7 @@ function BorrowerProfile() {
                                     <div className="th-title">Opening date</div>
                                   </div>
                                 </th>
-                                <td>13 March 2023</td>
+                                <td>13<sup>th</sup> April 2023</td>
                               </tr>
                               <tr className="border border-sand-200">
                                 <th scope="row">
@@ -353,11 +353,9 @@ function BorrowerProfile() {
                                         className="borrower-contract-link"
                                         href="https://docsend.com/view/s/rd7p9syq4j2rfkmx"
                                         target="_blank"
-                                        style={{ display: 'none' }}
                                       >
                                         view
                                       </a>
-                                      -
                                     </li>
                                   </ul>
                                 </td>
@@ -395,13 +393,11 @@ function BorrowerProfile() {
                                     <li>
                                       <a
                                         className="link"
-                                        href="https://polygonscan.com/address/0x428995b6b3e2ed27387ce15d224c2e669a284bc0"
+                                        href="https://polygonscan.com/address/0x862405370dc1cF4DE7b6aAE5F0520C6C35c060d0"
                                         target="_blank"
-                                        style={{ display: 'none' }}
                                       >
-                                        0x428995b6b3e2ed27387ce15d224c2e669a284bc0
+                                        0x862405370dc1cF4DE7b6aAE5F0520C6C35c060d0
                                       </a>
-                                      -
                                     </li>
                                   </ul>
                                 </td>
