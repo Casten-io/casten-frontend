@@ -145,7 +145,7 @@ function PortfolioList() {
     setApiCallStatus(false);
     setOrderList(resp.data.deposits.map((deposit: any) => ({
       ...deposit,
-      tranche: deposit.tranche === 'JUN' ? 'Junior' : 'Senior',
+      tranche: deposit.tranche.includes('JUN') ? 'Junior' : 'Senior',
     })));
   }, [address]);
 
