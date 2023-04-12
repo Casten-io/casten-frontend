@@ -38,7 +38,7 @@ function createData(
   tranche: string,
   totalIssuance: string,
   apy: string,
-  APY: number,
+  APY: number[],
   frequency: string,
   maturity: string,
   ltv: string,
@@ -162,8 +162,15 @@ function FactList() {
         pool.seniorTranche?.tokenName || 'Sr. QuickCheck 15% 2023',
         pool.seniorTranche?.name || 'Senior',
         Number(BigInt(pool.totalIssuance || '0') / BigInt((10 ** 6))).toLocaleString(),
-        `${Number(pool.expectedSeniorAPY).toFixed(2)}%`,
-        Number(pool.expectedSeniorAPY),
+        (pool.expectedSeniorAPY || '0')
+          .toString()
+          .split('-')
+          .map((esa: string) => `${Number(esa).toFixed(2)}%`)
+          .join(' - '),
+        (pool.expectedSeniorAPY || '0')
+          .toString()
+          .split('-')
+          .map((esa: string) => Number(esa)),
         pool.repaymentFrequency,
         "Sept 23",
         "-",
@@ -175,8 +182,15 @@ function FactList() {
         pool.juniorTranche?.tokenName || 'Sr. QuickCheck 15% 2023',
         pool.juniorTranche?.name || 'Junior',
         Number(BigInt(pool.totalIssuance || '0') / BigInt((10 ** 6))).toLocaleString(),
-        `${Number(pool.expectedJuniorAPY).toFixed(2)}%`,
-        Number(pool.expectedJuniorAPY),
+        (pool.expectedJuniorAPY || '0')
+          .toString()
+          .split('-')
+          .map((eja: string) => `${Number(eja).toFixed(2)}%`)
+          .join(' - '),
+        (pool.expectedJuniorAPY || '0')
+          .toString()
+          .split('-')
+          .map((eja: string) => Number(eja)),
         pool.repaymentFrequency,
         "Sept 23",
         "-",
@@ -415,8 +429,8 @@ function FactList() {
 
   const wrongNetwork = provider && networkInfo && address && !['80001', '137'].includes(networkInfo.chainId?.toString())
 
-  const apy = (investAmount || 0) * (investIn?.APY / 100);
-  const apyDeduction = apy * 0.1;
+  const apy = investIn?.APY?.map((apy: number) => (investAmount || 0) * (apy / 100));
+  const apyDeduction = apy?.map((apyF: number) => apyF * 0.1);
   const insufficientBalance =
     Number(parseBalance(tokenBalance || 0, 2, contractInfo?.DAI_TOKEN?.TOKEN_DECIMALS)) < Number(investAmount);
   return (
@@ -575,7 +589,9 @@ function FactList() {
               <div className="label">Interest Payout Frequency</div>
               <div className="value-input">Monthly</div>
               <div className="label">Interest Payout Based on Frequency</div>
-              <div className="value-input">${((apy - apyDeduction) / 12).toFixed(2)}</div>
+              <div className="value-input">
+                {apy?.map((apy: number, i: number) => `$${((apy - apyDeduction[i]) / 12).toFixed(4)}`).join(' - ')}
+              </div>
             </Box>
             {(
               checkingAllowance ||
@@ -596,7 +612,7 @@ function FactList() {
                   Checking approved amount of USDC to ${investIn?.tranche} Contract...&nbsp;
                 </span>}
                 {approving && `approving your USDC amount to spent by ${investIn?.tranche} Contract for invest...`}
-                {supplying && `Creating your supply order for invest...`}
+                {supplying && `Creating supply order...`}
               </Typography>
             </Box>}
             {(

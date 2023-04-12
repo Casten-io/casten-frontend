@@ -120,7 +120,7 @@ function ProductList() {
           .split('-')
           .map((esa: string) => `${Number(esa).toFixed(2)}%`)
           .join(' - '),
-        pool.expectedJuniorAPY
+        (pool.expectedJuniorAPY || '0')
           .toString()
           .split('-')
           .map((eja: string) => `${Number(eja).toFixed(2)}%`)
