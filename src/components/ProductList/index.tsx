@@ -115,8 +115,16 @@ function ProductList() {
       ...resp.data.pools.map((pool: any) => createData(
         pool.id as string,
         pool.borrowerName as string,
-        `${Number(pool.expectedSeniorAPY).toFixed(2)}%`,
-        `${Number(pool.expectedJuniorAPY).toFixed(2)}%`,
+        (pool.expectedSeniorAPY || '0')
+          .toString()
+          .split('-')
+          .map((esa: string) => `${Number(esa).toFixed(2)}%`)
+          .join(' - '),
+        pool.expectedJuniorAPY
+          .toString()
+          .split('-')
+          .map((eja: string) => `${Number(eja).toFixed(2)}%`)
+          .join(' - '),
         pool.repaymentFrequency,
         'Dec 23',
         pool.data.name as string,
